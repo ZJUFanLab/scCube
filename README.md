@@ -1,6 +1,6 @@
 # scCube v1.0.0
 
-## Simulation of spatially-resolved transcriptomic data
+## Simulating multiple variability in spatially resolved transcriptomics
 
 [![python >=3.8](https://img.shields.io/badge/python-%3E%3D3.8-brightgreen)](https://www.python.org/) 
 
