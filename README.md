@@ -52,5 +52,5 @@ TODO:
 
 
 ## About
-scCube was developed by Jie Liao and Jingyang Qian. Should you have any questions, please contact Jingyang Qian at qianjingyang@zju.edu.cn.
+scCube was developed by Jingyang Qian. Should you have any questions, please contact Jingyang Qian at qianjingyang@zju.edu.cn.
 
