@@ -48,7 +48,9 @@ For more details about the format of input and the description of parameters, se
 
 
 ## Tutorials
-TODO:
+
+## Others
+In the current version, scCube includes over **200** trained models of various tissues derived from four human and mouse scRNA-seq atlas (Tabula Muris, Tabula Sapiens, MCA, and HCL) as well as high-quality SRT datasets. These models can be conveniently employed through the Python package or the web interface ([http://tcm.zju.edu.cn/sccube](http://tcm.zju.edu.cn/sccube)) by users to generate the new gene expression profiles of specific tissues. Detailed information about these models and datasets can be found [here]().
 
 
 ## About
