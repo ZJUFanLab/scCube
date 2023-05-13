@@ -35,14 +35,14 @@ python setup.py install
 ```
 
 ## Quick Start
-To use scCube we require two formatted `.csv` files as input (i.e. read in by pandas). We have included two test datasets 
-in the [tutorial/demo_data folder](tutorial/demo_data) of this repository as examples to show how to use scCube. 
+scCube requires a **data** file (gene expression profiles) and a **meta** file (cell type/domain annotations) as the input, which can be stored as either `.csv` (read by pandas) or '.h5ad' (loaded by scanpy) formats. We have included two toy datasets in the [tutorial/demo_data folder](tutorial/demo_data) of this repository as examples to show how to use scCube. 
 
-If you generate spot-based ST data, please refer to:
-* [Demonstration of scCube on generating spot-based ST data](tutorial/demo_spot.ipynb)
+Reference-based simulation:
+* [Demonstration of scCube on simulating mouse hypothalamus MERFISH data](tutorial/demo_merfish.ipynb)
 
-If you generate image-based ST data, please refer to:
-* [Demonstration of scCube on generating image-based ST data](tutorial/demo_image.ipynb)
+Reference-free simulation:
+* [Demonstration of scCube on generating simulated spot-based SRT data](tutorial/demo_spot.ipynb)
+* [Demonstration of scCube on generating simulated imaging-based ST data](tutorial/demo_image.ipynb)
 
 For more details about the format of input and the description of parameters, see the [Tutorial Handbook](tutorial/handbook.md).
 
