@@ -6,13 +6,13 @@
 
 scCube is a python package coupled with an interactive website for reproducible, paired, and platform-diverse simulation of spatially-resolved transcriptomic data 
 
-![avatar](images/workflow.tif)
+![avatar](images/workflow.jpg)
 
 ## Requirements and Installation
 [![anndata 0.8.0](https://img.shields.io/badge/anndata-0.8.0-success)](https://pypi.org/project/anndata/) [![numpy 1.23.5](https://img.shields.io/badge/numpy-1.23.5-important)](https://pypi.org/project/numpy/) [![pandas 1.5.3](https://img.shields.io/badge/pandas-1.5.3-critical)](https://pypi.org/project/pandas/) [![scanpy 1.9.1](https://img.shields.io/badge/scanpy-1.9.1-informational)](https://github.com/scverse/scanpy) [![pot 0.8.2](https://img.shields.io/badge/pot-0.8.2-blueviolet)](https://pypi.org/project/POT/) [![matplotlib 3.6.3](https://img.shields.io/badge/matplotlib-3.6.3-ff69b4)](https://pypi.org/project/matplotlib/) [![seaborn 0.12.2](https://img.shields.io/badge/seaborn-0.12.2-9cf)](https://pypi.org/project/seaborn/) [![tqdm 4.64.1](https://img.shields.io/badge/tqdm-4.64.1-lightgrey)](https://pypi.org/project/tqdm/)
 
 ### Create and activate Python environment
-For scSpace, the python version need is over 3.8. If you have installed Python3.6 or Python3.7, consider installing Anaconda, and then you can create a new environment.
+For scCube, the python version need is over 3.8. If you have installed Python3.6 or Python3.7, consider installing Anaconda, and then you can create a new environment.
 ```
 conda create -n sccube python=3.8
 conda activate sccube
@@ -35,7 +35,7 @@ python setup.py install
 ```
 
 ## Quick Start
-To use scCube we require five formatted `.csv` files as input (i.e. read in by pandas). We have included two test datasets 
+To use scCube we require two formatted `.csv` files as input (i.e. read in by pandas). We have included two test datasets 
 in the [tutorial/demo_data folder](tutorial/demo_data) of this repository as examples to show how to use scCube. 
 
 If you generate spot-based ST data, please refer to:
@@ -52,5 +52,5 @@ TODO:
 
 
 ## About
-scCube was developed by Jie Liao and Jingyang Qian. Should you have any questions, please contact Jingyang Qian at qianjingyang@zju.edu.cn.
+scCube was developed by Jingyang Qian. Should you have any questions, please contact Jingyang Qian at qianjingyang@zju.edu.cn.
 
