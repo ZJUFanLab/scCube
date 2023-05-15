@@ -46,11 +46,14 @@ Reference-free simulation:
 
 For more details about the format of input and the description of parameters, see the [Tutorial Handbook](tutorial/handbook.md).
 
+## Trained models and datasets
+In the current version, scCube includes over **200** trained models of various tissues derived from four human and mouse scRNA-seq atlas (Tabula Muris, Tabula Sapiens, MCA, and HCL) as well as high-quality SRT datasets. Detailed information about these models and datasets can be found [here]().
 
 ## Tutorials
+Additional step-by-step tutorials now available! Users can employ the tained models conveniently through the Python package or the web interface ([http://tcm.zju.edu.cn/sccube](http://tcm.zju.edu.cn/sccube)) to generate the new gene expression profiles of specific tissues. We provide following tutorials as examples
 
-## Others
-In the current version, scCube includes over **200** trained models of various tissues derived from four human and mouse scRNA-seq atlas (Tabula Muris, Tabula Sapiens, MCA, and HCL) as well as high-quality SRT datasets. These models can be conveniently employed through the Python package or the web interface ([http://tcm.zju.edu.cn/sccube](http://tcm.zju.edu.cn/sccube)) by users to generate the new gene expression profiles of specific tissues. Detailed information about these models and datasets can be found [here]().
+* [Using the trained model to simulate the mouse hypothalamus MERFISH data](tutorial/tutorial_merfish.ipynb)
+* [Using the trained model to simulate the human DLPFC 10x Visium data](tutorial/tutorial_dlpfc.ipynb)
 
 
 ## About
