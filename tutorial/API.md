@@ -1,28 +1,17 @@
-## Tutorial Handbook
+## API Reference
 ### Input data format
 
-Bulk2Space requires five formatted data as input:
-1. Bulk-seq Normalized Data: a `.csv` file with genes as rows and one sample as column
+1. Data file: a `.csv` file with genes as rows and one sample as column
 
-|<img width=140/> <img width=140/>|<img width=139/>Sample<img width=138/>| 
-| :-----: | :-----: | 
-| Gene1 | 5.22 |
-| Gene2 | 3.67 |
-| ... | ... |
-| GeneN | 15.76 |
-
-****  
-2. Single Cell RNA-seq Normalized Data: a `.csv` file with genes as rows and cells as columns
-  
 |<img width=40/> <img width=40/>|<img width=25/>Cell1<img width=25/>|<img width=25/>Cell2<img width=25/>|<img width=25/>Cell3<img width=25/>|<img width=35/>...<img width=34/>|<img width=25/>CellN<img width=25/>| 
 | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | 
-| Gene1 | 1.05 | 2.31 | 1.72 | ... | 0 |
-| Gene2 | 4.71 | 1.07 | 0 | ... | 4.22 |
+| Gene1 | 1 | 2 | 1 | ... | 0 |
+| Gene2 | 4 | 1 | 0 | ... | 4 |
 | ... | ... | ... | ... | ... | ... |
-| GeneN | 0.55 | 0 | 1.48 | ... | 0 |
+| GeneN | 0 | 0 | 2 | ... | 0 |
 
-****
-3. Single Cell RNA-seq Annotation Data: a `.csv` file with cell ID and celltype annotation columns. 
+****  
+2. Meta file: a `.csv` file with cell/spot ID and celltype/domain annotation columns
    * The column containing cell ID should be named `Cell` 
    * the column containing the labels should be named `Cell_type` 
 
@@ -32,29 +21,6 @@ Bulk2Space requires five formatted data as input:
 | Cell2 | Cell2 | B cell |
 | ... | ... | ... |
 | CellN | CellN | Monocyte |
-
-****
-4. Spatial Transcriptomics Normalized Data: a `.csv` file with genes as rows and cells (or spots) as columns 
-
-|<img width=45/> <img width=45/>|<img width=20/>Cell1 / Spot1<img width=10/>|<img width=20/>Cell2 / Spot2<img width=20/>|<img width=33/>...<img width=32/>|<img width=15/>CellN / SpotN<img width=15/>| 
-| :-----: | :-----: | :-----: | :-----: | :-----: |
-| Gene1 | 3.22 | 4.71 | ... | 1.01 |
-| Gene2 | 0 | 2.17 | ... | 2.20 |
-| ... | ... | ... | ... | ... |
-| GeneN | 0 | 0.11 | ... | 1.61 |
-
-****
-5. Spatial Transcriptomics Coordinates Data: a `.csv` with cell/spot ID and coordinates columns. 
-   * The column containing the coordinates should be named `xcoord` and `ycoord`
-   * For spot-based data, the column containing spot ID should be named `Spot`
-   * For image-based data, the column containing cell ID should be named `Cell`
-  
-|<img width=50/> <img width=50/>|<img width=44/>Spot (or Cell) <img width=44/>|<img width=44/>xcoord<img width=45/>|<img width=45/>ycoord<img width=45/>|
-| :-----: | :-----: | :-----: | :-----: |
-| Cell_1 / Spot_1 | Cell_1 / Spot_1 | 1.2 | 5.2 |
-| Cell_2 / Spot_2 | Cell_1 / Spot_1 |5.4 | 4.3 |
-| ... | ... | ... | ... |
-| Cell_n / Spot_n | Cell_1 / Spot_1 | 11.3 | 6.3 |
 
 ****
 
