@@ -44,7 +44,7 @@ Reference-free simulation:
 * [Demonstration of scCube on generating simulated spot-based SRT data](tutorial/demo_spot.ipynb)
 * [Demonstration of scCube on generating simulated imaging-based SRT data](tutorial/demo_image.ipynb)
 
-For more details about the format of input and the description of parameters, see [here](tutorial/handbook.md).
+For more details about the format of input and the description of parameters, see [here](tutorial/API.md).
 
 ## Trained models and datasets
 In the current version, scCube includes over **200** trained models of various tissues derived from four human and mouse scRNA-seq atlas (Tabula Muris, Tabula Sapiens, MCA, and HCL) as well as high-quality SRT datasets. Detailed information about these models and datasets can be found [here](tutorial/statistics.md).
