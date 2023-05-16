@@ -44,10 +44,10 @@ Reference-free simulation:
 * [Demonstration of scCube on generating simulated spot-based SRT data](tutorial/demo_spot.ipynb)
 * [Demonstration of scCube on generating simulated imaging-based SRT data](tutorial/demo_image.ipynb)
 
-For more details about the format of input and the description of parameters, see the [Tutorial Handbook](tutorial/handbook.md).
+For more details about the format of input and the description of parameters, see [here](tutorial/API.md).
 
 ## Trained models and datasets
-In the current version, scCube includes over **200** trained models of various tissues derived from four human and mouse scRNA-seq atlas (Tabula Muris, Tabula Sapiens, MCA, and HCL) as well as high-quality SRT datasets. Detailed information about these models and datasets can be found [here]().
+In the current version, scCube includes over **200** trained models of various tissues derived from four human and mouse scRNA-seq atlas (Tabula Muris, Tabula Sapiens, MCA, and HCL) as well as high-quality SRT datasets. Detailed information about these models and datasets can be found [here](tutorial/statistics.md).
 
 ## Tutorials
 Additional step-by-step tutorials now available! Users can employ the tained models conveniently through the Python package or the web interface ([http://tcm.zju.edu.cn/sccube](http://tcm.zju.edu.cn/sccube)) to generate the new gene expression profiles of specific tissues. We provide following tutorials as examples:
@@ -59,8 +59,8 @@ Reference-based simulation:
 
 Reference-free simulation:
 * [Using the trained model to generate simulated SRT data with diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
-* [Using the trained model to generate simulated SRT data with diverse resolutions]()
-* [Using the trained model to generate simulated SRT data with user-specified number of cells and cell types]()
+* [Using the trained model to generate simulated SRT data with diverse resolutions](tutorial/tutorial_resolution.ipynb)
+* [Using the trained model to generate simulated SRT data with user-specified number of cells and cell types](tutorial/tutorial_specified.ipynb)
 
 
 
