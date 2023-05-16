@@ -69,70 +69,9 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate(
 | generate_save_dir | Path to save the generated scRNA-seq data | (str) `output` |
 | generate_save_name | File name of the generated scRNA-seq data | (str) `output` |
 
-****
-* Decompose spatial barcoding-based spatial transcriptomics data (10x Genomics, ST, or Slide-seq, etc) into spatially resolved single-cell transcriptomics data:
-```python
-from bulk2space import Bulk2Space
-model = Bulk2Space()
-
-# Decompose spatial barcoding-based spatial transcriptomics data 
-# (10x Genomics, ST, or Slide-seq, etc) into spatially resolved 
-# single-cell transcriptomics data
-df_meta, df_data = model.train_df_and_spatial_deconvolution(
-    generate_sc_meta,
-    generate_sc_data,
-    input_st_data_path,
-    input_st_meta_path,
-    spot_num=500,
-    cell_num=10,
-    df_save_dir='save_model',
-    df_save_name='df',
-    map_save_dir='output', 
-    map_save_name='deconvolution',
-    top_marker_num=500,
-    marker_used=True,
-    k=10)
-```
-
-| Parameter | Description | Default Value |
-| --- | --- | --- |
-| generate_sc_meta | Generated scRNA-seq metadata | None |
-| generate_sc_data | Generated scRNA-seq data | None |
-| input_st_data_path | Path to ST data files (.csv) | None |
-| input_st_meta_path | Path to ST metadata files (.csv) | None |
-| spot_num | The spot number of pseudo-spot data which used to train the deep forest model| (int) `500` |
-| cell_num | The cell number per spot of pseudo-spot data which used to train the deep forest model | (int) `10` |
-| df_save_dir | Path to save the trained deep forest model | (str) `save_model`  |
-| df_save_name | File name of the trained deep forest model | (str) `df` |
-| map_save_dir | Path to save the deconvoluted ST data | (str) `output` |
-| map_save_name | File name of the deconvoluted ST data | (str) `deconvolution` |
-| top_marker_num | The number of marker genes of each celltype used | (int) `500` |
-| marker_used | Whether to only use marker genes of each cell type | (bool) `True` |
-| k | The number of cells per spot set | (int) `10` |
 
 
-****
-* Map image-based spatial transcriptomics data (MERFISH, SeqFISH, or STARmap, etc) into spatially resolved single-cell transcriptomics data:
-```python
-from bulk2space import Bulk2Space
-model = Bulk2Space()
 
-# Map image-based spatial transcriptomics data (MERFISH, SeqFISH, or STARmap, etc) 
-# into spatially resolved single-cell transcriptomics data
-df_meta, df_data = model.spatial_mapping(
-    generate_sc_meta,
-    generate_sc_data,
-    input_st_data_path,
-    input_st_meta_path)
-```
-
-
-| Parameter | <img width=133/>Description <img width=133/> | <img width=11/>Default Value <img width=11/> |
-| --- | --- | --- |
-| generate_sc_meta | Generated scRNA-seq metadata | None |
-| generate_sc_data | Generated scRNA-seq data | None |
-| input_st_data_path | Path to ST data files (.csv) | None |
-| input_st_meta_path | Path to ST metadata files (.csv) | None |
 
 
 
