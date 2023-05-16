@@ -25,7 +25,7 @@
 ****
 
 ### Parameter description
-#### gene simulation:
+#### gene simulation functions:
 ```python
 import scCube
 from scCube import scCube
@@ -38,8 +38,8 @@ sc_adata = model.pre_process(sc_data=sc_data,
                              sc_meta=sc_meta,
                              is_normalized=False)
 ```
-* Parameters
-
+**Parameters**
+`sc_data`
 
 |  | Description | Default Value |
 | --- | --- | --- |
