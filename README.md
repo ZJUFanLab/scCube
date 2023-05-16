@@ -52,8 +52,16 @@ In the current version, scCube includes over **200** trained models of various t
 ## Tutorials
 Additional step-by-step tutorials now available! Users can employ the tained models conveniently through the Python package or the web interface ([http://tcm.zju.edu.cn/sccube](http://tcm.zju.edu.cn/sccube)) to generate the new gene expression profiles of specific tissues. We provide following tutorials as examples
 
+Reference-based simulation:
 * [Using the trained model to simulate the mouse hypothalamus MERFISH data](tutorial/tutorial_merfish.ipynb)
 * [Using the trained model to simulate the human DLPFC 10x Visium data](tutorial/tutorial_dlpfc.ipynb)
+* [Using the trained model to simulate the mouse cortex STARmap data](tutorial/tutorial_starmap.ipynb)
+
+Reference-free simulation:
+* [Using the trained model to generate simulated SRT data with diverse spatial patterns]()
+* [Using the trained model to generate simulated SRT data with diverse resolutions]()
+* [Using the trained model to generate simulated SRT data with user-specified number of cells and cell types]()
+
 
 
 ## About
