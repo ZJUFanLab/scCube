@@ -42,7 +42,7 @@ Reference-based simulation:
 
 Reference-free simulation:
 * [Demonstration of scCube on generating simulated spot-based SRT data](tutorial/demo_spot.ipynb)
-* [Demonstration of scCube on generating simulated imaging-based ST data](tutorial/demo_image.ipynb)
+* [Demonstration of scCube on generating simulated imaging-based SRT data](tutorial/demo_image.ipynb)
 
 For more details about the format of input and the description of parameters, see the [Tutorial Handbook](tutorial/handbook.md).
 
@@ -58,7 +58,7 @@ Reference-based simulation:
 * [Using the trained model to simulate the mouse cortex STARmap data](tutorial/tutorial_starmap.ipynb)
 
 Reference-free simulation:
-* [Using the trained model to generate simulated SRT data with diverse spatial patterns]()
+* [Using the trained model to generate simulated SRT data with diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
 * [Using the trained model to generate simulated SRT data with diverse resolutions]()
 * [Using the trained model to generate simulated SRT data with user-specified number of cells and cell types]()
 
