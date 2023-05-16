@@ -39,6 +39,7 @@ sc_adata = model.pre_process(sc_data=sc_data,
                              is_normalized=False)
 ```
 **Parameters**
+
 `sc_data`
 
 |  | Description | Default Value |
