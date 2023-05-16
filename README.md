@@ -59,8 +59,8 @@ Reference-based simulation:
 
 Reference-free simulation:
 * [Using the trained model to generate simulated SRT data with diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
-* [Using the trained model to generate simulated SRT data with diverse resolutions]()
-* [Using the trained model to generate simulated SRT data with user-specified number of cells and cell types]()
+* [Using the trained model to generate simulated SRT data with diverse resolutions](tutorial/tutorial_resolution.ipynb)
+* [Using the trained model to generate simulated SRT data with user-specified number of cells and cell types](tutorial/tutorial_specified.ipynb)
 
 
 
