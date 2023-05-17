@@ -40,9 +40,9 @@ sc_adata = model.pre_process(sc_data=sc_data,
 ```
 **Parameters**
 
-**sc_data: DataFrame**
+**sc_data: _DataFrame_**
 
-  DataFrame of input data
+emsp;&emsp;DataFrame of input data
 
 DataFrame of input data
 
