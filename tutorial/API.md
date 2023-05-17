@@ -26,6 +26,8 @@
 
 ### Parameter description
 #### gene simulation functions:
+
+##### pre-processing
 ```python
 import scCube
 from scCube import scCube
@@ -33,7 +35,6 @@ from scCube.visualization import *
 from scCube.utils import *
 
 model = scCube()
-# pre-processing
 sc_adata = model.pre_process(sc_data=sc_data, 
                              sc_meta=sc_meta,
                              is_normalized=False)
@@ -54,6 +55,7 @@ sc_adata = model.pre_process(sc_data=sc_data,
 
 ****
 
+##### train vae model and generate gene expression
 ```python
 generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(sc_adata=sc_adata,
                                                                        celltype_key='Cell_type',
@@ -115,21 +117,21 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(sc_adata=
 
 &emsp;The name of trained VAE model
 
-**used_device**: str, default: `cuda:0`_
+**used_device**: _str, default: `cuda:0`_
 
 &emsp;Device name, `cpu` or `cuda
 
 ****
 
+##### load VAE model and generate gene expression
 ```python
-generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(self,
-                                                                      sc_adata: AnnData,
-                                                                      celltype_key: str,
-                                                                      cell_key: str,
-                                                                      target_num: Optional[dict] = None,
-                                                                      hidden_size: int = 128,
-                                                                      load_path: str = '',
-                                                                      used_device: str = 'cuda:0'
+generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(sc_adata=sc_adata,
+                                                                      celltype_key='Cell_type',
+                                                                      cell_key='Cell',
+                                                                      target_num=None,
+                                                                      hidden_size=128,
+                                                                      load_path=load_path
+                                                                      used_device='cuda:0'
                                                                       )
 ```
 **Parameters**
@@ -142,8 +144,153 @@ generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(self,
 
 &emsp;The column name of `cell types` or `domain` in meta
 
+**cell_key**: _str_
 
+&emsp;The column name of `cell` in meta
 
+**target_num**: _Optional[dict], default: `None`_
+
+&emsp;Target number of cells to generate, if `target_num=None`, generate cells by the proportion of cell types of the input data.
+
+**hidden_size**: _int, default: `128`_
+
+&emsp;Hidden size of VAE model
+
+**load_path**: _str_
+
+&emsp;The load path
+
+**used_device**: _str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda
+
+****
+
+##### generate random spatial patterns with reference-free strategy
+```python
+generate_sc_data, generate_sc_meta_new, st_data, st_meta, st_index = model.generate_spatial_data_random(generate_sc_data=generate_sc_data,
+                                                                                                        generate_sc_meta=generate_sc_meta,
+                                                                                                        set_seed=False,
+                                                                                                        seed=12345,
+                                                                                                        spatial_cell_type=None,
+                                                                                                        spatial_dim=2,
+                                                                                                        spatial_size=30,
+                                                                                                        delta=25,
+                                                                                                        lamda=0.75,
+                                                                                                        is_spot=False,
+                                                                                                        platform='ST',
+                                                                                                        gene_type='whole',
+                                                                                                        min_cell=10,
+                                                                                                        n_gene=None,
+                                                                                                        n_cell=5,
+                                                                                                        is_split=True,
+                                                                                                        split_coord='point_z',
+                                                                                                        slice_num=5,
+                                                                                                        )
+```
+**Parameters**
+
+**generate_sc_data**: _DataFrame_
+
+&emsp;DataFrame of generated data
+
+**generate_sc_meta**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**set_seed**: _bool, default: `False`_
+
+&emsp;Whether to set seed for reproducible simulation
+
+**seed**: _int, default: `12345`_
+
+&emsp;The seed number
+
+**spatial_cell_type**: _ Optional[list], default: `None`_
+
+&emsp;The selected cell types with spatial patterns, if`spatial_cell_type=None`, all cell types would be assigned spatial patterns
+
+**spatial_dim**: _int, default: `2`_
+
+&emsp;The spatial dimensionality， `2` or `3`
+
+**spatial_size**: _int, default: `30`_
+
+&emsp;The scope for spatial autocorrelation function, the large values will take more running time
+
+**delta**: _float, default: `25`_
+
+&emsp;The larger value will tend to form spatial patterns with greater connectivity 
+
+**lamda**: _float, default: `0.75`_
+
+&emsp;The larger values will tend to form clearer spatial patterns
+
+**is_spot**: _bool, default: `False`_
+
+&emsp;True -- generate spot-based SRT data; False -- generate imaging-based SRT data
+
+**platform**: _str, default: `ST`_
+
+&emsp;Only works when `is_spot=True`, `ST` -- square neighborhood structure; `Visium` -- hexagonal neighborhood structure; `Slide` -- random neighborhood structure
+
+**gene_type**: _str, default: `whole`_
+
+&emsp;The type of genes to generate, `whole` -- the whole genes; `hvg` -- the highly variable genes; `marker` -- the marker genes of each cell type; `random` -- the randomly selected genes
+
+**min_cell**: _int, default: `10`_
+
+&emsp;Filter the genes expressed in fewer than `min_cell` cells before selected genes, only works when `gene_type='random', 'hvg', or 'marker'`
+
+**n_gene**: _Optional[int], default: `None`_
+
+&emsp;The number of genes to select, only works when `gene_type='random', 'hvg', or 'marker'`
+
+**n_cell**: _int, default: `10`_
+
+&emsp;The average number of cells per spot, only works when `is_spot=True`
+
+**is_split**: _bool, default: `True`_
+
+&emsp;Whether to spilt the 3D generated spatial patterns into a series of 2D spatial patterns, only works when `spatial_dim=3`
+
+**split_coord**: _str, default: `point_z`_
+
+&emsp;The name of split coordinate axis, only works when `spatial_dim=3` and `is_split=True`
+
+**slice_num**: _int, default: `5`_
+
+&emsp;The targeted number of 2D slices, only works when `spatial_dim=3` and `is_split=True`
+
+****
+
+##### generate spatial patterns with reference-based strategy
+```python
+generate_sc_data, generate_sc_meta_new, st_data, st_meta, st_index = model.generate_spatial_data_random(generate_sc_data=generate_sc_data,
+                                                                                                        generate_sc_meta=generate_sc_meta,
+                                                                                                        set_seed=False,
+                                                                                                        seed=12345,
+                                                                                                        spatial_cell_type=None,
+                                                                                                        spatial_dim=2,
+                                                                                                        spatial_size=30,
+                                                                                                        delta=25,
+                                                                                                        lamda=0.75,
+                                                                                                        is_spot=False,
+                                                                                                        platform='ST',
+                                                                                                        gene_type='whole',
+                                                                                                        min_cell=10,
+                                                                                                        n_gene=None,
+                                                                                                        n_cell=5,
+                                                                                                        is_split=True,
+                                                                                                        split_coord='point_z',
+                                                                                                        slice_num=5,
+                                                                                                        )
+```
+**Parameters**
+
+**generate_sc_data**: _DataFrame_
+
+&emsp;DataFrame of generated data
 
 
 
