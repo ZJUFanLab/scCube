@@ -494,7 +494,7 @@ plt.show(p)
 
 &emsp;Starting position in radians
 
-**size**: _int, default: `100`_
+**size**: _float, default: `100`_
 
 &emsp;The size of point
 
@@ -504,10 +504,305 @@ plt.show(p)
 
 ****
 
+##### Plot scatter plot of proportion of selected cell type
+```python
+p = plot_spot_prop(
+    obj=prop,
+    figwidth=8,
+    figheight=8,
+    x="spot_x",
+    y="spot_y",
+    colormap='viridis',
+    show_celltype= "",
+    size=100,
+    alpha=1,
+    )
+plt.show(p)
+```
+**Parameters**
 
+**obj**: _DataFrame_
 
+&emsp;DataFrame of cell type proportion per spot
 
+**figwidth**: _float, default: `8`_
 
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**x**: _str, defalut: `spot_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `spot_y`_
+
+&emsp;The name of column containing y coordinate
+
+**colormap**: str, default: `viridis`_
+
+&emsp;The name of cmap
+
+**show_celltype**: _Union[list, str]_
+
+&emsp;The cell type selected to plot
+
+**size**: _float, default: `100`_
+
+&emsp;The size of point
+
+**alpha**: _float, default: `1`_
+
+&emsp;The transparency of point
+
+****
+
+##### Plot scatter plot of spatial expression pattern of selected gene
+```python
+p = plot_gene_scatter(
+    data=generate_sc_data,
+    obj=generate_sc_meta_new,
+    figwidth=8,
+    figheight=8,
+    dim=2,
+    label='Cell',
+    normalize=True,
+    x="point_x",
+    y="point_y",
+    z="point_z",
+    colormap='viridis',
+    show_gene: str = "",
+    size=10,
+    alpha=1,
+    )
+plt.show(p)
+```
+**Parameters**
+
+**data**: _DataFrame_
+
+&emsp;DataFrame of generate data
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of generate meta
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**dim**: _int, default: `2`_
+
+&emsp;Spatial dimensionality
+
+**label**: _str, default: `Cell`_
+
+&emsp;The name of column containing cell/spot name
+
+**normalize**: _bool, default: `True`_
+
+&emsp;If 'normalize=True', normalizing expression value to [0, 1]
+
+**x**: _str, defalut: `point_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `point_x`_
+
+&emsp;The name of column containing y coordinate
+
+**z**: _Optional[str], default: `None`_
+
+&emsp;The name of column containing z coordinate, only use when 'dim = 3'
+
+**colormap**: str, default: `viridis`_
+
+&emsp;The name of cmap
+
+**show_gene**: _str_
+
+&emsp;The gene selected to plot
+
+**size**: _float, default: `10`_
+
+&emsp;The size of point
+
+**alpha**: _float, default: `1`_
+
+&emsp;The transparency of point
+
+****
+
+##### Plot histplot of spot-based data to investigate cell number per spot
+```python
+p = plot_gene_scatter(
+    obj=st_index,
+    figwidth=8,
+    figheight=8,
+    label='spot',
+    n_bin=20
+    )
+plt.show(p)
+```
+**Parameters**
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of cell-spot index
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**label**: _str, default: `spot`_
+
+&emsp;The name of column containing spot name
+
+**n_bins**: int, default: `20`_
+
+&emsp;The number of equal-width bins in the range
+
+****
+
+##### Plot 2d scatter plot of cell type spatial pattern of each slices from 3d data
+```python
+p = plot_slice_scatter(
+    obj=generate_sc_meta,
+    figwidth=8,
+    figheight=8,
+    x="point_x",
+    y="point_y",
+    label='Cell_type',
+    palette=None,
+    colormap='rainbow',
+    size=10,
+    alpha=1
+    )
+plt.show(p)
+```
+**Parameters**
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**x**: _str, defalut: `point_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `point_y`_
+
+&emsp;The name of column containing y coordinate
+
+**label**: _str, default: `Cell_type`_
+
+&emsp;The name of column containing cell type information
+
+**palette**: _Optional[list], default: `None`_
+
+&emsp;List of colors used, if 'palette=None', plot scatter plot with colormap colors
+
+**colormap**: str, default: `rainbow`_
+
+&emsp;The name of cmap
+
+**size**: _float, default: `10`_
+
+&emsp;The size of point
+
+**alpha**: _float, default: `1`_
+
+&emsp;The transparency of point
+
+****
+
+##### Plot 2d scatter plot of spatial expression pattern of selected gene of each slices from 3d data
+```python
+p = plot_slice_gene_scatter(
+    data=generate_sc_data,
+    obj=generate_sc_meta,
+    figwidth=8,
+    figheight=8,
+    x="point_x",
+    y="point_y",
+    label='Cell_type',
+    normalize=True,
+    show_gene="",
+    colormap='viridis',
+    size=10,
+    alpha=1
+    )
+plt.show(p)
+```
+**Parameters**
+
+**data**: _DataFrame_
+
+&emsp;DataFrame of generated data
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**x**: _str, defalut: `point_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `point_y`_
+
+&emsp;The name of column containing y coordinate
+
+**label**: _str, default: `Cell_type`_
+
+&emsp;The name of column containing cell type information
+
+**normalize**: _bool, default: `True`_
+
+&emsp;If 'normalize=True', normalizing expression value to [0, 1]
+
+**show_gene**: _str_
+
+&emsp;The gene selected to plot
+
+**colormap**: str, default: `viridis`_
+
+&emsp;The name of cmap
+
+**size**: _float, default: `10`_
+
+&emsp;The size of point
+
+**alpha**: _float, default: `1`_
+
+&emsp;The transparency of point
+
+****
 
 
 
