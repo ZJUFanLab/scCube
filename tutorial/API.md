@@ -25,8 +25,7 @@
 ****
 
 ### Parameter description
-#### gene simulation functions:
-
+#### gene expression simulation functions:
 ##### pre-processing
 ```python
 import scCube
@@ -170,6 +169,7 @@ generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(
 
 ****
 
+#### spatial pattern simulation functions:
 ##### generate random spatial patterns with reference-free strategy
 ```python
 generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_spatial_data_random(
@@ -272,19 +272,39 @@ generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_
 ##### generate spatial patterns with reference-based strategy
 ```python
 generate_sc_data, generate_sc_meta = model.generate_spatial_data_reference(
-    sc_adata: AnnData,
-    generate_sc_data: DataFrame,
-    generate_sc_meta: DataFrame,
-    celltype_key: list,
-    spatial_key: list,
+    sc_adata=sc_adata,
+    generate_sc_data=generate_sc_data,
+    generate_sc_meta=generate_sc_meta,
+    celltype_key='Cell_type',
+    spatial_key=['x', 'y'],
     cost_metric='sqeuclidean'
     )
 ```
 **Parameters**
 
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of reference data
+
 **generate_sc_data**: _DataFrame_
 
 &emsp;DataFrame of generated data
+
+**generate_sc_meta**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell types` or `domain` in meta
+
+**spatial_key**: _list_
+
+&emsp;The column name of `spatial coordinates` in meta
+
+**cost_metric**: _str, defalut: `sqeuclidean`_
+
+&emsp;The cost distance between generate_sc_data and real_data, `sqeuclidean` by default. On numpy the function also accepts from the scipy.spatial.distance.cdist function : ‘braycurtis’, ‘canberra’, ‘chebyshev’, ‘cityblock’, ‘correlation’, ‘cosine’, ‘dice’, ‘euclidean’, ‘hamming’, ‘jaccard’, ‘kulsinski’, ‘mahalanobis’, ‘matching’, ‘minkowski’, ‘rogerstanimoto’, ‘russellrao’, ‘seuclidean’, ‘sokalmichener’, ‘sokalsneath’, ‘sqeuclidean’, ‘wminkowski’, ‘yule’.
 
 
 
