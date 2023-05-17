@@ -35,9 +35,11 @@ from scCube.visualization import *
 from scCube.utils import *
 
 model = scCube()
-sc_adata = model.pre_process(sc_data=sc_data, 
-                             sc_meta=sc_meta,
-                             is_normalized=False)
+sc_adata = model.pre_process(
+    sc_data=sc_data, 
+    sc_meta=sc_meta,
+    is_normalized=False
+    )
 ```
 **Parameters**
 
@@ -57,19 +59,20 @@ sc_adata = model.pre_process(sc_data=sc_data,
 
 ##### train vae model and generate gene expression
 ```python
-generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(sc_adata=sc_adata,
-                                                                       celltype_key='Cell_type',
-                                                                       cell_key='Cell',
-                                                                       target_num=None,
-                                                                       batch_size=512,
-                                                                       epoch_num=10000,
-                                                                       lr=0.0001,
-                                                                       hidden_size=128,
-                                                                       save_model=True,
-                                                                       save_path=save_path,
-                                                                       project_name=model_name,
-                                                                       used_device='cuda:0'
-                                                                       )
+generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
+    sc_adata=sc_adata,
+    celltype_key='Cell_type',
+    cell_key='Cell',
+    target_num=None,
+    batch_size=512,
+    epoch_num=10000,
+    lr=0.0001,
+    hidden_size=128,
+    save_model=True,
+    save_path=save_path,
+    project_name=model_name,
+    used_device='cuda:0'
+    )
 ```
 **Parameters**
 
@@ -125,14 +128,15 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(sc_adata=
 
 ##### load VAE model and generate gene expression
 ```python
-generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(sc_adata=sc_adata,
-                                                                      celltype_key='Cell_type',
-                                                                      cell_key='Cell',
-                                                                      target_num=None,
-                                                                      hidden_size=128,
-                                                                      load_path=load_path
-                                                                      used_device='cuda:0'
-                                                                      )
+generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(
+    sc_adata=sc_adata,
+    celltype_key='Cell_type',
+    cell_key='Cell',
+    target_num=None,
+    hidden_size=128,
+    load_path=load_path,
+    used_device='cuda:0'
+    )
 ```
 **Parameters**
 
@@ -168,25 +172,26 @@ generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(sc_adata=s
 
 ##### generate random spatial patterns with reference-free strategy
 ```python
-generate_sc_data, generate_sc_meta_new, st_data, st_meta, st_index = model.generate_spatial_data_random(generate_sc_data=generate_sc_data,
-                                                                                                        generate_sc_meta=generate_sc_meta,
-                                                                                                        set_seed=False,
-                                                                                                        seed=12345,
-                                                                                                        spatial_cell_type=None,
-                                                                                                        spatial_dim=2,
-                                                                                                        spatial_size=30,
-                                                                                                        delta=25,
-                                                                                                        lamda=0.75,
-                                                                                                        is_spot=False,
-                                                                                                        platform='ST',
-                                                                                                        gene_type='whole',
-                                                                                                        min_cell=10,
-                                                                                                        n_gene=None,
-                                                                                                        n_cell=5,
-                                                                                                        is_split=True,
-                                                                                                        split_coord='point_z',
-                                                                                                        slice_num=5,
-                                                                                                        )
+generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_spatial_data_random(
+    generate_sc_data=generate_sc_data,
+    generate_sc_meta=generate_sc_meta,
+    set_seed=False,
+    seed=12345,
+    spatial_cell_type=None,
+    spatial_dim=2,
+    spatial_size=30,
+    delta=25,
+    lamda=0.75,
+    is_spot=False,
+    platform='ST',
+    gene_type='whole',
+    min_cell=10,
+    n_gene=None,
+    n_cell=5,
+    is_split=True,
+    split_coord='point_z',
+    slice_num=5,
+    )
 ```
 **Parameters**
 
@@ -266,25 +271,14 @@ generate_sc_data, generate_sc_meta_new, st_data, st_meta, st_index = model.gener
 
 ##### generate spatial patterns with reference-based strategy
 ```python
-generate_sc_data, generate_sc_meta_new, st_data, st_meta, st_index = model.generate_spatial_data_random(generate_sc_data=generate_sc_data,
-                                                                                                        generate_sc_meta=generate_sc_meta,
-                                                                                                        set_seed=False,
-                                                                                                        seed=12345,
-                                                                                                        spatial_cell_type=None,
-                                                                                                        spatial_dim=2,
-                                                                                                        spatial_size=30,
-                                                                                                        delta=25,
-                                                                                                        lamda=0.75,
-                                                                                                        is_spot=False,
-                                                                                                        platform='ST',
-                                                                                                        gene_type='whole',
-                                                                                                        min_cell=10,
-                                                                                                        n_gene=None,
-                                                                                                        n_cell=5,
-                                                                                                        is_split=True,
-                                                                                                        split_coord='point_z',
-                                                                                                        slice_num=5,
-                                                                                                        )
+generate_sc_data, generate_sc_meta = model.generate_spatial_data_reference(
+    sc_adata: AnnData,
+    generate_sc_data: DataFrame,
+    generate_sc_meta: DataFrame,
+    celltype_key: list,
+    spatial_key: list,
+    cost_metric='sqeuclidean'
+    )
 ```
 **Parameters**
 
