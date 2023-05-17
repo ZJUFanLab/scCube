@@ -48,7 +48,7 @@ sc_adata = model.pre_process(sc_data=sc_data,
 
 &emsp;DataFrame of input meta
 
-**is_normalized**: _bool, default: `<font color=#FF000 >False</font>`_
+**is_normalized**: _bool, default: `<font color=“#FF0000”>False</font>`_
 
 &emsp;Whether the input data is normalized or not. If `is_normalized=<font color=#FF000 >False</font>`, the input data will be normalized by scCube first.
 
