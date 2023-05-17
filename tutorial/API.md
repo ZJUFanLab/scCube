@@ -306,6 +306,204 @@ generate_sc_data, generate_sc_meta = model.generate_spatial_data_reference(
 
 &emsp;The cost distance between generate_sc_data and real_data, `sqeuclidean` by default. On numpy the function also accepts from the scipy.spatial.distance.cdist function : ‘braycurtis’, ‘canberra’, ‘chebyshev’, ‘cityblock’, ‘correlation’, ‘cosine’, ‘dice’, ‘euclidean’, ‘hamming’, ‘jaccard’, ‘kulsinski’, ‘mahalanobis’, ‘matching’, ‘minkowski’, ‘rogerstanimoto’, ‘russellrao’, ‘seuclidean’, ‘sokalmichener’, ‘sokalsneath’, ‘sqeuclidean’, ‘wminkowski’, ‘yule’.
 
+****
+
+#### visualization functions:
+##### Plot scatter plot of cell type spatial pattern
+```python
+p = plot_spatial_pattern_scatter(
+    obj=generate_sc_meta,
+    figwidth=8,
+    figheight=8,
+    dim=2,
+    x="point_x",
+    y="point_y",
+    z=None,
+    label=None,
+    palette=None,
+    colormap='rainbow',
+    size=10,
+    alpha=1,
+    )
+plt.show(p)
+```
+**Parameters**
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**dim**: _int, defalut: `2`_
+
+&emsp;Spatial dimensionality
+
+**x**: _str, defalut: `point_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `point_y`_
+
+&emsp;The name of column containing y coordinate
+
+**z**: _Optional[str], default: `None`_
+
+&emsp;The name of column containing z coordinate, only use when 'dim = 3'
+
+**label**: _Optional[str], default: `None`_
+
+&emsp;The name of column containing cell type information, if 'label=None', plot coordinates without cell type information only.
+
+**palette**: _Optional[list], default: `None`_
+
+&emsp;List of colors used, if 'palette=None', plot scatter plot with colormap colors
+
+**colormap**: str, default: `rainbow`_
+
+&emsp;The name of cmap
+
+**size**: _float, default: `10`_
+
+&emsp;The size of point
+
+**alpha**: _float, default: `1`_
+
+&emsp;The transparency of point
+
+****
+
+##### Plot density plot of cell type spatial pattern
+```python
+p = plot_spatial_pattern_density(
+    obj=generate_sc_meta,
+    figwidth=8,
+    figheight=8,
+    x="point_x",
+    y="point_y",
+    label="Cell_type",
+    show_celltype=None,
+    colormap='Blues',
+    fill=True,
+    )
+plt.show(p)
+```
+**Parameters**
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**x**: _str, defalut: `point_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `point_y`_
+
+&emsp;The name of column containing y coordinate
+
+**label**: _str, default: `Cell_type`_
+
+&emsp;The name of column containing cell type information, if 'label=None', plot coordinates without cell type information only.
+
+**show_celltype**: _Optional[str], default: `None`_
+
+&emsp;The cell type selected to plot separately, if 'show_celltype=None', plot all cell type together
+
+**colormap**: str, default: `Blues`_
+
+&emsp;The name of cmap
+
+**fill**: _bool, default: `True`_
+
+&emsp;If 'fill=True', fill in the area between bivariate contours
+
+****
+
+##### Plot scatterpie plot of spot-based data
+```python
+p = plot_spot_scatterpie(
+    obj=prop,
+    figwidth=8,
+    figheight=8,
+    x="spot_x",
+    y="spot_y",
+    palette=None,
+    colormap='rainbow',
+    res=50,
+    direction="+",
+    start=0.0,
+    size=100,
+    edgecolor="none",
+    )
+plt.show(p)
+```
+**Parameters**
+
+**obj**: _DataFrame_
+
+&emsp;DataFrame of cell type proportion per spot
+
+**figwidth**: _float, default: `8`_
+
+&emsp;Figure width
+
+**figheight**: _float, default: `8`_
+
+&emsp;Figure height
+
+**x**: _str, defalut: `spot_x`_
+
+&emsp;The name of column containing x coordinate
+
+**y**: _str, defalut: `spot_y`_
+
+&emsp;The name of column containing y coordinate
+
+**palette**: _Optional[dict], default: `None`_
+
+&emsp;Dict of color of each cell type, if 'palette == None', plot scatterpie plot with colormap colors
+
+**colormap**: str, default: `rainbow`_
+
+&emsp;The name of cmap
+
+**res**: _int, default: `50`_
+
+&emsp;Number of points around the circle
+
+**direction**: _str, default: `+`_
+
+&emsp;'+' for counter-clockwise, or '-' for clockwise
+
+**start**: _flost, default: `0.0`_
+
+&emsp;Starting position in radians
+
+**size**: _int, default: `100`_
+
+&emsp;The size of point
+
+**edgecolor**: _str, default: `none`_
+
+&emsp;The edge color of point
+
+****
+
 
 
 
