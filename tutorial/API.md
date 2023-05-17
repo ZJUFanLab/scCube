@@ -41,7 +41,9 @@ sc_adata = model.pre_process(sc_data=sc_data,
 **Parameters**
 
 `sc_data`: DataFrame of input data
+
 `sc_meta`: DataFrame of input meta
+
 `is_normalized`: Whether the input data is normalized or not. If `is_normalized=False`, the input data will be normalized by scCube first. (default: `False`)
 
 
