@@ -48,9 +48,63 @@ sc_adata = model.pre_process(sc_data=sc_data,
 
 &emsp;DataFrame of input meta
 
-**is_normalized**: _bool, default: `<font color=“#FF0000”>False</font>`_
+**is_normalized**: _bool, default: `False`_
 
-&emsp;Whether the input data is normalized or not. If `is_normalized=<font color=#FF000 >False</font>`, the input data will be normalized by scCube first.
+&emsp;Whether the input data is normalized or not. If `is_normalized=False`, the input data will be normalized by scCube first.
+
+****
+
+```python
+generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
+    sc_adata=sc_adata,
+    celltype_key='Cell_type',
+    cell_key='Cell',
+    target_num=None,
+    batch_size=512,
+    epoch_num=10000,
+    lr=0.0001,
+    hidden_size=128,
+    save_model=True,
+    save_path=save_path,
+    project_name=model_name,
+    used_device='cuda:0')
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of pre-processed data 
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell types` or `domain` in meta
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in meta
+
+**target_num**: _str_
+
+&emsp;The column name of `cell` in meta
+
+**cell_key**: _Optional[dict], default: `None`_
+
+&emsp;The column name of `cell` in meta
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in meta
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in meta
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in meta
+
+****
+
 
 
 
