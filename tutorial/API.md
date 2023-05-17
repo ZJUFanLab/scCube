@@ -40,7 +40,7 @@ sc_adata = model.pre_process(sc_data=sc_data,
 ```
 **Parameters**
 
-`sc_data`: DataFrame of input data
+**sc_data**: DataFrame of input data
 
 `sc_meta`: DataFrame of input meta
 
