@@ -55,19 +55,19 @@ sc_adata = model.pre_process(sc_data=sc_data,
 ****
 
 ```python
-generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
-    sc_adata=sc_adata,
-    celltype_key='Cell_type',
-    cell_key='Cell',
-    target_num=None,
-    batch_size=512,
-    epoch_num=10000,
-    lr=0.0001,
-    hidden_size=128,
-    save_model=True,
-    save_path=save_path,
-    project_name=model_name,
-    used_device='cuda:0')
+generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(sc_adata=sc_adata,
+                                                                       celltype_key='Cell_type',
+                                                                       cell_key='Cell',
+                                                                       target_num=None,
+                                                                       batch_size=512,
+                                                                       epoch_num=10000,
+                                                                       lr=0.0001,
+                                                                       hidden_size=128,
+                                                                       save_model=True,
+                                                                       save_path=save_path,
+                                                                       project_name=model_name,
+                                                                       used_device='cuda:0'
+                                                                       )
 ```
 **Parameters**
 
@@ -83,28 +83,64 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
 
 &emsp;The column name of `cell` in meta
 
-**target_num**: _str_
+**target_num**: _Optional[dict], default: `None`_
 
-&emsp;The column name of `cell` in meta
+&emsp;Target number of cells to generate, if `target_num=None`, generate cells by the proportion of cell types of the input data.
 
-**cell_key**: _Optional[dict], default: `None`_
+**batch_size**: _int, default: `512`_
 
-&emsp;The column name of `cell` in meta
+&emsp;Batch size of training
 
-**cell_key**: _str_
+**epoch_num**: _int, default: `3500`_
 
-&emsp;The column name of `cell` in meta
+&emsp;Epoch number of training
 
-**cell_key**: _str_
+**lr**: _float, default: `0.0001`_
 
-&emsp;The column name of `cell` in meta
+&emsp;Learning reta of training
 
-**cell_key**: _str_
+**hidden_size**: _int, default: `128`_
 
-&emsp;The column name of `cell` in meta
+&emsp;Hidden size of VAE model
+
+**save_model**: _bool, default: `True`_
+
+&emsp;Whether save trained VAE model or not
+
+**save_path**: _str_
+
+&emsp;The save path
+
+**project_name**: _str_
+
+&emsp;The name of trained VAE model
+
+**used_device**: str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda
 
 ****
 
+```python
+generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(self,
+                                                                      sc_adata: AnnData,
+                                                                      celltype_key: str,
+                                                                      cell_key: str,
+                                                                      target_num: Optional[dict] = None,
+                                                                      hidden_size: int = 128,
+                                                                      load_path: str = '',
+                                                                      used_device: str = 'cuda:0'
+                                                                      )
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of pre-processed data 
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell types` or `domain` in meta
 
 
 
