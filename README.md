@@ -56,6 +56,7 @@ Reference-based simulation:
 * [Using the trained model to simulate the mouse hypothalamus MERFISH data](tutorial/tutorial_merfish.ipynb)
 * [Using the trained model to simulate the human DLPFC 10x Visium data](tutorial/tutorial_dlpfc.ipynb)
 * [Using the trained model to simulate the mouse cortex STARmap data](tutorial/tutorial_starmap.ipynb)
+* [Using the trained model to simulate the human breast cancer ST data](tutorial/tutorial_bc.ipynb)
 
 Reference-free simulation:
 * [Using the trained model to generate simulated SRT data with diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
