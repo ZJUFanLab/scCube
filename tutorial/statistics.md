@@ -1,4 +1,4 @@
-## Statistics of datasets and traned models
+## Statistics of datasets and traIned models
 
 | Dataset name | DataType | Species | Tissue | Technology | Cell number | Gene number | Celltype number | DataSource | Trained model |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -219,6 +219,32 @@
 | Tabula_Sapiens_TS_Trachea_adata.h5ad | scRNA-seq | Human | Trachea | Microwell-seq | 1220 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Trachea_epoch10000.pth |
 | Tabula_Sapiens_TS_Uterus_adata.h5ad | scRNA-seq | Human | Uterus | Microwell-seq | 2027 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Uterus_epoch10000.pth |
 | Tabula_Sapiens_TS_Vasculature_adata.h5ad | scRNA-seq | Human | Vasculature | Microwell-seq | 4258 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Vasculature_epoch10000.pth |
+| DLPFC_151507_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4221 | 18094 | 7 | PMID:33558695 | slice151507_epoch100000.pth |
+| DLPFC_151508_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4381 | 18094 | 7 | PMID:33558695 | slice151508_epoch100000.pth |
+| DLPFC_151509_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4788 | 18094 | 7 | PMID:33558695 | slice151509_epoch100000.pth |
+| DLPFC_151510_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4595 | 18094 | 7 | PMID:33558695 | slice151510_epoch100000.pth |
+| DLPFC_151669_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3636 | 18094 | 5 | PMID:33558695 | slice151669_epoch100000.pth |
+| DLPFC_151670_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3484 | 18094 | 5 | PMID:33558695 | slice151670_epoch100000.pth |
+| DLPFC_151671_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4093 | 18094 | 5 | PMID:33558695 | slice151671_epoch100000.pth |
+| DLPFC_151672_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3888 | 18094 | 5 | PMID:33558695 | slice151672_epoch100000.pth |
+| DLPFC_151673_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3611 | 18094 | 7 | PMID:33558695 | slice151673_epoch100000.pth |
+| DLPFC_151674_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3635 | 18094 | 7 | PMID:33558695 | slice151674_epoch100000.pth |
+| DLPFC_151675_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3566 | 18094 | 7 | PMID:33558695 | slice151675_epoch100000.pth |
+| DLPFC_151676_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 3431 | 18094 | 7 | PMID:33558695 | slice151676_epoch100000.pth |
+| mouse_cortex_STARmap_1_adata.h5ad | SRT | Mouse | Cortex | STARmap | 930 | 1020 | 14 | PMID:29930089 | mouse_cortex_STARmap_1_epoch50000.pth |
+| mouse_cortex_STARmap_2_adata.h5ad | SRT | Mouse | Cortex | STARmap | 1207 | 1020 | 14 | PMID:29930089 | mouse_cortex_STARmap_2_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_0.01_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5338 | 155 | 9 | PMID:30385464 | bregma_0.01_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_0.06_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5343 | 155 | 9 | PMID:30385464 | bregma_0.06_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_0.11_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5070 | 155 | 9 | PMID:30385464 | bregma_0.11_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_0.16_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5169 | 155 | 8 | PMID:30385464 | bregma_0.16_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_0.21_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 4786 | 155 | 8 | PMID:30385464 | bregma_0.21_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_0.26_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 4831 | 155 | 8 | PMID:30385464 | bregma_0.26_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.04_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5488 | 155 | 9 | PMID:30385464 | bregma_n0.04_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.09_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5557 | 155 | 9 | PMID:30385464 | bregma_n0.09_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.14_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5926 | 155 | 9 | PMID:30385464 | bregma_n0.14_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.19_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5803 | 155 | 9 | PMID:30385464 | bregma_n0.19_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.24_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5543 | 155 | 9 | PMID:30385464 | bregma_n0.24_epoch50000.pth |
+| mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.29_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5517 | 155 | 9 | PMID:30385464 | bregma_n0.29_epoch50000.pth |
 
 
 
