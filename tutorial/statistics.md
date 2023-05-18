@@ -1,4 +1,4 @@
-## Statistics of datasets and traIned models
+## Statistics of datasets and trained models
 
 | Dataset name | DataType | Species | Tissue | Technology | Cell number | Gene number | Celltype number | DataSource | Trained model |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -160,65 +160,65 @@
 | MCA_mouse_Thymus_1_adata.h5ad | scRNA-seq | Mouse | Thymus | Microwell-seq | 4289 | 13637 | 8 | MCA | MCA_mouse_Thymus_1_epoch10000.pth |
 | MCA_mouse_Uterus_1_adata.h5ad | scRNA-seq | Mouse | Uterus | Microwell-seq | 2000 | 15905 | 11 | MCA | MCA_mouse_Uterus_1_epoch10000.pth |
 | MCA_mouse_Uterus_2_adata.h5ad | scRNA-seq | Mouse | Uterus | Microwell-seq | 1681 | 14821 | 13 | MCA | MCA_mouse_Uterus_2_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Bladder_adata.h5ad | scRNA-seq | Mouse | Bladder | Microwell-seq | 2500 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_droplet_Bladder_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Heart_and_Aorta_adata.h5ad | scRNA-seq | Mouse | Heart And Aorta | Microwell-seq | 526 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_droplet_Heart_and_Aorta_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Kidney_adata.h5ad | scRNA-seq | Mouse | Kidney | Microwell-seq | 2781 | 23341 | 8 | Tabula_Muris | Tabula_Muris_TM_droplet_Kidney_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Limb_Muscle_adata.h5ad | scRNA-seq | Mouse | Limb Muscle | Microwell-seq | 3909 | 23341 | 6 | Tabula_Muris | Tabula_Muris_TM_droplet_Limb_Muscle_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Liver_adata.h5ad | scRNA-seq | Mouse | Liver | Microwell-seq | 1845 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_droplet_Liver_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Lung_adata.h5ad | scRNA-seq | Mouse | Lung | Microwell-seq | 4797 | 23341 | 13 | Tabula_Muris | Tabula_Muris_TM_droplet_Lung_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Mammary_Gland_adata.h5ad | scRNA-seq | Mouse | Mammary Gland | Microwell-seq | 4481 | 23341 | 7 | Tabula_Muris | Tabula_Muris_TM_droplet_Mammary_Gland_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Spleen_adata.h5ad | scRNA-seq | Mouse | Spleen | Microwell-seq | 8359 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_droplet_Spleen_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Thymus_adata.h5ad | scRNA-seq | Mouse | Thymus | Microwell-seq | 1429 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_droplet_Thymus_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Tongue_adata.h5ad | scRNA-seq | Mouse | Tongue | Microwell-seq | 7538 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_droplet_Tongue_epoch10000.pth |
-| Tabula_Muris_TM_droplet_Trachea_adata.h5ad | scRNA-seq | Mouse | Trachea | Microwell-seq | 11248 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_droplet_Trachea_epoch10000.pth |
-| Tabula_Muris_TM_facs_Aorta_adata.h5ad | scRNA-seq | Mouse | Aorta | Microwell-seq | 408 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_facs_Aorta_epoch10000.pth |
-| Tabula_Muris_TM_facs_Bladder_adata.h5ad | scRNA-seq | Mouse | Bladder | Microwell-seq | 1378 | 23341 | 2 | Tabula_Muris | Tabula_Muris_TM_facs_Bladder_epoch10000.pth |
-| Tabula_Muris_TM_facs_Brain_Myeloid_adata.h5ad | scRNA-seq | Mouse | Brain Myeloid | Microwell-seq | 4455 | 23341 | 2 | Tabula_Muris | Tabula_Muris_TM_facs_Brain_Myeloid_epoch10000.pth |
-| Tabula_Muris_TM_facs_Brain_Non_Myeloid_adata.h5ad | scRNA-seq | Mouse | Brain Non Myeloid | Microwell-seq | 3401 | 23341 | 7 | Tabula_Muris | Tabula_Muris_TM_facs_Brain_Non_Myeloid_epoch10000.pth |
-| Tabula_Muris_TM_facs_Diaphragm_adata.h5ad | scRNA-seq | Mouse | Diaphragm | Microwell-seq | 870 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Diaphragm_epoch10000.pth |
-| Tabula_Muris_TM_facs_Fat_adata.h5ad | scRNA-seq | Mouse | Fat | Microwell-seq | 4865 | 23341 | 6 | Tabula_Muris | Tabula_Muris_TM_facs_Fat_epoch10000.pth |
-| Tabula_Muris_TM_facs_Heart_adata.h5ad | scRNA-seq | Mouse | Heart | Microwell-seq | 4337 | 23341 | 7 | Tabula_Muris | Tabula_Muris_TM_facs_Heart_epoch10000.pth |
-| Tabula_Muris_TM_facs_Kidney_adata.h5ad | scRNA-seq | Mouse | Kidney | Microwell-seq | 519 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Kidney_epoch10000.pth |
-| Tabula_Muris_TM_facs_Large_Intestine_adata.h5ad | scRNA-seq | Mouse | Large Intestine | Microwell-seq | 3938 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Large_Intestine_epoch10000.pth |
-| Tabula_Muris_TM_facs_Limb_Muscle_adata.h5ad | scRNA-seq | Mouse | Limb Muscle | Microwell-seq | 1090 | 23341 | 6 | Tabula_Muris | Tabula_Muris_TM_facs_Limb_Muscle_epoch10000.pth |
-| Tabula_Muris_TM_facs_Liver_adata.h5ad | scRNA-seq | Mouse | Liver | Microwell-seq | 714 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Liver_epoch10000.pth |
-| Tabula_Muris_TM_facs_Lung_adata.h5ad | scRNA-seq | Mouse | Lung | Microwell-seq | 1676 | 23341 | 11 | Tabula_Muris | Tabula_Muris_TM_facs_Lung_epoch10000.pth |
-| Tabula_Muris_TM_facs_Mammary_Gland_adata.h5ad | scRNA-seq | Mouse | Mammary Gland | Microwell-seq | 2405 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_facs_Mammary_Gland_epoch10000.pth |
-| Tabula_Muris_TM_facs_Marrow_adata.h5ad | scRNA-seq | Mouse | Marrow | Microwell-seq | 4356 | 23341 | 22 | Tabula_Muris | Tabula_Muris_TM_facs_Marrow_epoch10000.pth |
-| Tabula_Muris_TM_facs_Pancreas_adata.h5ad | scRNA-seq | Mouse | Pancreas | Microwell-seq | 1564 | 23341 | 9 | Tabula_Muris | Tabula_Muris_TM_facs_Pancreas_epoch10000.pth |
-| Tabula_Muris_TM_facs_Skin_adata.h5ad | scRNA-seq | Mouse | Skin | Microwell-seq | 2310 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Skin_epoch10000.pth |
-| Tabula_Muris_TM_facs_Spleen_adata.h5ad | scRNA-seq | Mouse | Spleen | Microwell-seq | 1697 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_facs_Spleen_epoch10000.pth |
-| Tabula_Muris_TM_facs_Thymus_adata.h5ad | scRNA-seq | Mouse | Thymus | Microwell-seq | 1349 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_facs_Thymus_epoch10000.pth |
-| Tabula_Muris_TM_facs_Tongue_adata.h5ad | scRNA-seq | Mouse | Tongue | Microwell-seq | 1416 | 23341 | 2 | Tabula_Muris | Tabula_Muris_TM_facs_Tongue_epoch10000.pth |
-| Tabula_Muris_TM_facs_Trachea_adata.h5ad | scRNA-seq | Mouse | Trachea | Microwell-seq | 1350 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_facs_Trachea_epoch10000.pth |
-| Tabula_Sapiens_TS_Bladder_adata.h5ad | scRNA-seq | Human | Bladder | Microwell-seq | 3627 | 58870 | 15 | Tabula_Sapiens | Tabula_Sapiens_TS_Bladder_epoch10000.pth |
-| Tabula_Sapiens_TS_Blood_adata.h5ad | scRNA-seq | Human | Blood | Microwell-seq | 390 | 58870 | 24 | Tabula_Sapiens | Tabula_Sapiens_TS_Blood_epoch10000.pth |
-| Tabula_Sapiens_TS_Bone_Marrow_adata.h5ad | scRNA-seq | Human | Bone Marrow | Microwell-seq | 776 | 58870 | 17 | Tabula_Sapiens | Tabula_Sapiens_TS_Bone_Marrow_epoch10000.pth |
-| Tabula_Sapiens_TS_endothelial_adata.h5ad | scRNA-seq | Human | Endothelial | Microwell-seq | 8902 | 58870 | 15 | Tabula_Sapiens | Tabula_Sapiens_TS_endothelial_epoch10000.pth |
-| Tabula_Sapiens_TS_epithelial_adata.h5ad | scRNA-seq | Human | Epithelial | Microwell-seq | 1625 | 58870 | 59 | Tabula_Sapiens | Tabula_Sapiens_TS_epithelial_epoch10000.pth |
-| Tabula_Sapiens_TS_Eye_adata.h5ad | scRNA-seq | Human | Eye | Microwell-seq | 1014 | 58870 | 32 | Tabula_Sapiens | Tabula_Sapiens_TS_Eye_epoch10000.pth |
-| Tabula_Sapiens_TS_Fat_adata.h5ad | scRNA-seq | Human | Fat | Microwell-seq | 782 | 58870 | 13 | Tabula_Sapiens | Tabula_Sapiens_TS_Fat_epoch10000.pth |
-| Tabula_Sapiens_TS_germ line_adata.h5ad | scRNA-seq | Human | Germ Line | Microwell-seq | 11 | 58870 | 1 | Tabula_Sapiens | Tabula_Sapiens_TS_germ line_epoch10000.pth |
-| Tabula_Sapiens_TS_Heart_adata.h5ad | scRNA-seq | Human | Heart | Microwell-seq | 11505 | 58870 | 6 | Tabula_Sapiens | Tabula_Sapiens_TS_Heart_epoch10000.pth |
-| Tabula_Sapiens_TS_immune_adata.h5ad | scRNA-seq | Human | Immune | Microwell-seq | 588 | 58870 | 48 | Tabula_Sapiens | Tabula_Sapiens_TS_immune_epoch10000.pth |
-| Tabula_Sapiens_TS_Kidney_adata.h5ad | scRNA-seq | Human | Kidney | Microwell-seq | 9641 | 58870 | 7 | Tabula_Sapiens | Tabula_Sapiens_TS_Kidney_epoch10000.pth |
-| Tabula_Sapiens_TS_Large_Intestine_adata.h5ad | scRNA-seq | Human | Large Intestine | Microwell-seq | 5299 | 58870 | 20 | Tabula_Sapiens | Tabula_Sapiens_TS_Large_Intestine_epoch10000.pth |
-| Tabula_Sapiens_TS_Liver_adata.h5ad | scRNA-seq | Human | Liver | Microwell-seq | 5007 | 58870 | 13 | Tabula_Sapiens | Tabula_Sapiens_TS_Liver_epoch10000.pth |
-| Tabula_Sapiens_TS_Lung_adata.h5ad | scRNA-seq | Human | Lung | Microwell-seq | 1582 | 58870 | 40 | Tabula_Sapiens | Tabula_Sapiens_TS_Lung_epoch10000.pth |
-| Tabula_Sapiens_TS_Lymph_Node_adata.h5ad | scRNA-seq | Human | Lymph Node | Microwell-seq | 1233 | 58870 | 29 | Tabula_Sapiens | Tabula_Sapiens_TS_Lymph_Node_epoch10000.pth |
-| Tabula_Sapiens_TS_Mammary_adata.h5ad | scRNA-seq | Human | Mammary | Microwell-seq | 3158 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Mammary_epoch10000.pth |
-| Tabula_Sapiens_TS_Muscle_adata.h5ad | scRNA-seq | Human | Muscle | Microwell-seq | 2384 | 58870 | 19 | Tabula_Sapiens | Tabula_Sapiens_TS_Muscle_epoch10000.pth |
-| Tabula_Sapiens_TS_Prostate_adata.h5ad | scRNA-seq | Human | Prostate | Microwell-seq | 1842 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Prostate_epoch10000.pth |
-| Tabula_Sapiens_TS_Salivary_Gland_adata.h5ad | scRNA-seq | Human | Salivary Gland | Microwell-seq | 8957 | 58870 | 23 | Tabula_Sapiens | Tabula_Sapiens_TS_Salivary_Gland_epoch10000.pth |
-| Tabula_Sapiens_TS_Skin_adata.h5ad | scRNA-seq | Human | Skin | Microwell-seq | 1374 | 58870 | 25 | Tabula_Sapiens | Tabula_Sapiens_TS_Skin_epoch10000.pth |
-| Tabula_Sapiens_TS_Small_Intestine_adata.h5ad | scRNA-seq | Human | Small Intestine | Microwell-seq | 8753 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Small_Intestine_epoch10000.pth |
-| Tabula_Sapiens_TS_Spleen_adata.h5ad | scRNA-seq | Human | Spleen | Microwell-seq | 5818 | 58870 | 24 | Tabula_Sapiens | Tabula_Sapiens_TS_Spleen_epoch10000.pth |
-| Tabula_Sapiens_TS_stromal_adata.h5ad | scRNA-seq | Human | Stromal | Microwell-seq | 998 | 58870 | 32 | Tabula_Sapiens | Tabula_Sapiens_TS_stromal_epoch10000.pth |
-| Tabula_Sapiens_TS_Thymus_adata.h5ad | scRNA-seq | Human | Thymus | Microwell-seq | 655 | 58870 | 32 | Tabula_Sapiens | Tabula_Sapiens_TS_Thymus_epoch10000.pth |
-| Tabula_Sapiens_TS_Tongue_adata.h5ad | scRNA-seq | Human | Tongue | Microwell-seq | 2003 | 58870 | 12 | Tabula_Sapiens | Tabula_Sapiens_TS_Tongue_epoch10000.pth |
-| Tabula_Sapiens_TS_Trachea_adata.h5ad | scRNA-seq | Human | Trachea | Microwell-seq | 1220 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Trachea_epoch10000.pth |
-| Tabula_Sapiens_TS_Uterus_adata.h5ad | scRNA-seq | Human | Uterus | Microwell-seq | 2027 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Uterus_epoch10000.pth |
-| Tabula_Sapiens_TS_Vasculature_adata.h5ad | scRNA-seq | Human | Vasculature | Microwell-seq | 4258 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Vasculature_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Bladder_adata.h5ad | scRNA-seq | Mouse | Bladder | 10x Genomics | 2500 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_droplet_Bladder_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Heart_and_Aorta_adata.h5ad | scRNA-seq | Mouse | Heart And Aorta | 10x Genomics | 526 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_droplet_Heart_and_Aorta_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Kidney_adata.h5ad | scRNA-seq | Mouse | Kidney | 10x Genomics | 2781 | 23341 | 8 | Tabula_Muris | Tabula_Muris_TM_droplet_Kidney_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Limb_Muscle_adata.h5ad | scRNA-seq | Mouse | Limb Muscle | 10x Genomics | 3909 | 23341 | 6 | Tabula_Muris | Tabula_Muris_TM_droplet_Limb_Muscle_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Liver_adata.h5ad | scRNA-seq | Mouse | Liver | 10x Genomics | 1845 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_droplet_Liver_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Lung_adata.h5ad | scRNA-seq | Mouse | Lung | 10x Genomics | 4797 | 23341 | 13 | Tabula_Muris | Tabula_Muris_TM_droplet_Lung_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Mammary_Gland_adata.h5ad | scRNA-seq | Mouse | Mammary Gland | 10x Genomics | 4481 | 23341 | 7 | Tabula_Muris | Tabula_Muris_TM_droplet_Mammary_Gland_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Spleen_adata.h5ad | scRNA-seq | Mouse | Spleen | 10x Genomics | 8359 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_droplet_Spleen_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Thymus_adata.h5ad | scRNA-seq | Mouse | Thymus | 10x Genomics | 1429 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_droplet_Thymus_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Tongue_adata.h5ad | scRNA-seq | Mouse | Tongue | 10x Genomics | 7538 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_droplet_Tongue_epoch10000.pth |
+| Tabula_Muris_TM_droplet_Trachea_adata.h5ad | scRNA-seq | Mouse | Trachea | 10x Genomics | 11248 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_droplet_Trachea_epoch10000.pth |
+| Tabula_Muris_TM_facs_Aorta_adata.h5ad | scRNA-seq | Mouse | Aorta | smart-seq2 | 408 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_facs_Aorta_epoch10000.pth |
+| Tabula_Muris_TM_facs_Bladder_adata.h5ad | scRNA-seq | Mouse | Bladder | smart-seq2 | 1378 | 23341 | 2 | Tabula_Muris | Tabula_Muris_TM_facs_Bladder_epoch10000.pth |
+| Tabula_Muris_TM_facs_Brain_Myeloid_adata.h5ad | scRNA-seq | Mouse | Brain Myeloid | smart-seq2 | 4455 | 23341 | 2 | Tabula_Muris | Tabula_Muris_TM_facs_Brain_Myeloid_epoch10000.pth |
+| Tabula_Muris_TM_facs_Brain_Non_Myeloid_adata.h5ad | scRNA-seq | Mouse | Brain Non Myeloid | smart-seq2 | 3401 | 23341 | 7 | Tabula_Muris | Tabula_Muris_TM_facs_Brain_Non_Myeloid_epoch10000.pth |
+| Tabula_Muris_TM_facs_Diaphragm_adata.h5ad | scRNA-seq | Mouse | Diaphragm | smart-seq2 | 870 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Diaphragm_epoch10000.pth |
+| Tabula_Muris_TM_facs_Fat_adata.h5ad | scRNA-seq | Mouse | Fat | smart-seq2 | 4865 | 23341 | 6 | Tabula_Muris | Tabula_Muris_TM_facs_Fat_epoch10000.pth |
+| Tabula_Muris_TM_facs_Heart_adata.h5ad | scRNA-seq | Mouse | Heart | smart-seq2 | 4337 | 23341 | 7 | Tabula_Muris | Tabula_Muris_TM_facs_Heart_epoch10000.pth |
+| Tabula_Muris_TM_facs_Kidney_adata.h5ad | scRNA-seq | Mouse | Kidney | smart-seq2 | 519 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Kidney_epoch10000.pth |
+| Tabula_Muris_TM_facs_Large_Intestine_adata.h5ad | scRNA-seq | Mouse | Large Intestine | smart-seq2 | 3938 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Large_Intestine_epoch10000.pth |
+| Tabula_Muris_TM_facs_Limb_Muscle_adata.h5ad | scRNA-seq | Mouse | Limb Muscle | smart-seq2 | 1090 | 23341 | 6 | Tabula_Muris | Tabula_Muris_TM_facs_Limb_Muscle_epoch10000.pth |
+| Tabula_Muris_TM_facs_Liver_adata.h5ad | scRNA-seq | Mouse | Liver | smart-seq2 | 714 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Liver_epoch10000.pth |
+| Tabula_Muris_TM_facs_Lung_adata.h5ad | scRNA-seq | Mouse | Lung | smart-seq2 | 1676 | 23341 | 11 | Tabula_Muris | Tabula_Muris_TM_facs_Lung_epoch10000.pth |
+| Tabula_Muris_TM_facs_Mammary_Gland_adata.h5ad | scRNA-seq | Mouse | Mammary Gland | smart-seq2 | 2405 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_facs_Mammary_Gland_epoch10000.pth |
+| Tabula_Muris_TM_facs_Marrow_adata.h5ad | scRNA-seq | Mouse | Marrow | smart-seq2 | 4356 | 23341 | 22 | Tabula_Muris | Tabula_Muris_TM_facs_Marrow_epoch10000.pth |
+| Tabula_Muris_TM_facs_Pancreas_adata.h5ad | scRNA-seq | Mouse | Pancreas | smart-seq2 | 1564 | 23341 | 9 | Tabula_Muris | Tabula_Muris_TM_facs_Pancreas_epoch10000.pth |
+| Tabula_Muris_TM_facs_Skin_adata.h5ad | scRNA-seq | Mouse | Skin | smart-seq2 | 2310 | 23341 | 5 | Tabula_Muris | Tabula_Muris_TM_facs_Skin_epoch10000.pth |
+| Tabula_Muris_TM_facs_Spleen_adata.h5ad | scRNA-seq | Mouse | Spleen | smart-seq2 | 1697 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_facs_Spleen_epoch10000.pth |
+| Tabula_Muris_TM_facs_Thymus_adata.h5ad | scRNA-seq | Mouse | Thymus | smart-seq2 | 1349 | 23341 | 3 | Tabula_Muris | Tabula_Muris_TM_facs_Thymus_epoch10000.pth |
+| Tabula_Muris_TM_facs_Tongue_adata.h5ad | scRNA-seq | Mouse | Tongue | smart-seq2 | 1416 | 23341 | 2 | Tabula_Muris | Tabula_Muris_TM_facs_Tongue_epoch10000.pth |
+| Tabula_Muris_TM_facs_Trachea_adata.h5ad | scRNA-seq | Mouse | Trachea | smart-seq2 | 1350 | 23341 | 4 | Tabula_Muris | Tabula_Muris_TM_facs_Trachea_epoch10000.pth |
+| Tabula_Sapiens_TS_Bladder_adata.h5ad | scRNA-seq | Human | Bladder | 10x Genomics & smart-seq2 | 3627 | 58870 | 15 | Tabula_Sapiens | Tabula_Sapiens_TS_Bladder_epoch10000.pth |
+| Tabula_Sapiens_TS_Blood_adata.h5ad | scRNA-seq | Human | Blood | 10x Genomics & smart-seq2 | 390 | 58870 | 24 | Tabula_Sapiens | Tabula_Sapiens_TS_Blood_epoch10000.pth |
+| Tabula_Sapiens_TS_Bone_Marrow_adata.h5ad | scRNA-seq | Human | Bone Marrow | 10x Genomics & smart-seq2 | 776 | 58870 | 17 | Tabula_Sapiens | Tabula_Sapiens_TS_Bone_Marrow_epoch10000.pth |
+| Tabula_Sapiens_TS_endothelial_adata.h5ad | scRNA-seq | Human | Endothelial | 10x Genomics & smart-seq2 | 8902 | 58870 | 15 | Tabula_Sapiens | Tabula_Sapiens_TS_endothelial_epoch10000.pth |
+| Tabula_Sapiens_TS_epithelial_adata.h5ad | scRNA-seq | Human | Epithelial | 10x Genomics & smart-seq2 | 1625 | 58870 | 59 | Tabula_Sapiens | Tabula_Sapiens_TS_epithelial_epoch10000.pth |
+| Tabula_Sapiens_TS_Eye_adata.h5ad | scRNA-seq | Human | Eye | 10x Genomics & smart-seq2 | 1014 | 58870 | 32 | Tabula_Sapiens | Tabula_Sapiens_TS_Eye_epoch10000.pth |
+| Tabula_Sapiens_TS_Fat_adata.h5ad | scRNA-seq | Human | Fat | 10x Genomics & smart-seq2 | 782 | 58870 | 13 | Tabula_Sapiens | Tabula_Sapiens_TS_Fat_epoch10000.pth |
+| Tabula_Sapiens_TS_germ line_adata.h5ad | scRNA-seq | Human | Germ Line | 10x Genomics & smart-seq2 | 11 | 58870 | 1 | Tabula_Sapiens | Tabula_Sapiens_TS_germ line_epoch10000.pth |
+| Tabula_Sapiens_TS_Heart_adata.h5ad | scRNA-seq | Human | Heart | 10x Genomics & smart-seq2 | 11505 | 58870 | 6 | Tabula_Sapiens | Tabula_Sapiens_TS_Heart_epoch10000.pth |
+| Tabula_Sapiens_TS_immune_adata.h5ad | scRNA-seq | Human | Immune | 10x Genomics & smart-seq2 | 588 | 58870 | 48 | Tabula_Sapiens | Tabula_Sapiens_TS_immune_epoch10000.pth |
+| Tabula_Sapiens_TS_Kidney_adata.h5ad | scRNA-seq | Human | Kidney | 10x Genomics & smart-seq2 | 9641 | 58870 | 7 | Tabula_Sapiens | Tabula_Sapiens_TS_Kidney_epoch10000.pth |
+| Tabula_Sapiens_TS_Large_Intestine_adata.h5ad | scRNA-seq | Human | Large Intestine | 10x Genomics & smart-seq2 | 5299 | 58870 | 20 | Tabula_Sapiens | Tabula_Sapiens_TS_Large_Intestine_epoch10000.pth |
+| Tabula_Sapiens_TS_Liver_adata.h5ad | scRNA-seq | Human | Liver | 10x Genomics & smart-seq2 | 5007 | 58870 | 13 | Tabula_Sapiens | Tabula_Sapiens_TS_Liver_epoch10000.pth |
+| Tabula_Sapiens_TS_Lung_adata.h5ad | scRNA-seq | Human | Lung | 10x Genomics & smart-seq2 | 1582 | 58870 | 40 | Tabula_Sapiens | Tabula_Sapiens_TS_Lung_epoch10000.pth |
+| Tabula_Sapiens_TS_Lymph_Node_adata.h5ad | scRNA-seq | Human | Lymph Node | 10x Genomics & smart-seq2 | 1233 | 58870 | 29 | Tabula_Sapiens | Tabula_Sapiens_TS_Lymph_Node_epoch10000.pth |
+| Tabula_Sapiens_TS_Mammary_adata.h5ad | scRNA-seq | Human | Mammary | 10x Genomics & smart-seq2 | 3158 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Mammary_epoch10000.pth |
+| Tabula_Sapiens_TS_Muscle_adata.h5ad | scRNA-seq | Human | Muscle | 10x Genomics & smart-seq2 | 2384 | 58870 | 19 | Tabula_Sapiens | Tabula_Sapiens_TS_Muscle_epoch10000.pth |
+| Tabula_Sapiens_TS_Prostate_adata.h5ad | scRNA-seq | Human | Prostate | 10x Genomics & smart-seq2 | 1842 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Prostate_epoch10000.pth |
+| Tabula_Sapiens_TS_Salivary_Gland_adata.h5ad | scRNA-seq | Human | Salivary Gland | 10x Genomics & smart-seq2 | 8957 | 58870 | 23 | Tabula_Sapiens | Tabula_Sapiens_TS_Salivary_Gland_epoch10000.pth |
+| Tabula_Sapiens_TS_Skin_adata.h5ad | scRNA-seq | Human | Skin | 10x Genomics & smart-seq2 | 1374 | 58870 | 25 | Tabula_Sapiens | Tabula_Sapiens_TS_Skin_epoch10000.pth |
+| Tabula_Sapiens_TS_Small_Intestine_adata.h5ad | scRNA-seq | Human | Small Intestine | 10x Genomics & smart-seq2 | 8753 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Small_Intestine_epoch10000.pth |
+| Tabula_Sapiens_TS_Spleen_adata.h5ad | scRNA-seq | Human | Spleen | 10x Genomics & smart-seq2 | 5818 | 58870 | 24 | Tabula_Sapiens | Tabula_Sapiens_TS_Spleen_epoch10000.pth |
+| Tabula_Sapiens_TS_stromal_adata.h5ad | scRNA-seq | Human | Stromal | 10x Genomics & smart-seq2 | 998 | 58870 | 32 | Tabula_Sapiens | Tabula_Sapiens_TS_stromal_epoch10000.pth |
+| Tabula_Sapiens_TS_Thymus_adata.h5ad | scRNA-seq | Human | Thymus | 10x Genomics & smart-seq2 | 655 | 58870 | 32 | Tabula_Sapiens | Tabula_Sapiens_TS_Thymus_epoch10000.pth |
+| Tabula_Sapiens_TS_Tongue_adata.h5ad | scRNA-seq | Human | Tongue | 10x Genomics & smart-seq2 | 2003 | 58870 | 12 | Tabula_Sapiens | Tabula_Sapiens_TS_Tongue_epoch10000.pth |
+| Tabula_Sapiens_TS_Trachea_adata.h5ad | scRNA-seq | Human | Trachea | 10x Genomics & smart-seq2 | 1220 | 58870 | 21 | Tabula_Sapiens | Tabula_Sapiens_TS_Trachea_epoch10000.pth |
+| Tabula_Sapiens_TS_Uterus_adata.h5ad | scRNA-seq | Human | Uterus | 10x Genomics & smart-seq2 | 2027 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Uterus_epoch10000.pth |
+| Tabula_Sapiens_TS_Vasculature_adata.h5ad | scRNA-seq | Human | Vasculature | 10x Genomics & smart-seq2 | 4258 | 58870 | 14 | Tabula_Sapiens | Tabula_Sapiens_TS_Vasculature_epoch10000.pth |
 | DLPFC_151507_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4221 | 18094 | 7 | PMID:33558695 | slice151507_epoch100000.pth |
 | DLPFC_151508_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4381 | 18094 | 7 | PMID:33558695 | slice151508_epoch100000.pth |
 | DLPFC_151509_adata.h5ad | SRT | Human | Dorsolateral Prefrontal Cortex | 10x Visium | 4788 | 18094 | 7 | PMID:33558695 | slice151509_epoch100000.pth |
@@ -245,9 +245,3 @@
 | mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.19_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5803 | 155 | 9 | PMID:30385464 | bregma_n0.19_epoch50000.pth |
 | mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.24_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5543 | 155 | 9 | PMID:30385464 | bregma_n0.24_epoch50000.pth |
 | mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.29_adata.h5ad | SRT | Mouse | Hypothalamus | MERFISH | 5517 | 155 | 9 | PMID:30385464 | bregma_n0.29_epoch50000.pth |
-
-
-
-
-
-
