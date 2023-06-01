@@ -158,18 +158,22 @@ for (i in 1:length(slice_list)) {
   real_data <- read.csv(paste0('data/DLPFC/processed/', slice_list[i], '_data.csv'), row.names = 1)
   rownames(real_meta) <- colnames(real_data)
   
+  sc_meta_generate <- real_meta
+  rownames(sc_meta_generate) <- sc_meta_generate$Cell <- colnames(sim_count_copula_tmp)
+  rownames(real_meta) <- real_meta$Cell <- colnames(real_data) <- colnames(sim_count_copula_tmp)
+  
   # normalize
   generate_data <- get_normalized_data(data = sim_count_copula_tmp, meta = sc_meta_generate)
   real_data <- get_normalized_data(data = real_data, meta = real_meta)
   
-  real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
-  sc_meta_generate$spot <- 'unassigned'
-  for (j in 1:nrow(sc_meta_generate)) {
-    sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
-  }
-  rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
-  sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
-  generate_data <- generate_data[, real_meta$spot]
+  # real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
+  # sc_meta_generate$spot <- 'unassigned'
+  # for (j in 1:nrow(sc_meta_generate)) {
+  #   sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
+  # }
+  # rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
+  # sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
+  # generate_data <- generate_data[, real_meta$spot]
   
   if(all(rownames(real_data) == rownames(generate_data)) & all(real_meta$x == sc_meta_generate$x) & all(real_meta$y == sc_meta_generate$y)){
     pcc_tmp <- cal_pcc(real_data = real_data,
@@ -319,18 +323,22 @@ for (i in 1:length(bregma_list)) {
   real_data <- read.csv(paste0('data/MERFISH/processed/Animal1_Bregma_', bregma_list[i], '_data.csv'), row.names = 1)
   rownames(real_meta) <- colnames(real_data)
   
+  sc_meta_generate <- real_meta
+  rownames(sc_meta_generate) <- sc_meta_generate$Cell <- colnames(sim_count_copula_tmp)
+  rownames(real_meta) <- real_meta$Cell <- colnames(real_data) <- colnames(sim_count_copula_tmp)
+  
   # normalize
   generate_data <- get_normalized_data(data = sim_count_copula_tmp, meta = sc_meta_generate)
   real_data <- get_normalized_data(data = real_data, meta = real_meta)
   
-  real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
-  sc_meta_generate$spot <- 'unassigned'
-  for (j in 1:nrow(sc_meta_generate)) {
-    sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
-  }
-  rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
-  sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
-  generate_data <- generate_data[, real_meta$spot]
+  # real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
+  # sc_meta_generate$spot <- 'unassigned'
+  # for (j in 1:nrow(sc_meta_generate)) {
+  #   sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
+  # }
+  # rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
+  # sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
+  # generate_data <- generate_data[, real_meta$spot]
   
   if(all(rownames(real_data) == rownames(generate_data)) & all(real_meta$x == sc_meta_generate$x) & all(real_meta$y == sc_meta_generate$y)){
     pcc_tmp <- cal_pcc(real_data = real_data,
