@@ -30,19 +30,21 @@ for (i in 1:length(slice_list)) {
   t4 <- proc.time()
   running_time[running_time$slice == slice_list[i] & running_time$type == 'generate', ]$time <- as.numeric(t4 - t3)[3]
   
-  sc_meta_generate <- data.frame(Cell = paste0('C_', 1:ncol(sim_count_copula_tmp)),
-                          Cell_type = colnames(sim_count_copula_tmp))
-  rownames(sim_count_copula_tmp) <- rownames(sc_data)
-  colnames(sim_count_copula_tmp) <- rownames(sc_meta_generate) <- sc_meta_generate$Cell
+  # sc_meta_generate <- data.frame(Cell = paste0('C_', 1:ncol(sim_count_copula_tmp)),
+  #                         Cell_type = colnames(sim_count_copula_tmp))
+  # rownames(sim_count_copula_tmp) <- rownames(sc_data)
+  # colnames(sim_count_copula_tmp) <- rownames(sc_meta_generate) <- sc_meta_generate$Cell
+  # 
+  # sc_meta_generate$x <- 0
+  # sc_meta_generate$y <- 0
+  # for (j in unique(sc_meta$Cell_type)) {
+  #   sc_meta_generate[sc_meta_generate$Cell_type == j, ]$x <- sc_meta[sc_meta$Cell_type == j, ]$x
+  #   sc_meta_generate[sc_meta_generate$Cell_type == j, ]$y <- sc_meta[sc_meta$Cell_type == j, ]$y
+  # }
+  # 
+  # save(sim_count_copula_tmp, sc_meta_generate, file = paste0('result/scDesign2/scdesign2_DLPFC_', slice_list[i], '_data.Rdata'))
   
-  sc_meta_generate$x <- 0
-  sc_meta_generate$y <- 0
-  for (j in unique(sc_meta$Cell_type)) {
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$x <- sc_meta[sc_meta$Cell_type == j, ]$x
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$y <- sc_meta[sc_meta$Cell_type == j, ]$y
-  }
-  
-  save(sim_count_copula_tmp, sc_meta_generate, file = paste0('result/scDesign2/scdesign2_DLPFC_', slice_list[i], '_data.Rdata'))
+  save(sim_count_copula_tmp, file = paste0('result/scDesign2/scdesign2_DLPFC_', slice_list[i], '_data.Rdata'))
 }
 
 write.csv(running_time, file = 'result/scDesign2/scdesign2_DLPFC_self_time.csv')
@@ -78,19 +80,21 @@ for (i in 1:length(bregma_list)) {
   t4 <- proc.time()
   running_time[running_time$slice == bregma_list[i] & running_time$type == 'generate', ]$time <- as.numeric(t4 - t3)[3]
   
-  sc_meta_generate <- data.frame(Cell = paste0('C_', 1:ncol(sim_count_copula_tmp)),
-                                 Cell_type = colnames(sim_count_copula_tmp))
-  rownames(sim_count_copula_tmp) <- rownames(sc_data)
-  colnames(sim_count_copula_tmp) <- rownames(sc_meta_generate) <- sc_meta_generate$Cell
+  # sc_meta_generate <- data.frame(Cell = paste0('C_', 1:ncol(sim_count_copula_tmp)),
+  #                                Cell_type = colnames(sim_count_copula_tmp))
+  # rownames(sim_count_copula_tmp) <- rownames(sc_data)
+  # colnames(sim_count_copula_tmp) <- rownames(sc_meta_generate) <- sc_meta_generate$Cell
+  # 
+  # sc_meta_generate$x <- 0
+  # sc_meta_generate$y <- 0
+  # for (j in unique(sc_meta$Cell_type)) {
+  #   sc_meta_generate[sc_meta_generate$Cell_type == j, ]$x <- sc_meta[sc_meta$Cell_type == j, ]$x
+  #   sc_meta_generate[sc_meta_generate$Cell_type == j, ]$y <- sc_meta[sc_meta$Cell_type == j, ]$y
+  # }
+  # 
+  # save(sim_count_copula_tmp, sc_meta_generate, file = paste0('result/scDesign2/scdesign2_MERFISH_', bregma_list[i], '_data.Rdata'))
   
-  sc_meta_generate$x <- 0
-  sc_meta_generate$y <- 0
-  for (j in unique(sc_meta$Cell_type)) {
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$x <- sc_meta[sc_meta$Cell_type == j, ]$x
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$y <- sc_meta[sc_meta$Cell_type == j, ]$y
-  }
-  
-  save(sim_count_copula_tmp, sc_meta_generate, file = paste0('result/scDesign2/scdesign2_MERFISH_', bregma_list[i], '_data.Rdata'))
+  save(sim_count_copula_tmp, file = paste0('result/scDesign2/scdesign2_MERFISH_', bregma_list[i], '_data.Rdata'))
 }
 
 write.csv(running_time, file = 'result/scDesign2/scdesign2_MERFISH_self_time.csv')
