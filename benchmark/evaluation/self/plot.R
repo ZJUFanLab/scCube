@@ -22,7 +22,13 @@ load("~/workspace/scCube/evaluate/srtsim_DLPFC_evaluate_result.Rdata")
 all_res <- na.omit(rbind(sccube_res, srtsim_res, symsim_res, scdesign2_res, splatter_res))
 all_res <- data.frame(aggregate(all_res$pearson, by=list(all_res$slice, all_res$method), mean))
 colnames(all_res) <- c('slice', 'method', 'pcc')
-all_res$method <- factor(all_res$method, levels = c('scCube', 'SRTsim', 'scDesign2', 'zinb', 'SymSim', 'splat', 'kersplat', 'simplesplat'))
+# add scDesign3 result
+# not run: scDesign3 is too slow to handle 1.7w+ genes
+scDesign3_res <- data.frame(slice = unique(all_res$slice),
+                            method = 'scDesign3',
+                            pcc = NA)
+all_res <- rbind(all_res, scDesign3_res)
+all_res$method <- factor(all_res$method, levels = c('scCube', 'SRTsim', 'scDesign3', 'zinb', 'SymSim', 'scDesign2', 'splat', 'simplesplat', 'kersplat'))
 p <- ggplot(all_res, aes(method, pcc, fill = method)) +
   geom_boxplot() +
   theme_classic()
@@ -34,7 +40,7 @@ ggsave(filename = 'figures/DLPFC_self_benckmark.pdf', p, width = 6, height = 7)
 
 
 #genes
-gene_list <- c('MGP', 'HPCAL1', 'HOPX', 'NEFH', 'PCP4', 'KRT17', 'MOBP')
+gene_list <- c('GFAP', 'HPCAL1', 'HOPX', 'NEFH', 'PCP4', 'KRT17', 'MOBP')
 
 # ground truth
 real_meta <- read.csv(paste0('data/DLPFC/processed/', '151507', '_meta.csv'), row.names = 1)
@@ -70,17 +76,10 @@ for (i in 1:length(gene_list)) {
 # scDesign2
 load(paste0('~/workspace/scCube/result/scDesign2/scdesign2_DLPFC_', '151507', '_data.Rdata'))
 rownames(sc_meta_generate) <- colnames(sim_count_copula_tmp)
+rownames(sim_count_copula_tmp) <- rownames(real_data)
 # normalize
 generate_data <- get_normalized_data(data = sim_count_copula_tmp, meta = sc_meta_generate)
 
-real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
-sc_meta_generate$spot <- 'unassigned'
-for (j in 1:nrow(sc_meta_generate)) {
-  sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
-}
-rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
-sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
-generate_data <- generate_data[, real_meta$spot]
 for (i in 1:length(gene_list)) {
   p <- plot_exp_pattern(real_data = generate_data, real_meta = generate_meta, gene = gene_list[i])
   ggsave(filename = paste0('figures/DLPFC_scDesign2_', gene_list[i], '.pdf'), p, width = 8, height = 6)
@@ -131,7 +130,17 @@ for (i in 1:length(gene_list)) {
   ggsave(filename = paste0('figures/DLPFC_symsim_', gene_list[i], '.pdf'), p, width = 8, height = 6)
 }
 
-
+#scDesign3
+load(paste0('~/workspace/scCube/result/scDesign3/scdesign3_DLPFC_', '151507', '_data.Rdata'))
+generate_data <- example_simu$new_count
+real_meta <- read.csv(paste0('data/DLPFC/processed/', '151507', '_meta.csv'), row.names = 1)
+generate_meta <- real_meta
+rownames(generate_meta) <- colnames(generate_data)
+generate_data <- get_normalized_data(data = generate_data, meta = generate_meta)
+for (i in 1:length(gene_list)) {
+  p <- plot_exp_pattern(real_data = generate_data, real_meta = generate_meta, gene = gene_list[i])
+  ggsave(filename = paste0('figures/DLPFC_scdesign3_', gene_list[i], '.pdf'), p, width = 8, height = 6)
+}
 
 
 
@@ -141,12 +150,13 @@ load("~/workspace/scCube/evaluate/scdesign2_MERFISH_evaluate_result.Rdata")
 load("~/workspace/scCube/evaluate/splatter_MERFISH_evaluate_result.Rdata")
 load("~/workspace/scCube/evaluate/symsim_MERFISH_evaluate_result.Rdata")
 load("~/workspace/scCube/evaluate/srtsim_MERFISH_evaluate_result.Rdata")
+load("/home/qjy/workspace/scCube/evaluate/scdesign3_MERFISH_evaluate_result.Rdata")
 
 # all
-all_res <- na.omit(rbind(sccube_res, srtsim_res, symsim_res, scdesign2_res, splatter_res))
+all_res <- na.omit(rbind(sccube_res, srtsim_res, symsim_res, scdesign2_res, splatter_res, scdesign3_res))
 all_res <- data.frame(aggregate(all_res$pearson, by=list(all_res$slice, all_res$method), mean))
 colnames(all_res) <- c('slice', 'method', 'pcc')
-all_res$method <- factor(all_res$method, levels = c('scCube', 'SRTsim', 'scDesign2', 'zinb', 'SymSim', 'splat', 'kersplat', 'simplesplat'))
+all_res$method <- factor(all_res$method, levels = c('scCube', 'SRTsim', 'scDesign3', 'zinb', 'SymSim', 'scDesign2', 'splat', 'simplesplat', 'kersplat'))
 p <- ggplot(all_res, aes(method, pcc, fill = method)) +
   geom_boxplot() +
   theme_classic()
@@ -158,9 +168,9 @@ ggsave(filename = 'figures/MERFISH_self_benckmark.pdf', p, width = 6, height = 7
 
 # spatial expression patterns of genes (bregma: 0.06 as example)
 
-# OD Mature: Mbp; OD Immature: Pdgfra; Inhibitory: Gad1; Excitatory: Slc17a6; Microglia: Selplg; Astrocyte: Ttyh2; Endothelial: Fn1; Pericytes: Myh11; 
+# OD Mature: Mbp; OD Immature: Pdgfra; Inhibitory: Gad1; Excitatory: Slc17a6; Microglia: Selplg; Astrocyte: Aqp4; Endothelial: Fn1; Pericytes: Myh11; 
 # Ependymal: Nnat
-gene_list <- c('Mbp', 'Pdgfra', 'Gad1', 'Slc17a6', 'Selplg', 'Ttyh2', 'Fn1', 'Myh11', 'Nnat', 'Aqp4')
+gene_list <- c('Mbp', 'Pdgfra', 'Gad1', 'Slc17a6', 'Selplg', 'Fn1', 'Myh11', 'Nnat', 'Aqp4')
 
 
 # ground truth
@@ -258,7 +268,17 @@ for (i in 1:length(gene_list)) {
   ggsave(filename = paste0('figures/MERFISH_symsim_', gene_list[i], '.pdf'), p, width = 7.5, height = 6)
 }
 
-
+#scDesign3
+load(paste0('~/workspace/scCube/result/scDesign3/scdesign3_MERFISH_', '0.06', '_data.Rdata'))
+generate_data <- example_simu$new_count
+real_meta <- read.csv(paste0('/home/qjy/workspace/scCube/data/MERFISH/processed/Animal1_Bregma_', '0.06', '_meta.csv'), row.names = 1)
+generate_meta <- real_meta
+rownames(generate_meta) <- colnames(generate_data)
+generate_data <- get_normalized_data(data = generate_data, meta = generate_meta)
+for (i in 1:length(gene_list)) {
+  p <- plot_exp_pattern(real_data = generate_data, real_meta = generate_meta, gene = gene_list[i])
+  ggsave(filename = paste0('figures/MERFISH_scdesign3_', gene_list[i], '.pdf'), p, width = 7.5, height = 6)
+}
 
 
 
