@@ -4,8 +4,8 @@ library(ggplot2)
 library(dplyr)
 library(viridis)
 ###################### DLPFC ######################
-slice_list <- c('151507', '151508', '151509', '151510', '151669', '151670', 
-                '151671', '151672', '151673', '151674', '151675', '151676')
+# slice_list <- c('151507', '151508', '151509', '151510', '151669', '151670', 
+#                 '151671', '151672', '151673', '151674', '151675', '151676')
 slice_list <- c('151507')
 running_time <- data.frame(time = NA, slice = slice_list)
 # example_sce <- readRDS((url("https://figshare.com/ndownloader/files/40582019")))
