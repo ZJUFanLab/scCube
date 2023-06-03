@@ -158,22 +158,14 @@ for (i in 1:length(slice_list)) {
   real_data <- read.csv(paste0('data/DLPFC/processed/', slice_list[i], '_data.csv'), row.names = 1)
   rownames(real_meta) <- colnames(real_data)
   
-  sc_meta_generate <- real_meta
+  rownames(sim_count_copula_tmp) <- rownames(real_data)
+  
   rownames(sc_meta_generate) <- sc_meta_generate$Cell <- colnames(sim_count_copula_tmp)
   rownames(real_meta) <- real_meta$Cell <- colnames(real_data) <- colnames(sim_count_copula_tmp)
   
   # normalize
   generate_data <- get_normalized_data(data = sim_count_copula_tmp, meta = sc_meta_generate)
   real_data <- get_normalized_data(data = real_data, meta = real_meta)
-  
-  # real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
-  # sc_meta_generate$spot <- 'unassigned'
-  # for (j in 1:nrow(sc_meta_generate)) {
-  #   sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
-  # }
-  # rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
-  # sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
-  # generate_data <- generate_data[, real_meta$spot]
   
   if(all(rownames(real_data) == rownames(generate_data)) & all(real_meta$x == sc_meta_generate$x) & all(real_meta$y == sc_meta_generate$y)){
     pcc_tmp <- cal_pcc(real_data = real_data,
@@ -223,6 +215,33 @@ for (i in 1:length(slice_list)) {
 
 save(sccube_res, file = 'evaluate/sccube_DLPFC_evaluate_result.Rdata')
 
+
+########################## scDesign3 ##########################
+# only 151507
+load(paste0('/home/qjy/workspace/scCube/result/scDesign3/scdesign3_DLPFC_', slice_list[1], '_data.Rdata'))
+generate_data <- data.frame(example_simu$new_count)
+
+real_meta <- read.csv(paste0('data/DLPFC/processed/', slice_list[1], '_meta.csv'), row.names = 1)
+real_data <- read.csv(paste0('data/DLPFC/processed/', slice_list[1], '_data.csv'), row.names = 1)
+rownames(real_meta) <- colnames(real_data)
+
+generate_meta <- real_meta
+
+# normalize
+generate_data <- get_normalized_data(data = generate_data, meta = generate_meta)
+real_data <- get_normalized_data(data = real_data, meta = real_meta)
+
+# only 7 marker genes
+real_data <- real_data[rownames(generate_data), ]
+
+if(all(rownames(real_data) == rownames(generate_data)) & all(real_meta$Cell == generate_meta$Cell)){
+  scdesign3_res <- cal_pcc(real_data = real_data,
+                           generate_data = generate_data,
+                           slice = slice_list[1],
+                           method = 'scDesign3')
+}
+
+save(scdesign3_res, file = 'evaluate/scdesign3_DLPFC_evaluate_result.Rdata')
 
 
 #############################################################
@@ -323,22 +342,11 @@ for (i in 1:length(bregma_list)) {
   real_data <- read.csv(paste0('data/MERFISH/processed/Animal1_Bregma_', bregma_list[i], '_data.csv'), row.names = 1)
   rownames(real_meta) <- colnames(real_data)
   
-  sc_meta_generate <- real_meta
-  rownames(sc_meta_generate) <- sc_meta_generate$Cell <- colnames(sim_count_copula_tmp)
-  rownames(real_meta) <- real_meta$Cell <- colnames(real_data) <- colnames(sim_count_copula_tmp)
+  rownames(sim_count_copula_tmp) <- rownames(real_data)
   
   # normalize
   generate_data <- get_normalized_data(data = sim_count_copula_tmp, meta = sc_meta_generate)
   real_data <- get_normalized_data(data = real_data, meta = real_meta)
-  
-  # real_meta$spot <- paste0('spot_', 1:nrow(real_meta))
-  # sc_meta_generate$spot <- 'unassigned'
-  # for (j in 1:nrow(sc_meta_generate)) {
-  #   sc_meta_generate[j, ]$spot <- real_meta[real_meta$x == sc_meta_generate[j, ]$x & real_meta$y == sc_meta_generate[j, ]$y, ]$spot
-  # }
-  # rownames(sc_meta_generate) <- colnames(generate_data) <- sc_meta_generate$spot
-  # sc_meta_generate <- sc_meta_generate[real_meta$spot, ]
-  # generate_data <- generate_data[, real_meta$spot]
   
   if(all(rownames(real_data) == rownames(generate_data)) & all(real_meta$x == sc_meta_generate$x) & all(real_meta$y == sc_meta_generate$y)){
     pcc_tmp <- cal_pcc(real_data = real_data,
@@ -389,6 +397,33 @@ for (i in 1:length(bregma_list)) {
 save(sccube_res, file = 'evaluate/sccube_MERFISH_evaluate_result.Rdata')
 
 
+########################## scDesign3 ##########################
+scdesign3_res <- data.frame()
+for (i in 1:length(bregma_list)) {
+  load(paste0('/home/qjy/workspace/scCube/result/scDesign3/scdesign3_MERFISH_', bregma_list[i], '_data.Rdata'))
+  generate_data <- data.frame(example_simu$new_count)
+  
+  real_meta <- read.csv(paste0('/home/qjy/workspace/scCube/data/MERFISH/processed/Animal1_Bregma_', bregma_list[i], '_meta.csv'), row.names = 1)
+  real_data <- read.csv(paste0('/home/qjy/workspace/scCube/data/MERFISH/processed/Animal1_Bregma_', bregma_list[i], '_data.csv'), row.names = 1)
+  rownames(real_meta) <- colnames(real_data)
+  
+  generate_meta <- real_meta
+  
+  # normalize
+  generate_data <- get_normalized_data(data = generate_data, meta = generate_meta)
+  real_data <- get_normalized_data(data = real_data, meta = real_meta)
+  
+  if(all(rownames(real_data) == rownames(generate_data)) & all(real_meta$Cell == generate_meta$Cell)){
+    pcc_tmp <- cal_pcc(real_data = real_data,
+                       generate_data = generate_data,
+                       slice = bregma_list[i],
+                       method = 'scDesign3')
+  }
+  
+  scdesign3_res <- rbind(scdesign3_res, pcc_tmp)
+}
+
+save(scdesign3_res, file = '/home/qjy/workspace/scCube/evaluate/scdesign3_MERFISH_evaluate_result.Rdata')
 
 
 
