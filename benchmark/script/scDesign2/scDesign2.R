@@ -14,33 +14,23 @@ for (i in 1:length(slice_list)) {
   # fit model and simulate data -----------------------------------------------------------
   set.seed(1)
   sc_data2 <- sc_data
-  colnames(sc_data2) <- sc_meta$Cell_type
+  colnames(sc_data2) <- rep('cell', ncol(sc_data2))
   t1 <- proc.time()
-  copula_result <- fit_model_scDesign2(as.matrix(sc_data2), unique(sc_meta$Cell_type), sim_method = 'copula')
+  copula_result <- fit_model_scDesign2(as.matrix(sc_data2), 'cell', sim_method = 'copula')
   t2 <- proc.time()
   running_time[running_time$slice == slice_list[i] & running_time$type == 'train', ]$time <- as.numeric(t2 - t1)[3]
   
   # generate
-  sc_meta$Cell_type <- factor(sc_meta$Cell_type, levels = unique(sc_meta$Cell_type))
   t3 <- proc.time()
   sim_count_copula_tmp <- simulate_count_scDesign2(copula_result, 
-                                                   n_cell_new = nrow(sc_meta), 
-                                                   cell_type_prop = as.numeric(table(sc_meta$Cell_type))/nrow(sc_meta), 
+                                                   n_cell_new = copula_result$cell$n_cell, 
                                                    sim_method = 'copula')
   t4 <- proc.time()
   running_time[running_time$slice == slice_list[i] & running_time$type == 'generate', ]$time <- as.numeric(t4 - t3)[3]
   
-  sc_meta_generate <- data.frame(Cell = paste0('C_', 1:ncol(sim_count_copula_tmp)),
-                          Cell_type = colnames(sim_count_copula_tmp))
-  rownames(sim_count_copula_tmp) <- rownames(sc_data)
-  colnames(sim_count_copula_tmp) <- rownames(sc_meta_generate) <- sc_meta_generate$Cell
-  
-  sc_meta_generate$x <- 0
-  sc_meta_generate$y <- 0
-  for (j in unique(sc_meta$Cell_type)) {
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$x <- sc_meta[sc_meta$Cell_type == j, ]$x
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$y <- sc_meta[sc_meta$Cell_type == j, ]$y
-  }
+  sc_meta_generate <- sc_meta
+  colnames(sim_count_copula_tmp) <- sc_meta_generate$Cell
+  rownames(sim_count_copula_tmp) <- rownames(sc_data2)
   
   save(sim_count_copula_tmp, sc_meta_generate, file = paste0('result/scDesign2/scdesign2_DLPFC_', slice_list[i], '_data.Rdata'))
 }
@@ -62,35 +52,27 @@ for (i in 1:length(bregma_list)) {
   # fit model and simulate data -----------------------------------------------------------
   set.seed(1)
   sc_data2 <- sc_data
-  colnames(sc_data2) <- sc_meta$Cell_type
+  colnames(sc_data2) <- rep('cell', ncol(sc_data2))
   t1 <- proc.time()
-  copula_result <- fit_model_scDesign2(as.matrix(sc_data2), unique(sc_meta$Cell_type), sim_method = 'copula')
+  copula_result <- fit_model_scDesign2(as.matrix(sc_data2), 'cell', sim_method = 'copula')
   t2 <- proc.time()
   running_time[running_time$slice == bregma_list[i] & running_time$type == 'train', ]$time <- as.numeric(t2 - t1)[3]
   
   # generate
-  sc_meta$Cell_type <- factor(sc_meta$Cell_type, levels = unique(sc_meta$Cell_type))
   t3 <- proc.time()
   sim_count_copula_tmp <- simulate_count_scDesign2(copula_result, 
-                                                   n_cell_new = nrow(sc_meta), 
-                                                   cell_type_prop = as.numeric(table(sc_meta$Cell_type))/nrow(sc_meta), 
+                                                   n_cell_new = copula_result$cell$n_cell, 
                                                    sim_method = 'copula')
   t4 <- proc.time()
   running_time[running_time$slice == bregma_list[i] & running_time$type == 'generate', ]$time <- as.numeric(t4 - t3)[3]
   
-  sc_meta_generate <- data.frame(Cell = paste0('C_', 1:ncol(sim_count_copula_tmp)),
-                                 Cell_type = colnames(sim_count_copula_tmp))
-  rownames(sim_count_copula_tmp) <- rownames(sc_data)
-  colnames(sim_count_copula_tmp) <- rownames(sc_meta_generate) <- sc_meta_generate$Cell
-  
-  sc_meta_generate$x <- 0
-  sc_meta_generate$y <- 0
-  for (j in unique(sc_meta$Cell_type)) {
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$x <- sc_meta[sc_meta$Cell_type == j, ]$x
-    sc_meta_generate[sc_meta_generate$Cell_type == j, ]$y <- sc_meta[sc_meta$Cell_type == j, ]$y
-  }
+  sc_meta_generate <- sc_meta
+  colnames(sim_count_copula_tmp) <- sc_meta_generate$Cell
   
   save(sim_count_copula_tmp, sc_meta_generate, file = paste0('result/scDesign2/scdesign2_MERFISH_', bregma_list[i], '_data.Rdata'))
 }
 
 write.csv(running_time, file = 'result/scDesign2/scdesign2_MERFISH_self_time.csv')
+
+
+
