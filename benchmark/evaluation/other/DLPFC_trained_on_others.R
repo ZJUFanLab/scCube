@@ -50,6 +50,11 @@ generate_data <- data.frame(simSRT1@simCounts)
 rownames(generate_meta) <- colnames(generate_data)
 generate_data <- get_normalized_data(data = generate_data, meta = generate_meta)
 
+pcc_srtsim <- cal_pcc(real_data = real_data,
+                      generate_data = generate_data,
+                      slice = '151676',
+                      method = 'SRTsim')
+
 for (i in 1:length(gene_list)) {
   p <- plot_exp_pattern(real_data = generate_data, real_meta = generate_meta, gene = gene_list[i])
   ggsave(filename = paste0('figures/DLPFC_SRTsim_', gene_list[i], '_151676.pdf'), p, width = 8, height = 6)
