@@ -226,10 +226,6 @@ class scCube:
 
         return generate_sc_data, generate_sc_meta_new, st_data, st_meta, st_index
 
-    # TODO:
-    def generate_pattern_custom(self):
-
-        return 1
 
     def generate_pattern_reference(self,
                                    sc_adata: AnnData,
