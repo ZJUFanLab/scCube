@@ -245,43 +245,50 @@
 | mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.19_adata.h5ad / bregma_n0.19_epoch50000.pth | SRT | Mouse | Hypothalamus | MERFISH | 5803 | 155 | 9 | PMID:30385464 | [Download link]() Password: test
 | mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.24_adata.h5ad / bregma_n0.24_epoch50000.pth | SRT | Mouse | Hypothalamus | MERFISH | 5543 | 155 | 9 | PMID:30385464 | [Download link]() Password: test
 | mouse_hypothalamus_MERFISH_Animal1_Bregma_n0.29_adata.h5ad / bregma_n0.29_epoch50000.pth | SRT | Mouse | Hypothalamus | MERFISH | 5517 | 155 | 9 | PMID:30385464 | [Download link]() Password: test
-| A1_adata.h5ad / A1_epoch100000.pth | SRT | Human | Breast | ST | 346 | 15045 | 6 | PMID:34650042 | [Download link]() Password: test
-| A2_adata.h5ad / A2_epoch100000.pth | SRT | Human | Breast | ST | 325 | 15526 | 6 | PMID:34650042 | [Download link]() Password: test
-| A3_adata.h5ad / A3_epoch100000.pth | SRT | Human | Breast | ST | 359 | 15517 | 6 | PMID:34650042 | [Download link]() Password: test
-| A4_adata.h5ad / A4_epoch100000.pth | SRT | Human | Breast | ST | 343 | 15583 | 6 | PMID:34650042 | [Download link]() Password: test
-| A5_adata.h5ad / A5_epoch100000.pth | SRT | Human | Breast | ST | 332 | 15638 | 6 | PMID:34650042 | [Download link]() Password: test
-| A6_adata.h5ad / A6_epoch100000.pth | SRT | Human | Breast | ST | 360 | 15645 | 6 | PMID:34650042 | [Download link]() Password: test
-| B1_adata.h5ad / B1_epoch100000.pth | SRT | Human | Breast | ST | 295 | 15109 | 6 | PMID:34650042 | [Download link]() Password: test
-| B2_adata.h5ad / B2_epoch100000.pth | SRT | Human | Breast | ST | 270 | 15290 | 6 | PMID:34650042 | [Download link]() Password: test
-| B3_adata.h5ad / B3_epoch100000.pth | SRT | Human | Breast | ST | 298 | 15215 | 6 | PMID:34650042 | [Download link]() Password: test
-| B4_adata.h5ad / B4_epoch100000.pth | SRT | Human | Breast | ST | 283 | 15289 | 6 | PMID:34650042 | [Download link]() Password: test
-| B5_adata.h5ad / B5_epoch100000.pth | SRT | Human | Breast | ST | 289 | 15273 | 6 | PMID:34650042 | [Download link]() Password: test
-| B6_adata.h5ad / B6_epoch100000.pth | SRT | Human | Breast | ST | 277 | 15387 | 6 | PMID:34650042 | [Download link]() Password: test
-| C1_adata.h5ad / C1_epoch100000.pth | SRT | Human | Breast | ST | 176 | 15557 | 7 | PMID:34650042 | [Download link]() Password: test
-| C2_adata.h5ad / C2_epoch100000.pth | SRT | Human | Breast | ST | 187 | 15706 | 7 | PMID:34650042 | [Download link]() Password: test
-| C3_adata.h5ad / C3_epoch100000.pth | SRT | Human | Breast | ST | 180 | 15821 | 7 | PMID:34650042 | [Download link]() Password: test
-| C4_adata.h5ad / C4_epoch100000.pth | SRT | Human | Breast | ST | 184 | 15842 | 7 | PMID:34650042 | [Download link]() Password: test
-| C5_adata.h5ad / C5_epoch100000.pth | SRT | Human | Breast | ST | 181 | 15721 | 7 | PMID:34650042 | [Download link]() Password: test
-| C6_adata.h5ad / C6_epoch100000.pth | SRT | Human | Breast | ST | 178 | 15772 | 7 | PMID:34650042 | [Download link]() Password: test
-| D1_adata.h5ad / D1_epoch100000.pth | SRT | Human | Breast | ST | 306 | 15661 | 6 | PMID:34650042 | [Download link]() Password: test
-| D2_adata.h5ad / D2_epoch100000.pth | SRT | Human | Breast | ST | 303 | 15396 | 6 | PMID:34650042 | [Download link]() Password: test
-| D3_adata.h5ad / D3_epoch100000.pth | SRT | Human | Breast | ST | 301 | 15529 | 6 | PMID:34650042 | [Download link]() Password: test
-| D4_adata.h5ad / D4_epoch100000.pth | SRT | Human | Breast | ST | 302 | 15503 | 6 | PMID:34650042 | [Download link]() Password: test
-| D5_adata.h5ad / D5_epoch100000.pth | SRT | Human | Breast | ST | 306 | 15666 | 6 | PMID:34650042 | [Download link]() Password: test
-| D6_adata.h5ad / D6_epoch100000.pth | SRT | Human | Breast | ST | 315 | 15409 | 6 | PMID:34650042 | [Download link]() Password: test
-| E1_adata.h5ad / E1_epoch100000.pth | SRT | Human | Breast | ST | 587 | 15701 | 5 | PMID:34650042 | [Download link]() Password: test
-| E2_adata.h5ad / E2_epoch100000.pth | SRT | Human | Breast | ST | 572 | 15167 | 5 | PMID:34650042 | [Download link]() Password: test
-| E3_adata.h5ad / E3_epoch100000.pth | SRT | Human | Breast | ST | 570 | 15097 | 5 | PMID:34650042 | [Download link]() Password: test
-| F1_adata.h5ad / F1_epoch100000.pth | SRT | Human | Breast | ST | 691 | 14861 | 4 | PMID:34650042 | [Download link]() Password: test
-| F2_adata.h5ad / F2_epoch100000.pth | SRT | Human | Breast | ST | 695 | 15041 | 4 | PMID:34650042 | [Download link]() Password: test
-| F3_adata.h5ad / F3_epoch100000.pth | SRT | Human | Breast | ST | 712 | 15067 | 4 | PMID:34650042 | [Download link]() Password: test
-| G1_adata.h5ad / G1_epoch100000.pth | SRT | Human | Breast | ST | 441 | 14992 | 6 | PMID:34650042 | [Download link]() Password: test
-| G2_adata.h5ad / G2_epoch100000.pth | SRT | Human | Breast | ST | 467 | 15258 | 6 | PMID:34650042 | [Download link]() Password: test
-| G3_adata.h5ad / G3_epoch100000.pth | SRT | Human | Breast | ST | 463 | 15035 | 6 | PMID:34650042 | [Download link]() Password: test
-| H1_adata.h5ad / H1_epoch100000.pth | SRT | Human | Breast | ST | 613 | 15029 | 5 | PMID:34650042 | [Download link]() Password: test
-| H2_adata.h5ad / H2_epoch100000.pth | SRT | Human | Breast | ST | 603 | 14907 | 5 | PMID:34650042 | [Download link]() Password: test
-| H3_adata.h5ad / H3_epoch100000.pth | SRT | Human | Breast | ST | 510 | 14873 | 5 | PMID:34650042 | [Download link]() Password: test
-
+| A1_adata.h5ad / A1_epoch100000.pth | SRT | Human | Breast cancer | ST | 346 | 15045 | 6 | PMID:34650042 | [Download link]() Password: test
+| A2_adata.h5ad / A2_epoch100000.pth | SRT | Human | Breast cancer | ST | 325 | 15526 | 6 | PMID:34650042 | [Download link]() Password: test
+| A3_adata.h5ad / A3_epoch100000.pth | SRT | Human | Breast cancer | ST | 359 | 15517 | 6 | PMID:34650042 | [Download link]() Password: test
+| A4_adata.h5ad / A4_epoch100000.pth | SRT | Human | Breast cancer | ST | 343 | 15583 | 6 | PMID:34650042 | [Download link]() Password: test
+| A5_adata.h5ad / A5_epoch100000.pth | SRT | Human | Breast cancer | ST | 332 | 15638 | 6 | PMID:34650042 | [Download link]() Password: test
+| A6_adata.h5ad / A6_epoch100000.pth | SRT | Human | Breast cancer | ST | 360 | 15645 | 6 | PMID:34650042 | [Download link]() Password: test
+| B1_adata.h5ad / B1_epoch100000.pth | SRT | Human | Breast cancer | ST | 295 | 15109 | 6 | PMID:34650042 | [Download link]() Password: test
+| B2_adata.h5ad / B2_epoch100000.pth | SRT | Human | Breast cancer | ST | 270 | 15290 | 6 | PMID:34650042 | [Download link]() Password: test
+| B3_adata.h5ad / B3_epoch100000.pth | SRT | Human | Breast cancer | ST | 298 | 15215 | 6 | PMID:34650042 | [Download link]() Password: test
+| B4_adata.h5ad / B4_epoch100000.pth | SRT | Human | Breast cancer | ST | 283 | 15289 | 6 | PMID:34650042 | [Download link]() Password: test
+| B5_adata.h5ad / B5_epoch100000.pth | SRT | Human | Breast cancer | ST | 289 | 15273 | 6 | PMID:34650042 | [Download link]() Password: test
+| B6_adata.h5ad / B6_epoch100000.pth | SRT | Human | Breast cancer | ST | 277 | 15387 | 6 | PMID:34650042 | [Download link]() Password: test
+| C1_adata.h5ad / C1_epoch100000.pth | SRT | Human | Breast cancer | ST | 176 | 15557 | 7 | PMID:34650042 | [Download link]() Password: test
+| C2_adata.h5ad / C2_epoch100000.pth | SRT | Human | Breast cancer | ST | 187 | 15706 | 7 | PMID:34650042 | [Download link]() Password: test
+| C3_adata.h5ad / C3_epoch100000.pth | SRT | Human | Breast cancer | ST | 180 | 15821 | 7 | PMID:34650042 | [Download link]() Password: test
+| C4_adata.h5ad / C4_epoch100000.pth | SRT | Human | Breast cancer | ST | 184 | 15842 | 7 | PMID:34650042 | [Download link]() Password: test
+| C5_adata.h5ad / C5_epoch100000.pth | SRT | Human | Breast cancer | ST | 181 | 15721 | 7 | PMID:34650042 | [Download link]() Password: test
+| C6_adata.h5ad / C6_epoch100000.pth | SRT | Human | Breast cancer | ST | 178 | 15772 | 7 | PMID:34650042 | [Download link]() Password: test
+| D1_adata.h5ad / D1_epoch100000.pth | SRT | Human | Breast cancer | ST | 306 | 15661 | 6 | PMID:34650042 | [Download link]() Password: test
+| D2_adata.h5ad / D2_epoch100000.pth | SRT | Human | Breast cancer | ST | 303 | 15396 | 6 | PMID:34650042 | [Download link]() Password: test
+| D3_adata.h5ad / D3_epoch100000.pth | SRT | Human | Breast cancer | ST | 301 | 15529 | 6 | PMID:34650042 | [Download link]() Password: test
+| D4_adata.h5ad / D4_epoch100000.pth | SRT | Human | Breast cancer | ST | 302 | 15503 | 6 | PMID:34650042 | [Download link]() Password: test
+| D5_adata.h5ad / D5_epoch100000.pth | SRT | Human | Breast cancer | ST | 306 | 15666 | 6 | PMID:34650042 | [Download link]() Password: test
+| D6_adata.h5ad / D6_epoch100000.pth | SRT | Human | Breast cancer | ST | 315 | 15409 | 6 | PMID:34650042 | [Download link]() Password: test
+| E1_adata.h5ad / E1_epoch100000.pth | SRT | Human | Breast cancer | ST | 587 | 15701 | 5 | PMID:34650042 | [Download link]() Password: test
+| E2_adata.h5ad / E2_epoch100000.pth | SRT | Human | Breast cancer | ST | 572 | 15167 | 5 | PMID:34650042 | [Download link]() Password: test
+| E3_adata.h5ad / E3_epoch100000.pth | SRT | Human | Breast cancer | ST | 570 | 15097 | 5 | PMID:34650042 | [Download link]() Password: test
+| F1_adata.h5ad / F1_epoch100000.pth | SRT | Human | Breast cancer | ST | 691 | 14861 | 4 | PMID:34650042 | [Download link]() Password: test
+| F2_adata.h5ad / F2_epoch100000.pth | SRT | Human | Breast cancer | ST | 695 | 15041 | 4 | PMID:34650042 | [Download link]() Password: test
+| F3_adata.h5ad / F3_epoch100000.pth | SRT | Human | Breast cancer | ST | 712 | 15067 | 4 | PMID:34650042 | [Download link]() Password: test
+| G1_adata.h5ad / G1_epoch100000.pth | SRT | Human | Breast cancer | ST | 441 | 14992 | 6 | PMID:34650042 | [Download link]() Password: test
+| G2_adata.h5ad / G2_epoch100000.pth | SRT | Human | Breast cancer | ST | 467 | 15258 | 6 | PMID:34650042 | [Download link]() Password: test
+| G3_adata.h5ad / G3_epoch100000.pth | SRT | Human | Breast cancer | ST | 463 | 15035 | 6 | PMID:34650042 | [Download link]() Password: test
+| H1_adata.h5ad / H1_epoch100000.pth | SRT | Human | Breast cancer | ST | 613 | 15029 | 5 | PMID:34650042 | [Download link]() Password: test
+| H2_adata.h5ad / H2_epoch100000.pth | SRT | Human | Breast cancer | ST | 603 | 14907 | 5 | PMID:34650042 | [Download link]() Password: test
+| H3_adata.h5ad / H3_epoch100000.pth | SRT | Human | Breast cancer | ST | 510 | 14873 | 5 | PMID:34650042 | [Download link]() Password: test
+| SCC_p2_r1.h5ad / SCC_p2_r1_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p2_r2.h5ad / SCC_p2_r2_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p2_r3.h5ad / SCC_p2_r3_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p10_r1.h5ad / SCC_p10_r1_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p10_r2.h5ad / SCC_p10_r2_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p10_r3.h5ad / SCC_p10_r3_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p4.h5ad / SCC_p4_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | 10x Visium |  |  |  | PMID:32579974 | [Download link]() Password: test
+| SCC_p6.h5ad / SCC_p6_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | 10x Visium |  |  |  | PMID:32579974 | [Download link]() Password: test
 
 
 
