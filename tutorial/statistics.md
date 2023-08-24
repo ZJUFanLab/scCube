@@ -23,3 +23,17 @@
 | HCL_human_AdultHeart1_adata.h5ad / HCL_human_AdultHeart1_epoch10000.pth | scRNA-seq | Human | Adult Heart | Microwell-seq | 1308 | 12689 | 11 | HCL | [Download link]() Password: test 
 | HCL_human_AdultHeart2_adata.h5ad / HCL_human_AdultHeart2_epoch10000.pth | scRNA-seq | Human | Adult Heart | Microwell-seq | 1471 | 13232 | 10 | HCL | [Download link]() Password: test 
 | HCL_human_AdultIleum2_adata.h5ad / HCL_human_AdultIleum2_epoch10000.pth | scRNA-seq | Human | Adult Ileum | Microwell-seq | 3367 | 20951 | 18 | HCL | [Download link]() Password: test
+| HCL_human_AdultJejunum2_adata.h5ad / HCL_human_AdultJejunum2_epoch10000.pth | scRNA-seq | Human | Adult Jejunum | Microwell-seq | 5549 | 21345 | 20 | HCL | [Download link]() Password: test
+| HCL_human_AdultKidney2_adata.h5ad / HCL_human_AdultKidney2_epoch10000.pth | scRNA-seq | Human | Adult Kidney | Microwell-seq | 9153 | 20092 | 21 | HCL | [Download link]() Password: test
+| HCL_human_AdultKidney3_adata.h5ad / HCL_human_AdultKidney3_epoch10000.pth | scRNA-seq | Human | Adult Kidney | Microwell-seq | 9531 | 21237 | 20 | HCL | [Download link]() Password: test
+| HCL_human_AdultKidney4_adata.h5ad / HCL_human_AdultKidney4_epoch10000.pth | scRNA-seq | Human | Adult Kidney | Microwell-seq | 3849 | 16920 | 22 | HCL | [Download link]() Password: test
+| HCL_human_AdultLiver1_adata.h5ad / HCL_human_AdultLiver1_epoch10000.pth | scRNA-seq | Human | Adult Liver | Microwell-seq | 1811 | 12707 | 16 | HCL | [Download link]() Password: test
+| HCL_human_AdultLiver2_adata.h5ad / HCL_human_AdultLiver2_epoch10000.pth | scRNA-seq | Human | Adult Liver | Microwell-seq | 4377 | 15689 | 17 | HCL | [Download link]() Password: test
+| HCL_human_AdultLiver4_adata.h5ad / HCL_human_AdultLiver4_epoch10000.pth | scRNA-seq | Human | Adult Liver | Microwell-seq | 4384 | 15479 | 16 | HCL | [Download link]() Password: test
+| HCL_human_AdultLung1_adata.h5ad / HCL_human_AdultLung1_epoch10000.pth | scRNA-seq | Human | Adult Lung | Microwell-seq | 8426 | 19000 | 25 | HCL | [Download link]() Password: test
+| HCL_human_AdultLung2_adata.h5ad / HCL_human_AdultLung2_epoch10000.pth | scRNA-seq | Human | Adult Lung | Microwell-seq | 6022 | 21333 | 22 | HCL | [Download link]() Password: test
+| HCL_human_AdultLung3_adata.h5ad / HCL_human_AdultLung3_epoch10000.pth | scRNA-seq | Human | Adult Lung | Microwell-seq | 9603 | 18502 | 22 | HCL | [Download link]() Password: test
+| HCL_human_AdultMuscle1_adata.h5ad / HCL_human_AdultMuscle1_epoch10000.pth | scRNA-seq | Human | Adult Muscle | Microwell-seq | 7775 | 17564 | 22 | HCL | [Download link]() Password: test
+| HCL_human_AdultOmentum1_adata.h5ad / HCL_human_AdultOmentum1_epoch10000.pth | scRNA-seq | Human | Adult Omentum | Microwell-seq | 1487 | 16600 | 8 | HCL | [Download link]() Password: test
+| HCL_human_AdultOmentum2_adata.h5ad / HCL_human_AdultOmentum2_epoch10000.pth | scRNA-seq | Human | Adult Omentum | Microwell-seq | 9971 | 18356 | 10 | HCL | [Download link]() Password: test
+| HCL_human_AdultOmentum3_adata.h5ad / HCL_human_AdultOmentum3_epoch10000.pth | scRNA-seq | Human | Adult Omentum | Microwell-seq | 1341 | 11079 | 11 | HCL | [Download link]() Password: test
