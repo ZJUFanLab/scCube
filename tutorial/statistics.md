@@ -287,8 +287,8 @@
 | SCC_p2_r1_adata.h5ad / SCC_p2_r1_epoch100000.pth | SRT | Human | Skin | ST | 666 | 16772 | 8 | PMID:32579974 | https://pan.baidu.com/s/1QEwgaq9yxsAhYbznQDyQpg?pwd=cube |
 | SCC_p2_r2_adata.h5ad / SCC_p2_r2_epoch100000.pth | SRT | Human | Skin | ST | 646 | 16962 | 9 | PMID:32579974 | https://pan.baidu.com/s/1bx71lHwP-fxg-jOsaMFOVQ?pwd=cube |
 | SCC_p2_r3_adata.h5ad / SCC_p2_r3_epoch100000.pth | SRT | Human | Skin | ST | 638 | 17506 | 8 | PMID:32579974 | https://pan.baidu.com/s/1by1T3IHPg52Phr4yuTKpfA?pwd=cube |
-| SCC_p4_adata.h5ad / SCC_p4_epoch100000.pth | SRT | Human | Skin | ST | 744 | 18866 | 10 | PMID:32579974 | https://pan.baidu.com/s/1bsBDiyNgLCNpgLQi1vRWXA?pwd=cube |
-| SCC_p6_adata.h5ad / SCC_p6_epoch100000.pth | SRT | Human | Skin | ST | 3650 | 20265 | 14 | PMID:32579974 | https://pan.baidu.com/s/13x6XVWbweWiJ2Ytf-yIbzg?pwd=cube |
+| SCC_p4_adata.h5ad / SCC_p4_epoch100000.pth | SRT | Human | Skin | 10x Visium | 744 | 18866 | 10 | PMID:32579974 | https://pan.baidu.com/s/1bsBDiyNgLCNpgLQi1vRWXA?pwd=cube |
+| SCC_p6_adata.h5ad / SCC_p6_epoch100000.pth | SRT | Human | Skin | 10x Visium | 3650 | 20265 | 14 | PMID:32579974 | https://pan.baidu.com/s/13x6XVWbweWiJ2Ytf-yIbzg?pwd=cube |
 
 
 
