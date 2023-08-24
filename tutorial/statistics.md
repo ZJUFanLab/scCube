@@ -47,3 +47,26 @@
 | HCL_human_AdultRectum1_adata.h5ad / HCL_human_AdultRectum1_epoch10000.pth | scRNA-seq | Human | Adult Rectum | Microwell-seq | 5718 | 16088 | 14 | HCL | [Download link]() Password: test
 | HCL_human_AdultSigmoidColon1_adata.h5ad / HCL_human_AdultSigmoidColon1_epoch10000.pth | scRNA-seq | Human | Adult Sigmoid Colon | Microwell-seq | 3189 | 15096 | 12 | HCL | [Download link]() Password: test
 | HCL_human_AdultSpleen1_adata.h5ad / HCL_human_AdultSpleen1_epoch10000.pth | scRNA-seq | Human | Adult Spleen | Microwell-seq | 15806 | 17582 | 16 | HCL | [Download link]() Password: test
+| HCL_human_AdultStomach1_adata.h5ad / HCL_human_AdultStomach1_epoch10000.pth | scRNA-seq | Human | Adult Stomach | Microwell-seq | 1879 | 17773 | 11 | HCL | [Download link]() Password: test
+| HCL_human_AdultStomach2_adata.h5ad / HCL_human_AdultStomach2_epoch10000.pth | scRNA-seq | Human | Adult Stomach | Microwell-seq | 4669 | 15067 | 14 | HCL | [Download link]() Password: test
+| HCL_human_AdultStomach3_adata.h5ad / HCL_human_AdultStomach3_epoch10000.pth | scRNA-seq | Human | Adult Stomach | Microwell-seq | 8005 | 17782 | 20 | HCL | [Download link]() Password: test
+| HCL_human_AdultTemporalLobe1_adata.h5ad / HCL_human_AdultTemporalLobe1_epoch10000.pth | scRNA-seq | Human | Adult Temporal Lobe | Microwell-seq | 9459 | 18789 | 13 | HCL | [Download link]() Password: test
+| HCL_human_AdultThyroid1_adata.h5ad / HCL_human_AdultThyroid1_epoch10000.pth | scRNA-seq | Human | Adult Thyroid | Microwell-seq | 6319 | 18559 | 7 | HCL | [Download link]() Password: test
+| HCL_human_AdultThyroid2_adata.h5ad / HCL_human_AdultThyroid2_epoch10000.pth | scRNA-seq | Human | Adult Thyroid | Microwell-seq | 6328 | 18514 | 14 | HCL | [Download link]() Password: test
+| HCL_human_AdultTrachea2_adata.h5ad / HCL_human_AdultTrachea2_epoch10000.pth | scRNA-seq | Human | Adult Trachea | Microwell-seq | 9949 | 19732 | 20 | HCL | [Download link]() Password: test
+| HCL_human_AdultTransverseColon2_adata.h5ad / HCL_human_AdultTransverseColon2_epoch10000.pth | scRNA-seq | Human | Adult Transverse Colon | Microwell-seq | 11229 | 18560 | 20 | HCL | [Download link]() Password: test
+| HCL_human_AdultUreter1_adata.h5ad / HCL_human_AdultUreter1_epoch10000.pth | scRNA-seq | Human | Adult Ureter | Microwell-seq | 2390 | 16008 | 8 | HCL | [Download link]() Password: test
+| HCL_human_AdultUterus1_adata.h5ad / HCL_human_AdultUterus1_epoch10000.pth | scRNA-seq | Human | Adult Uterus | Microwell-seq | 7694 | 16334 | 17 | HCL | [Download link]() Password: test
+| HCL_human_ChorionicVillus1_adata.h5ad / HCL_human_ChorionicVillus1_epoch10000.pth | scRNA-seq | Human | Chorionic Villus | Microwell-seq | 9898 | 22610 | 19 | HCL | [Download link]() Password: test
+| HCL_human_CordBlood1_adata.h5ad / HCL_human_CordBlood1_epoch10000.pth | scRNA-seq | Human | Cord Blood | Microwell-seq | 2150 | 11884 | 12 | HCL | [Download link]() Password: test
+| HCL_human_CordBlood2_adata.h5ad / HCL_human_CordBlood2_epoch10000.pth | scRNA-seq | Human | Cord Blood | Microwell-seq | 4444 | 13586 | 17 | HCL | [Download link]() Password: test
+
+
+
+
+
+
+
+
+
+
