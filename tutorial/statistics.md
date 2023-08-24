@@ -37,3 +37,13 @@
 | HCL_human_AdultOmentum1_adata.h5ad / HCL_human_AdultOmentum1_epoch10000.pth | scRNA-seq | Human | Adult Omentum | Microwell-seq | 1487 | 16600 | 8 | HCL | [Download link]() Password: test
 | HCL_human_AdultOmentum2_adata.h5ad / HCL_human_AdultOmentum2_epoch10000.pth | scRNA-seq | Human | Adult Omentum | Microwell-seq | 9971 | 18356 | 10 | HCL | [Download link]() Password: test
 | HCL_human_AdultOmentum3_adata.h5ad / HCL_human_AdultOmentum3_epoch10000.pth | scRNA-seq | Human | Adult Omentum | Microwell-seq | 1341 | 11079 | 11 | HCL | [Download link]() Password: test
+| HCL_human_AdultPancreas1_adata.h5ad / HCL_human_AdultPancreas1_epoch10000.pth | scRNA-seq | Human | Adult Pancreas | Microwell-seq | 9727 | 15601 | 12 | HCL | [Download link]() Password: test
+| HCL_human_AdultPeripheralBlood1_adata.h5ad / HCL_human_AdultPeripheralBlood1_epoch10000.pth | scRNA-seq | Human | Adult Peripheral Blood | Microwell-seq | 2719 | 9045 | 10 | HCL | [Download link]() Password: test
+| HCL_human_AdultPeripheralBlood2_adata.h5ad / HCL_human_AdultPeripheralBlood2_epoch10000.pth | scRNA-seq | Human | Adult Peripheral Blood | Microwell-seq | 5296 | 13757 | 11 | HCL | [Download link]() Password: test
+| HCL_human_AdultPeripheralBlood3_adata.h5ad / HCL_human_AdultPeripheralBlood3_epoch10000.pth | scRNA-seq | Human | Adult Peripheral Blood | Microwell-seq | 2156 | 11835 | 12 | HCL | [Download link]() Password: test
+| HCL_human_AdultPeripheralBlood4_adata.h5ad / HCL_human_AdultPeripheralBlood4_epoch10000.pth | scRNA-seq | Human | Adult Peripheral Blood | Microwell-seq | 7160 | 14462 | 20 | HCL | [Download link]() Password: test
+| HCL_human_AdultPleura1_adata.h5ad / HCL_human_AdultPleura1_epoch10000.pth | scRNA-seq | Human | Adult Pleura | Microwell-seq | 19517 | 21229 | 14 | HCL | [Download link]() Password: test
+| HCL_human_AdultProstate1_adata.h5ad / HCL_human_AdultProstate1_epoch10000.pth | scRNA-seq | Human | Adult Prostate | Microwell-seq | 1962 | 13959 | 13 | HCL | [Download link]() Password: test
+| HCL_human_AdultRectum1_adata.h5ad / HCL_human_AdultRectum1_epoch10000.pth | scRNA-seq | Human | Adult Rectum | Microwell-seq | 5718 | 16088 | 14 | HCL | [Download link]() Password: test
+| HCL_human_AdultSigmoidColon1_adata.h5ad / HCL_human_AdultSigmoidColon1_epoch10000.pth | scRNA-seq | Human | Adult Sigmoid Colon | Microwell-seq | 3189 | 15096 | 12 | HCL | [Download link]() Password: test
+| HCL_human_AdultSpleen1_adata.h5ad / HCL_human_AdultSpleen1_epoch10000.pth | scRNA-seq | Human | Adult Spleen | Microwell-seq | 15806 | 17582 | 16 | HCL | [Download link]() Password: test
