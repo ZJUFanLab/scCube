@@ -13,15 +13,15 @@
 | HCL_human_AdultBoneMarrow2_adata.h5ad / HCL_human_AdultBoneMarrow2_epoch10000.pth | scRNA-seq | Human | Adult Bone Marrow | Microwell-seq | 6443 | 19406 | 11 | HCL | [Download link]() Password: test 
 | HCL_human_AdultCerebellum1_adata.h5ad / HCL_human_AdultCerebellum1_epoch10000.pth | scRNA-seq | Human | Adult Cerebellum | Microwell-seq | 7200 | 19239 | 16 | HCL | [Download link]() Password: test 
 | HCL_human_AdultCervix1_adata.h5ad / HCL_human_AdultCervix1_epoch10000.pth | scRNA-seq | Human | Adult Cervix | Microwell-seq | 7474 | 21969 | 11 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
-| HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
+| HCL_human_AdultDuodenum1_adata.h5ad / HCL_human_AdultDuodenum1_epoch10000.pth | scRNA-seq | Human | Adult Duodenum | Microwell-seq | 4681 | 15017 | 16 | HCL | [Download link]() Password: test 
+| HCL_human_AdultEpityphlon1_adata.h5ad / HCL_human_AdultEpityphlon1_epoch10000.pth | scRNA-seq | Human | Adult Epityphlon | Microwell-seq | 4486 | 15326 | 10 | HCL | [Download link]() Password: test 
+| HCL_human_AdultEsophagus1_adata.h5ad / HCL_human_AdultEsophagus1_epoch10000.pth | scRNA-seq | Human | Adult Esophagus | Microwell-seq | 2696 | 12817 | 11 | HCL | [Download link]() Password: test 
+| HCL_human_AdultEsophagus2_adata.h5ad / HCL_human_AdultEsophagus2_epoch10000.pth | scRNA-seq | Human | Adult Esophagus | Microwell-seq | 8668 | 19078 | 22 | HCL | [Download link]() Password: test 
+| HCL_human_AdultFallopiantube1_adata.h5ad / HCL_human_AdultFallopiantube1_epoch10000.pth | scRNA-seq | Human | Adult Fallopiantube | Microwell-seq | 6556 | 18199 | 16 | HCL | [Download link]() Password: test 
+| HCL_human_AdultGallbladder1_adata.h5ad / HCL_human_AdultGallbladder1_epoch10000.pth | scRNA-seq | Human | Adult Gallbladder | Microwell-seq | 9769 | 18613 | 18 | HCL | [Download link]() Password: test 
+| HCL_human_AdultGallbladder2_adata.h5ad / HCL_human_AdultGallbladder2_epoch10000.pth | scRNA-seq | Human | Adult Gallbladder | Microwell-seq | 2143 | 14378 | 9 | HCL | [Download link]() Password: test 
+| HCL_human_AdultHeart1_adata.h5ad / HCL_human_AdultHeart1_epoch10000.pth | scRNA-seq | Human | Adult Heart | Microwell-seq | 1308 | 12689 | 11 | HCL | [Download link]() Password: test 
+| HCL_human_AdultHeart2_adata.h5ad / HCL_human_AdultHeart2_epoch10000.pth | scRNA-seq | Human | Adult Heart | Microwell-seq | 1471 | 13232 | 10 | HCL | [Download link]() Password: test 
 | HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
 | HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
 | HCL_human_AdultAdipose1_adata.h5ad / HCL_human_AdultAdipose1_epoch10000.pth | scRNA-seq | Human | Adult Adipose | Microwell-seq | 1353 | 16054 | 7 | HCL | [Download link]() Password: test 
