@@ -289,7 +289,12 @@
 | SCC_p2_r3_adata.h5ad / SCC_p2_r3_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | ST | 638 | 17506 | 8 | PMID:32579974 | https://pan.baidu.com/s/1by1T3IHPg52Phr4yuTKpfA?pwd=cube |
 | SCC_p4_adata.h5ad / SCC_p4_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | 10x Visium | 744 | 18866 | 10 | PMID:32579974 | https://pan.baidu.com/s/1bsBDiyNgLCNpgLQi1vRWXA?pwd=cube |
 | SCC_p6_adata.h5ad / SCC_p6_epoch100000.pth | SRT | Human |  cutaneous squamous cell carcinoma (cSCC) | 10x Visium | 3650 | 20265 | 14 | PMID:32579974 | https://pan.baidu.com/s/13x6XVWbweWiJ2Ytf-yIbzg?pwd=cube |
-
+| BC_CID4290.h5ad / sampleCID4290_Cell_type_epoch100000.pth | SRT | Human | breast cancer | ST | 2426 | 19237 | 4 | PMID:34493872 | https://pan.baidu.com/s/1CL8hu01IQFtXZCIK8_8LdQ?pwd=cube |
+| BC_CID4465.h5ad / sampleCID4465_Cell_type_epoch100000.pth | SRT | Human | breast cancer | ST | 1211 | 19237 | 4 | PMID:34493872 | https://pan.baidu.com/s/1zKyF8rTb9D6IHoLedC2WlQ?pwd=cube |
+| BC_CID44971.h5ad / sampleCID44971_Cell_type_epoch100000.pth | SRT | Human | breast cancer | ST | 1160 | 19237 | 7 | PMID:34493872 | https://pan.baidu.com/s/10PtSNUciAHArrTfvneTBiA?pwd=cube |
+| BC_CID4535.h5ad / sampleCID4535_Cell_type_epoch100000.pth | SRT | Human | breast cancer | ST | 1124 | 19237 | 8 | PMID:34493872 | https://pan.baidu.com/s/1MMRA5xoCBiRFgsgqwnuEGQ?pwd=cube |
+| stereoseq_zebrafish.h5ad / stereoseq_zebrafish_epoch100000.pth | SRT | Zebrafish | embryo | Stereo-seq | 4938 | 12838 | 10 | PMID:35512701 | https://pan.baidu.com/s/1VdtJVhBXsnxte_jQzC6PXA?pwd=cube |
+| Xenium.h5ad / Xenium_epoch100000.pth | SRT | Human | breast | 10x Xenium | 167780 | 313 | 20 | https://www.biorxiv.org/content/10.1101/2022.10.06.510405v2 | https://pan.baidu.com/s/1ARxrjkO0djztRgCWpylOkQ?pwd=cube |
 
 
 
