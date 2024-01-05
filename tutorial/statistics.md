@@ -294,7 +294,7 @@
 | BC_CID44971.h5ad / sampleCID44971_Cell_type_epoch100000.pth | SRT | Human | breast cancer | ST | 1160 | 19237 | 7 | PMID:34493872 | https://pan.baidu.com/s/10PtSNUciAHArrTfvneTBiA?pwd=cube |
 | BC_CID4535.h5ad / sampleCID4535_Cell_type_epoch100000.pth | SRT | Human | breast cancer | ST | 1124 | 19237 | 8 | PMID:34493872 | https://pan.baidu.com/s/1MMRA5xoCBiRFgsgqwnuEGQ?pwd=cube |
 | stereoseq_zebrafish.h5ad / stereoseq_zebrafish_epoch100000.pth | SRT | Zebrafish | embryo | Stereo-seq | 4938 | 12838 | 10 | PMID:35512701 | https://pan.baidu.com/s/1VdtJVhBXsnxte_jQzC6PXA?pwd=cube |
-| Xenium.h5ad / Xenium_epoch100000.pth | SRT | Human | breast | 10x Xenium | 167780 | 313 | 20 | https://www.biorxiv.org/content/10.1101/2022.10.06.510405v2 | https://pan.baidu.com/s/1ARxrjkO0djztRgCWpylOkQ?pwd=cube |
+| Xenium.h5ad / Xenium_epoch100000.pth | SRT | Human | breast | 10x Xenium | 167780 | 313 | 20 | PMID:38114474 | https://pan.baidu.com/s/1ARxrjkO0djztRgCWpylOkQ?pwd=cube |
 
 
 
