@@ -105,7 +105,8 @@ def plot_spatial_pattern_scatter(
             ax.set_zlabel(z)
 
         plt.title("Spatial pattern of generated data")
-        plt.legend(bbox_to_anchor=(1, 0.6), borderaxespad=0, frameon=False)
+        plt.legend(bbox_to_anchor=(1, 0.5), loc='center left',
+                   ncol=(1 if len(label_list) <= 14 else 2 if len(label_list) <= 30 else 3), frameon=False)
 
     return fig
 
@@ -287,7 +288,8 @@ def plot_spot_scatterpie(
                 ax.scatter(group.x, group.y, marker=xy, s=[s * s * size], facecolor=color, edgecolor=edgecolor)
 
     handles = [plt.scatter([], [], color=palette[i], label=i) for i in label_list]
-    ax.legend(handles=handles, bbox_to_anchor=(1, 0.6), borderaxespad=0, frameon=False)
+    ax.legend(handles=handles, bbox_to_anchor=(1, 0.5), loc='center left',
+              ncol=(1 if len(label_list) <= 14 else 2 if len(label_list) <= 30 else 3), borderaxespad=0, frameon=False)
 
     return ax
 
@@ -505,7 +507,8 @@ def plot_slice_scatter(
             axes[i].set_title('Slice ' + str(slice_id[i]))
 
     plt.tight_layout()
-    plt.legend(bbox_to_anchor=(1, 0.6), borderaxespad=0, frameon=False)
+    plt.legend(bbox_to_anchor=(1, 0.5), loc='center left',
+               ncol=(1 if len(label_list) <= 14 else 2 if len(label_list) <= 30 else 3), borderaxespad=0, frameon=False)
 
     return fig
 

@@ -8,11 +8,15 @@ import random
 from tqdm import tqdm
 from torch import nn
 from torch.optim import AdamW
-from .model import VAE
+from .model import VAE, CLASSIFIER, LINEAR_LOGSOFTMAX, MLP_G, MLP_CRITIC
 from torch.utils.data import Dataset, DataLoader
+from torch.autograd import Variable
+import torch.autograd as autograd
 from collections import Counter
 from pandas import DataFrame
 from typing import Optional
+import torch.optim as optim
+from anndata import AnnData
 import pdb
 import warnings
 
@@ -38,10 +42,25 @@ class myDataset(Dataset):  # 需要继承data.Dataset
         return self.label.shape[0]
 
 
+class labelDataset(Dataset):  # 需要继承data.Dataset
+    def __init__(self, label):
+        # 1. Initialize file path or list of file names.
+        self.label = label
+
+    def __getitem__(self, idx):
+        tmp_y_tag = self.label[idx]
+
+        return tmp_y_tag  # tag 分类
+
+    def __len__(self):
+        # You should change 0 to the total size of your dataset.
+        return self.label.shape[0]
+
+
 def train_vae(
         res_list: list,
         batch_size: int = 512,
-        epoch_num: int = 3500,
+        epoch_num: int = 5000,
         lr: float = 0.0001,
         hidden_size: int = 128,
         used_device: str = 'cuda:0'
@@ -255,6 +274,266 @@ def generate_vae(
     return generate_sc_meta, generate_sc_data
 
 
+def calc_gradient_penalty(netD, real_data, fake_data, input_sem="", used_device: str = 'cuda:0'):
+    # print real_data.size()
+    alpha = torch.rand(real_data.shape[0], 1)
+    alpha = alpha.expand(real_data.size())
+    alpha = alpha.to(used_device)
+    interpolates = alpha * real_data + ((1 - alpha) * fake_data)
+    interpolates = interpolates.to(used_device)
+    interpolates = Variable(interpolates, requires_grad=True)
+
+    disc_interpolates = netD(interpolates, Variable(input_sem))
+
+    ones = torch.ones(disc_interpolates.size())
+    ones = ones.to(used_device)
+    gradients = autograd.grad(outputs=disc_interpolates, inputs=interpolates,
+                              grad_outputs=ones,
+                              create_graph=True, retain_graph=True, only_inputs=True)[0]
+    # args.GP_Weight = 10
+    GP_Weight = 10
+    gradient_penalty = ((gradients.norm(2, dim=1) - 1) ** 2).mean() * GP_Weight
+    return gradient_penalty
+
+
+def train_cgan(
+        res_list: list,
+        batch_size: int = 512,
+        epoch_num: int = 5000,
+        lr: float = 0.0001,
+        SemSize: int = 256,
+        NoiseSize: int = 256,
+        used_device: str = 'cuda:0'):
+    """
+    Training CGAN model
+    :param res_list: the result list prepared by `prepare_generate` function
+    :param batch_size: batch size, eg:512
+    :param epoch_num: num epochs, eg:5000
+    :param lr: learning rate, eg:0.0001
+    :param SemSize: dim of embedding of class, eg:256
+    :param NoiseSize: dim of noise, eg:256
+    :param used_device: the id of used device, 'cuda:0, 1 ...' or 'cpu'
+    :return: trained CGAN model
+    """
+    dataloader = DataLoader(myDataset(single_cell=res_list[1], label=res_list[2]), batch_size=batch_size, shuffle=True)
+    netG = MLP_G(SemSize=SemSize, NoiseSize=NoiseSize, NGH=4096, FeaSize=res_list[0]).to(used_device)
+    netD = MLP_CRITIC(SemSize=SemSize, NDH=4096, FeaSize=res_list[0]).to(used_device)
+    cls_criterion = nn.NLLLoss().to(used_device)  # cross entropy loss
+    optimizerD = optim.Adam(netD.parameters(), lr=lr, betas=(0.5, 0.999))
+    optimizerG = optim.Adam(netG.parameters(), lr=lr, betas=(0.5, 0.999))
+    pretrain_cls = CLASSIFIER(res_list[0], len(set(res_list[2])), res_list[6], SemSize, dataloader, used_device,
+                              _lr=0.001, _nepoch=200)
+
+    for p in pretrain_cls.model.parameters():  # set requires_grad to False
+        p.requires_grad = False
+
+    pbar = tqdm(range(epoch_num))
+    # begain training
+    input_fea = torch.FloatTensor(batch_size, res_list[0]).to(used_device)
+    input_sem = torch.FloatTensor(batch_size, SemSize).to(used_device)
+    noise = torch.FloatTensor(batch_size, NoiseSize).to(used_device)
+    # one = torch.FloatTensor([1])
+    #
+    one = torch.tensor(1, dtype=torch.float)
+    mone = one * -1
+    one = one.to(used_device)
+    mone = mone.to(used_device)
+    input_label = torch.LongTensor(batch_size).to(used_device)
+
+    min_loss_d = 10000000000000
+    min_loss_g = 10000000000000
+    ntrain = 600
+    Critic_Iter = 5
+    Cls_Weight = 0.01
+
+    for epoch in pbar:
+        train_loss_d = []
+        train_loss_g = []
+        WD = []
+        for i in range(0, ntrain, batch_size):
+            iter_d = 0
+            for p in netD.parameters():
+                p.requires_grad = True
+            for batch_idx, data in enumerate(dataloader):
+
+                cell_feature, label = data  # dim of cell sample cell ,label should map to embedding, which dim=dim_noise
+                noise = torch.FloatTensor(len(label), NoiseSize).to(used_device)  # (64, 500)
+
+                cell_feature = torch.tensor(cell_feature, dtype=torch.float32).to(used_device)
+                netD.zero_grad()
+                input_feav = Variable(cell_feature)
+                input_sem = pretrain_cls.classifier_embed(
+                    label).to(used_device)  # get the embedding of a class. input:4 out put 1024
+                input_semv = Variable(input_sem)
+
+                if iter_d < Critic_Iter:  # 每次的样本都不一样
+                    iter_d += 1
+                    # loss of real data
+
+                    criticD_real = netD(input_feav, input_semv)
+                    criticD_real = criticD_real.mean()
+                    criticD_real.backward(mone)  # D_real is what we want to maximize, so minimize the loss (-D_real)
+                    # loss of generated data
+                    noise.normal_(0, 1)
+                    noisev = Variable(noise)
+                    fake = netG(noisev, input_semv)  # generate samples
+                    # detach(): return a new variable, do not compute gradient for it
+                    criticD_fake = netD(fake.detach(), input_semv)
+                    criticD_fake = criticD_fake.mean()
+                    criticD_fake.backward(one)
+
+                    # loss with Lipschitz constraint
+                    gradient_penalty = calc_gradient_penalty(netD, cell_feature, fake.data, input_sem,
+                                                             used_device=used_device)
+                    gradient_penalty.backward()
+
+                    Wasserstein_D = criticD_real - criticD_fake
+                    # Final Loss of Discriminator
+                    D_cost = criticD_fake - criticD_real + gradient_penalty  # 判别器希望criticD_real大，criticD_fake，gradient_penalty小
+                    optimizerD.step()
+                    train_loss_d.append(D_cost.item())
+                    WD.append(Wasserstein_D.item())
+                else:
+                    break  # 达到cfg.Critic_Iter，结束该次循环
+
+            # ********************************
+            # train Generation
+            for p in netD.parameters():  # reset requires_grad
+                p.requires_grad = False  # avoid computation
+            # GENERATOR
+            netG.zero_grad()
+            input_semv = Variable(input_sem)
+            noise.normal_(0, 1)
+            noisev = Variable(noise)
+            # pdb.set_trace()
+
+            fake = netG(noisev, input_semv)
+            criticG_fake = netD(fake, input_semv)
+            criticG_fake = criticG_fake.mean()
+            G_cost = -criticG_fake
+            # # classification loss
+            label = torch.LongTensor(label).to(used_device)
+            c_errG = cls_criterion(pretrain_cls.model(fake), Variable(label))  # 输入fake编码 与 label（指示下标）
+            errG = G_cost + Cls_Weight * c_errG  # 同时对生成器的生成质量与分类质量进行误差判定。生成器的loss由判别器衡量
+
+            train_loss_g.append(errG.item())
+            errG.backward()
+            optimizerG.step()
+
+        #     # ********************************
+        train_loss_d = np.mean(train_loss_d)
+        train_loss_g = np.mean(train_loss_g)
+        WD = np.mean(WD)
+
+        fmt = '{:.4f}'.format
+        pbar.set_description('Train Epoch: {}'.format(epoch))
+        pbar.set_postfix(loss=fmt(WD), loss_d=fmt(train_loss_d), loss_g=fmt(train_loss_g))
+
+        if epoch > 40 and (train_loss_d < min_loss_d or train_loss_g < min_loss_g):
+            if train_loss_d < min_loss_d:
+                min_loss_d = train_loss_d
+
+            if train_loss_g < min_loss_g:
+                min_loss_g = train_loss_g
+
+        #     torch.save(netG.state_dict(), g_path_save)
+        #     torch.save(netD.state_dict(), d_path_save)
+    print(f"min loss D = {min_loss_d}, min loss G = {min_loss_g}")
+
+    return pretrain_cls, netD, netG
+
+
+def load_cgan(
+        res_list: list,
+        load_path: str = '',
+        SemSize: int = 256,
+        NoiseSize: int = 256,
+        used_device: str = 'cuda:0'
+):
+    """
+    Loading trained CGAN model
+    :param res_list: the result list prepared by `prepare_generate` function
+    :param load_path: the load directory
+    :param SemSize: dim of embedding of class, eg:256
+    :param NoiseSize: dim of noise, eg:256
+    :param used_device: the id of used device, 'cuda:0, 1 ...' or 'cpu'
+    :return: trained CGAN model
+    """
+
+    netG = MLP_G(SemSize=SemSize, NoiseSize=NoiseSize, NGH=4096, FeaSize=res_list[0]).to(used_device)
+    # netD = MLP_CRITIC(SemSize=SemSize, NDH=4096, FeaSize=res_list[0]).to(used_device)
+
+    netG.load_state_dict(torch.load(load_path, map_location=used_device))
+    # netD.load_state_dict(torch.load(load_path, map_location=used_device))
+
+    return netG
+
+
+def generate_cgan(
+        netG,
+        pretrain_cls,
+        res_list: list,
+        NoiseSize: int = 256,
+        used_device: str = 'cuda:0'
+):
+    """
+    Generate single cell expression profiles
+    :param netG: trained netG model
+    :param pretrain_cls: pretain CLASSIFIER class
+    :param res_list: the result list prepared by `prepare_generate` function
+    :param NoiseSize: dim of noise, eg:256
+    :param used_device: the id of used device, 'cuda:0, 1 ...' or 'cpu'
+    :return: generated single cell expression profiles and metadata
+    """
+    cell_number_target_num = res_list[5]
+
+    generate_label_list = []
+    for key in cell_number_target_num.keys():
+        generate_label_list += [key] * cell_number_target_num[key]
+
+    label = np.array(generate_label_list)
+
+    # netG in cuda now
+    for p in netG.parameters():  # reset requires_grad
+        p.requires_grad = False  # avoid computation
+
+    dataloader = DataLoader(labelDataset(label=label), batch_size=1024, shuffle=False)
+    ratio = 1
+    netG.eval()
+    netG.to(used_device)
+
+    pretrain_cls.model.to(used_device)
+    cell_all_generate = []
+    label_all_generate = []
+
+    with torch.no_grad():
+        with tqdm(total=len(dataloader.dataset)) as pbar:
+            for batch_idx, data in enumerate(dataloader):  # 一个batch
+                label = data
+                noise = torch.FloatTensor(label.shape[0], NoiseSize).to(used_device)  # (32, 256)
+
+                input_sem = pretrain_cls.classifier_embed(label).to(used_device)
+                input_semv = Variable(input_sem)
+
+                label = label.cpu().numpy()
+                # cell_feature = torch.tensor(cell_feature, dtype=torch.float32).cuda()
+                for j in range(ratio):  # 翻倍多少
+                    noise.normal_(0, 1)  # 每次都重新随机noise
+                    noisev = Variable(noise)
+                    fake = netG(noisev, input_semv)  # 固定输入的语义
+
+                    fake = fake.cpu().data.numpy()
+                    cell_all_generate.extend(fake)
+                    label_all_generate.extend(label)
+
+                pbar.update(label.shape[0])
+
+    print("generated done!")
+    generate_sc_meta, generate_sc_data = prepare_data(cell_all_generate, label_all_generate, res_list[3], res_list[4])
+    print("data have been prepared!")
+    return generate_sc_meta, generate_sc_data
+
+
 # generate spatial pattern (single cell)
 class SPatternGenerator:
     def __init__(self):
@@ -264,6 +543,7 @@ class SPatternGenerator:
             generate_meta: DataFrame,
             set_seed: bool = False,
             seed: int = 12345,
+            celltype_key: str = 'Cell_type',
             spatial_cell_type: Optional[list] = None,
             spatial_dim: int = 2,
             spatial_size: int = 30,
@@ -272,17 +552,18 @@ class SPatternGenerator:
             ):
 
         """
-            Generate spatial pattern of cell types with single cell resolution
-            :param generate_meta: generate single cell meta from VAE
-            :param set_seed: False--random True--set seed
-            :param seed: random seed
-            :param spatial_cell_type: select cell types with spatial pattern, if None, all cell types have spatial patterns
-            :param spatial_dim: spatial pattern dim
-            :param spatial_size: spatial pattern size
-            :param delta: spatial pattern delta, large--big spatial pattern
-            :param lamda: spatial pattern lamda (0-1), large--clear pattern small--fuzzy pattern
-            :return: DataFrame of single cell meta with spatial coordinates
-            """
+        Generate spatial pattern of cell types with single cell resolution
+        :param generate_meta: generate single cell meta from VAE
+        :param set_seed: False--random True--set seed
+        :param seed: random seed
+        :param celltype_key: column name of celltype
+        :param spatial_cell_type: select cell types with spatial pattern, if None, all cell types have spatial patterns
+        :param spatial_dim: spatial pattern dim
+        :param spatial_size: spatial pattern size
+        :param delta: spatial pattern delta, large--big spatial pattern
+        :param lamda: spatial pattern lamda (0-1), large--clear pattern small--fuzzy pattern
+        :return: DataFrame of single cell meta with spatial coordinates
+        """
 
         if set_seed:
             np.random.seed(seed)
@@ -322,16 +603,16 @@ class SPatternGenerator:
             grid.columns = ['grid_x', 'grid_y', 'grid_z']
 
         grid_out = grid + 0.5
-        grid_out['Cell_type'] = "unassigned"
+        grid_out[celltype_key] = "unassigned"
 
         # get proportion of each cell type from generate_meta
-        cell_type_num_dict = dict(Counter(generate_meta['Cell_type'].values))
+        cell_type_num_dict = dict(Counter(generate_meta[celltype_key].values))
         cell_num = generate_meta.shape[0]
 
         for k, v in cell_type_num_dict.items():
             prop = v / cell_num
             dic1 = {key: value for key, value in sample_dic.items() if value < np.quantile(sample, prop)}
-            grid_out.loc[dic1.keys(), ['Cell_type']] = k
+            grid_out.loc[dic1.keys(), [celltype_key]] = k
             sample_dic = {key: value for key, value in sample_dic.items() if value >= np.quantile(sample, prop)}
             sample = np.array(np.array(list(sample_dic.values())))
             cell_num = cell_num - v
@@ -371,10 +652,10 @@ class SPatternGenerator:
         #     grid_out.loc[idx_choose, 'Cell_type'] = k
 
         # handle unassigned
-        cell_type_name = np.unique(generate_meta['Cell_type'].values)
-        replace_num = len(grid_out.loc[grid_out['Cell_type'] == 'unassigned', ['Cell_type']])
-        grid_out.loc[grid_out['Cell_type'] == 'unassigned', ['Cell_type']] = np.random.choice(cell_type_name,
-                                                                                              replace_num)
+        cell_type_name = np.unique(generate_meta[celltype_key].values)
+        replace_num = len(grid_out.loc[grid_out[celltype_key] == 'unassigned', [celltype_key]])
+        grid_out.loc[grid_out[celltype_key] == 'unassigned', [celltype_key]] = np.random.choice(cell_type_name,
+                                                                                                replace_num)
 
         if spatial_cell_type is None:
             print('generating spatial patterns of totally ' + str(len(cell_type_num_dict)) + ' cell types...')
@@ -384,14 +665,14 @@ class SPatternGenerator:
             print('generating spatial patterns of selected ' + str(len(choose_cell_type_list)) + ' cell types...')
             spa_pattern = pd.merge(grid_out, sim_point, how='inner')
             # random shuffle other cell type coordinates
-            idx = spa_pattern.loc[~spa_pattern['Cell_type'].isin(choose_cell_type_list),].index
+            idx = spa_pattern.loc[~spa_pattern[celltype_key].isin(choose_cell_type_list), ].index
             idx_cell_type = spa_pattern.loc[
-                ~spa_pattern['Cell_type'].isin(choose_cell_type_list), 'Cell_type'].values.tolist()
+                ~spa_pattern[celltype_key].isin(choose_cell_type_list), celltype_key].values.tolist()
             random.shuffle(idx_cell_type)
-            spa_pattern.loc[idx, ['Cell_type']] = idx_cell_type
+            spa_pattern.loc[idx, [celltype_key]] = idx_cell_type
 
         # correct cell type prop
-        generate_cell_type_num_dict = dict(Counter(spa_pattern['Cell_type'].values))
+        generate_cell_type_num_dict = dict(Counter(spa_pattern[celltype_key].values))
         add_dict = {}
         sub_dict = {}
         for i in list(cell_type_name):
@@ -405,14 +686,14 @@ class SPatternGenerator:
         correct_index = []
         for k, v in sub_dict.items():
             correct_index.extend(
-                np.random.choice(spa_pattern[spa_pattern['Cell_type'] == k].index.values, v, replace=False).tolist())
+                np.random.choice(spa_pattern[spa_pattern[celltype_key] == k].index.values, v, replace=False).tolist())
 
         add_ct_list = []
         for k, v in add_dict.items():
             add_ct_list.extend([k] * v)
 
         random.shuffle(add_ct_list)
-        spa_pattern.loc[correct_index, ['Cell_type']] = add_ct_list
+        spa_pattern.loc[correct_index, [celltype_key]] = add_ct_list
 
         # pdb.set_trace()
 
@@ -420,11 +701,11 @@ class SPatternGenerator:
         lamda_len = round(len(spa_pattern) * (1 - lamda))
         select_idx = np.random.choice(spa_pattern.index.values, lamda_len, replace=False)
         change_idx = np.random.choice(select_idx, len(select_idx), replace=False)
-        spa_pattern.loc[select_idx, ['Cell_type']] = np.array(spa_pattern.loc[change_idx, 'Cell_type'])
+        spa_pattern.loc[select_idx, [celltype_key]] = np.array(spa_pattern.loc[change_idx, celltype_key])
 
         # match Cell - Cell_type - coord
-        generate_meta.sort_values(by=['Cell_type'], inplace=True)
-        spa_pattern.sort_values(by=['Cell_type'], inplace=True)
+        generate_meta.sort_values(by=[celltype_key], inplace=True)
+        spa_pattern.sort_values(by=[celltype_key], inplace=True)
         generate_meta.set_index(generate_meta['Cell'], inplace=True)
         spa_pattern.set_index(generate_meta['Cell'], inplace=True)
         if int(spatial_dim) == 2:
@@ -436,8 +717,8 @@ class SPatternGenerator:
 
     def __cal_dist(self, coord):
         """
-            Calculate Euclidean distance between points
-            """
+        Calculate Euclidean distance between points
+        """
         dis = []
         for i in range(len(coord)):
             dis.append([])
@@ -469,6 +750,117 @@ class SPatternGenerator:
             zz = np.random.uniform(0, 1, cell_num)
             out = pd.DataFrame({'point_x': xx, 'point_y': yy, 'point_z': zz})
         return out
+
+
+class SPatternGeneratorSubtype:
+    def __init__(self):
+        pass
+
+    def run(self,
+            generate_meta: DataFrame,
+            set_seed: bool = False,
+            seed: int = 12345,
+            celltype_key: str = 'Cell_type',
+            select_cell_type: str = '',
+            subtype_key: str = '',
+            spatial_dim: int = 2,
+            delta: float = 25,
+            ):
+
+        """
+            Generate spatial pattern of cell types with single cell resolution
+            :param generate_meta: generate single cell meta from VAE
+            :param set_seed: False--random True--set seed
+            :param seed: random seed
+            :param celltype_key: column name of celltype
+            :param select_cell_type: select cell types to generate subtype spatial patterns
+            :param spatial_dim: spatial pattern dim
+            :param subtype_key: columns of subtype
+            :param delta: spatial pattern delta, large--big spatial pattern
+            :return: DataFrame of subtype meta with spatial coordinates
+            """
+
+        if set_seed:
+            np.random.seed(seed)
+
+        print('generating subtype spatial patterns of ' + select_cell_type, '...')
+        generate_meta_sub = generate_meta[generate_meta[celltype_key] == select_cell_type]
+        if int(spatial_dim) == 2:
+            coord = generate_meta_sub[['point_x', 'point_y']]
+        elif int(spatial_dim) == 3:
+            coord = generate_meta_sub[['point_x', 'point_y', 'point_z']]
+
+        # create distance matrix
+        distance = pd.DataFrame(np.array(self.__cal_dist(coord=np.array(coord))))
+        # Generate random variable
+        mean = np.repeat(0, distance.shape[0])
+        cov = np.exp(-(distance.values / delta) ** 2)
+        sample = np.random.multivariate_normal(mean, cov, tol=1e-6)
+        sample_dic = {}
+        for i in range(len(sample)):
+            sample_dic[i] = sample[i]
+
+        coord[subtype_key] = 'unassigned'
+        coord = coord.reset_index()
+
+        # get proportion of each cell type from generate_meta
+        cell_type_num_dict = dict(Counter(generate_meta_sub[subtype_key].values))
+        cell_num = generate_meta_sub.shape[0]
+
+        for k, v in cell_type_num_dict.items():
+            prop = v / cell_num
+            dic1 = {key: value for key, value in sample_dic.items() if value < np.quantile(sample, prop)}
+            coord.loc[dic1.keys(), [subtype_key]] = k
+            sample_dic = {key: value for key, value in sample_dic.items() if value >= np.quantile(sample, prop)}
+            sample = np.array(np.array(list(sample_dic.values())))
+            cell_num = cell_num - v
+
+        # handle unassigned
+        cell_type_name = np.unique(generate_meta_sub[subtype_key].values)
+        replace_num = len(coord.loc[coord[subtype_key] == 'unassigned', [subtype_key]])
+        coord.loc[coord[subtype_key] == 'unassigned', [subtype_key]] = np.random.choice(cell_type_name, replace_num)
+
+        # correct cell type prop
+        generate_cell_type_num_dict = dict(Counter(coord[subtype_key].values))
+        add_dict = {}
+        sub_dict = {}
+        for i in list(cell_type_name):
+            if generate_cell_type_num_dict[i] < cell_type_num_dict[i]:
+                add_dict[i] = cell_type_num_dict[i] - generate_cell_type_num_dict[i]
+            elif generate_cell_type_num_dict[i] > cell_type_num_dict[i]:
+                sub_dict[i] = generate_cell_type_num_dict[i] - cell_type_num_dict[i]
+
+        correct_index = []
+        for k, v in sub_dict.items():
+            correct_index.extend(
+                np.random.choice(coord[coord[subtype_key] == k].index.values, v, replace=False).tolist())
+
+        add_ct_list = []
+        for k, v in add_dict.items():
+            add_ct_list.extend([k] * v)
+
+        random.shuffle(add_ct_list)
+        coord.loc[correct_index, [subtype_key]] = add_ct_list
+
+        # adjust cell order
+        spa_pattern = generate_meta_sub
+        coord = coord.sort_values(subtype_key)
+        spa_pattern = spa_pattern.sort_values(subtype_key)
+        spa_pattern['point_x'] = coord['point_x'].values
+        spa_pattern['point_y'] = coord['point_y'].values
+
+        return spa_pattern
+
+    def __cal_dist(self, coord):
+        """
+            Calculate Euclidean distance between points
+            """
+        dis = []
+        for i in range(len(coord)):
+            dis.append([])
+            for j in range(len(coord)):
+                dis[i].append(math.dist(coord[i], coord[j]))
+        return dis
 
 
 def select_gene(
@@ -555,11 +947,16 @@ def generate_spot_data(
     # pdb.set_trace()
     generate_meta['spot_x'] = "unassigned"
     generate_meta['spot_y'] = "unassigned"
+
+    generate_meta_columns = list(generate_meta.columns)
+    spot_x_loc = generate_meta_columns.index('spot_x')
+    spot_y_loc = generate_meta_columns.index('spot_y')
+
     for i in range(0, generate_meta.shape[0]):
         # spot_x TODO:
-        generate_meta.iloc[i, 4] = select_min_grid(generate_meta.iloc[i, 2], grid_seq)
+        generate_meta.iloc[i, spot_x_loc] = select_min_grid(generate_meta.iloc[i, 2], grid_seq)
         # spot_y
-        generate_meta.iloc[i, 5] = select_min_grid(generate_meta.iloc[i, 3], grid_seq)
+        generate_meta.iloc[i, spot_y_loc] = select_min_grid(generate_meta.iloc[i, 3], grid_seq)
 
     # assign spot name
     generate_meta['spot'] = "unassigned"
@@ -646,7 +1043,6 @@ def generate_spot_data(
 def generate_image_data(
         generate_meta: DataFrame,
         generate_data: DataFrame,
-        spatial_dim: int,
         gene_type: str,
         min_cell: int,
         n_gene: int,
@@ -655,7 +1051,6 @@ def generate_image_data(
     Generate image-based spatial transcriptomics data
     :param generate_meta: generate single cell meta from VAE
     :param generate_data: generate single cell data from VAE
-    :param spatial_dim: spatial pattern dimensionality
     :param gene_type: targeted genes type
     :param min_cell: filter the genes expressed in fewer than `min_cell` cells
     :param n_gene: targeted genes number
@@ -665,11 +1060,9 @@ def generate_image_data(
         generate_data: ground truth of untargeted genes
     """
     print('generating image-based ST data with ' + str(n_gene) + ' targeted genes...')
-    # check spatial dim
-    assert spatial_dim in [2, 3], "the spatial pattern dim is supposed to 2 or 3 for image-based ST data!!"
     # check gene type
-    assert gene_type in ['whole', 'hvg', 'marker',
-                         'random'], "the gene type is supposed to whole, hvg, marker, or random!!"
+    assert gene_type in ['whole', 'hvg', 'marker', 'random'], \
+        "the gene type is supposed to whole, hvg, marker, or random!!"
     # check gene number
     assert n_gene <= generate_data.shape[0], "the number of selected genes is too large, please reduce and try again!!"
 
@@ -746,5 +1139,546 @@ def get_min_grid_index(
             idx = i
 
     return idx
+
+
+# generate custom spatial pattern
+# (biologically interpretable, such as a spherical tumor tissue surrounded by normal tissues)
+class SPatternGeneratorCustom:
+    def __init__(self, sc_adata: AnnData, cell_num: int = 5000, celltype_key: str = 'Cell_type', set_seed: bool = False,
+                 seed: int = 12345, spatial_size: int = 30, select_celltype: Optional[list] = None):
+        self.sc_adata = sc_adata
+        self.cell_num = cell_num
+        self.celltype_key = celltype_key
+        self.set_seed = set_seed
+        self.seed = seed
+        self.spatial_size = spatial_size
+        self.celltype_list = list(set(self.sc_adata.obs[self.celltype_key]))
+        self.select_celltype = select_celltype
+        if self.select_celltype is None:
+            self.select_celltype = self.celltype_list
+        else:
+            assert len(set(self.select_celltype) - set(self.celltype_list)) == 0, \
+                "select cell types must exist in sc_adata!"
+
+    def simulate_mixing(self, prop_list: Optional[list] = None):
+
+        print('generating unstructured mixed spatial patterns...')
+        if self.set_seed:
+            np.random.seed(self.seed)
+            random.seed(self.seed)
+
+        if prop_list is None:
+            print('no `prop_list` is provided, each cell type follows an equal proportion...')
+            prop_list = [1 / len(self.select_celltype)] * len(self.select_celltype)
+
+        else:
+            assert len(prop_list) == len(self.select_celltype), \
+                "the length of `prop_list` must be equal to the length of `select_celltype`!"
+            prop_list = [x / sum(prop_list) for x in prop_list]
+
+        celltype_num = [np.round(x * self.cell_num).astype(int) for x in prop_list]
+
+        # Generates a realisation of the Poisson point process
+        sim_point = self.__create_sim_pois(cell_num=sum(celltype_num)) * self.spatial_size
+
+        # cell type list
+        celltype_list_all = [ct for ct, num in zip(self.select_celltype, celltype_num) for _ in range(num)]
+        # random shuffle
+        random.shuffle(celltype_list_all)
+
+        sim_point[self.celltype_key] = celltype_list_all
+
+        return sim_point
+
+    def simulate_cluster(self,
+                         shape_list: list = ['Circle', 'Oval'],
+                         cluster_celltype_list: list = [],
+                         cluster_purity_list: list = [],
+                         infiltration_celltype_list: list = [[]],
+                         infiltration_prop_list: list = [[]],
+                         background_celltype: list = [],
+                         background_prop: Optional[list] = None,
+                         center_x_list: list = [20, 10],
+                         center_y_list: list = [20, 10],
+                         a_list: list = [15, 20],
+                         b_list: list = [10, 15],
+                         theta_list: list = [np.pi / 4, np.pi / 4],
+                         scale_value_list: list = [4.8, 4.8],
+                         twist_value_list: list = [0.5, 0.5]):
+
+        print('generating structured cluster spatial patterns...')
+        if self.set_seed:
+            np.random.seed(self.seed)
+            random.seed(self.seed)
+
+        shapes = ['Circle', 'Oval', 'Irregular']
+        assert len(set(shape_list) - set(shapes)) == 0, \
+            "the shape in `shape_list` must be `Circle`, `Oval`, or `Irregular`!"
+
+        assert len(set(cluster_celltype_list) - set(self.select_celltype)) == 0, \
+            "the cluster cell type in `cluster_celltype_list` must exist in `select_celltype`!"
+
+        infiltration_list_set = set()
+        for row in infiltration_celltype_list:
+            infiltration_list_set.update(row)
+        assert len(infiltration_list_set - set(self.select_celltype)) == 0, \
+            "the infiltrated cell type in `infiltration_celltype_list` must exist in `select_celltype`!"
+
+        assert len(set(background_celltype) - set(self.select_celltype)) == 0, \
+            "`background_celltype` must exist in `select_celltype`!"
+
+        # Generates a realisation of the Poisson point process
+        sim_point = self.__create_sim_pois(cell_num=self.cell_num) * self.spatial_size
+        sim_point[self.celltype_key] = 'unassigned'
+
+        var_len_list = [len(shape_list), len(cluster_celltype_list), len(cluster_purity_list),
+                        len(infiltration_celltype_list), len(infiltration_prop_list), len(center_x_list),
+                        len(center_y_list), len(a_list), len(b_list), len(theta_list),
+                        len(scale_value_list), len(twist_value_list)]
+        assert len(set(var_len_list)) == 1, \
+            "`the length of `shape_list`, `cluster_celltype_list`, `cluster_purity_list`, " \
+            "`infiltration_celltype_list`, `infiltration_prop_list`, `center_x_list`, `center_y_list`,  " \
+            "`a_list`, `b_list`, `theta_list`, `scale_value_list`, and `twist_value_list` must be equal!"
+
+        for n in range(len(shape_list)):
+            shape = shape_list[n]
+            cluster_celltype = cluster_celltype_list[n]
+            cluster_purity = cluster_purity_list[n]
+            infiltration_prop = infiltration_prop_list[n]
+            infiltration_celltype = infiltration_celltype_list[n]
+            center_x = center_x_list[n]
+            center_y = center_y_list[n]
+            a = a_list[n]
+            b = b_list[n]
+            theta = theta_list[n]
+            scale_value = scale_value_list[n]
+            twist_value = twist_value_list[n]
+            idx = []
+
+            # Cluster
+            for i in range(sim_point.shape[0]):
+                x = sim_point.loc[i, 'point_x']
+                y = sim_point.loc[i, 'point_y']
+                x = x - center_x
+                y = y - center_y
+
+                if shape == 'Circle':
+                    assert a == b, 'the value of `a` and `b` must be same when `shape == Circle`!'
+                    # 使用椭圆方程进行判断
+                    value = (x ** 2) / (a ** 2) + (y ** 2) / (b ** 2)
+                    if value < 1:
+                        sim_point.loc[i, self.celltype_key] = cluster_celltype
+                        idx.append(i)
+
+                elif shape == 'Oval':
+                    # theta = np.pi / theta
+                    # 旋转点坐标
+                    x_rotated = x * np.cos(theta) + y * np.sin(theta)
+                    y_rotated = -x * np.sin(theta) + y * np.cos(theta)
+                    # 使用椭圆方程进行判断
+                    value = (x_rotated ** 2) / (a ** 2) + (y_rotated ** 2) / (b ** 2)
+                    if value < 1:
+                        sim_point.loc[i, self.celltype_key] = cluster_celltype
+                        idx.append(i)
+
+                elif shape == 'Irregular':
+                    x_rotated = x * np.cos(theta) + y * np.sin(theta)
+                    y_rotated = -x * np.sin(theta) + y * np.cos(theta)
+                    # t = np.arctan2(x, y)
+                    # r = np.sqrt(x ** 2 + y ** 2) / scale_value
+                    # equation = (r <= 16 * np.sin(t) ** 3 * twist_value) and (r >= 13 * np.cos(t))
+                    # if equation:
+                    #     sim_point.loc[i, self.celltype_key] = cluster_celltype
+                    t = np.arctan2(x_rotated, y_rotated)
+                    r = np.sqrt(x_rotated ** 2 + y_rotated ** 2) / scale_value
+                    # equation = (r <= 16 * np.sin(t) ** 3 * twist_value) and (r >= 13 * np.cos(t))
+                    equation = (r <= 16 * np.sin(t) ** 3 * twist_value) and (r >= (13 * np.cos(t) - 5 * np.cos(2 * t) -
+                                                                                   2 * np.cos(3 * t) - np.cos(4 * t)))
+                    if equation:
+                        sim_point.loc[i, self.celltype_key] = cluster_celltype
+                        idx.append(i)
+
+            # Infiltration
+            if cluster_purity is None:
+                cluster_purity = 1
+            else:
+                assert 0 <= cluster_purity <= 1, '`cluster_purity` must in [0, 1]!'
+
+            # avoid duplication in Infiltration
+            sim_point_rep = sim_point.loc[idx].copy()
+            cluster_num_all = sim_point_rep[sim_point_rep[self.celltype_key] == cluster_celltype].shape[0]
+            cluster_num_inner = np.round(cluster_num_all * cluster_purity).astype(int)
+            cluster_num_outer = cluster_num_all - cluster_num_inner
+            if infiltration_prop is None:
+                print('no `infiltration_prop` is provided, each infiltrated cell type follows an equal proportion...')
+                infiltration_prop = [1 / len(infiltration_celltype)] * len(infiltration_celltype)
+            else:
+                assert len(infiltration_prop) == len(infiltration_celltype), \
+                    "the length of `infiltration_prop` must be equal to the length of `infiltration_celltype`!"
+                infiltration_prop = [x / sum(infiltration_prop) for x in infiltration_prop]
+
+            infiltration_num_list = [np.round(x * cluster_num_outer).astype(int) for x in infiltration_prop]
+            for i in range(len(infiltration_num_list)):
+                tmp_idx = np.random.choice(sim_point_rep[sim_point_rep[self.celltype_key] == cluster_celltype].index.values,
+                                           infiltration_num_list[i], replace=False).tolist()
+                sim_point.loc[tmp_idx, self.celltype_key] = infiltration_celltype[i]
+
+        # background
+        if background_prop is None:
+            print('no `background_prop` is provided, each background cell type follows an equal proportion...')
+            background_prop = [1 / len(background_celltype)] * len(background_celltype)
+        else:
+            assert len(background_prop) == len(background_celltype), \
+                "the length of `background_prop` must be equal to the length of `background_celltype`!"
+            background_prop = [x / sum(background_prop) for x in background_prop]
+
+        background_num_all = sim_point[sim_point[self.celltype_key] == 'unassigned'].shape[0]
+        background_num_list = [np.round(x * background_num_all).astype(int) for x in background_prop]
+
+        for i in range(len(background_num_list)):
+            if i < len(background_num_list) - 1:
+                tmp_idx = np.random.choice(sim_point[sim_point[self.celltype_key] == 'unassigned'].index.values,
+                                           background_num_list[i], replace=False).tolist()
+                sim_point.loc[tmp_idx, self.celltype_key] = background_celltype[i]
+            else:
+                sim_point.loc[sim_point[self.celltype_key] == 'unassigned', self.celltype_key] = background_celltype[i]
+
+        return sim_point
+
+    def simulate_ring(self,
+                      shape_list: list = ['Circle', 'Oval'],
+                      ring_celltype_list: list = [[]],
+                      ring_purity_list: list = [],
+                      infiltration_celltype_list: list = [[]],
+                      infiltration_prop_list: list = [[]],
+                      background_celltype: list = [],
+                      background_prop: Optional[list] = None,
+                      center_x_list: list = [20, 10],
+                      center_y_list: list = [20, 10],
+                      ring_width_list: list = [[2, 3], [2]],
+                      a_list: list = [15, 20],
+                      b_list: list = [10, 15],
+                      theta_list: list = [np.pi / 4, np.pi / 4], ):
+
+        print('generating structured immune ring spatial patterns...')
+        if self.set_seed:
+            np.random.seed(self.seed)
+            random.seed(self.seed)
+
+        shapes = ['Circle', 'Oval']
+        assert len(set(shape_list) - set(shapes)) == 0, \
+            "the shape in `shape_list` must be `Circle`, or `Oval`!"
+
+        ring_list_set = set()
+        for row in ring_celltype_list:
+            ring_list_set.update(row)
+        assert len(set(ring_list_set) - set(self.select_celltype)) == 0, \
+            "the ring cell type in `ring_celltype_list` must exist in `select_celltype`!"
+
+        infiltration_list_set = set()
+        for row in infiltration_celltype_list:
+            infiltration_list_set.update(row)
+        assert len(infiltration_list_set - set(self.select_celltype)) == 0, \
+            "the infiltrated cell type in `infiltration_celltype_list` must exist in `select_celltype`!"
+
+        assert len(set(background_celltype) - set(self.select_celltype)) == 0, \
+            "`background_celltype` must exist in `select_celltype`!"
+
+        # Generates a realisation of the Poisson point process
+        sim_point = self.__create_sim_pois(cell_num=self.cell_num) * self.spatial_size
+        sim_point[self.celltype_key] = 'unassigned'
+
+        var_len_list = [len(shape_list), len(ring_celltype_list), len(ring_purity_list),
+                        len(infiltration_celltype_list), len(infiltration_prop_list), len(center_x_list),
+                        len(center_y_list), len(ring_width_list),
+                        len(a_list), len(b_list), len(theta_list)]
+        assert len(set(var_len_list)) == 1, \
+            "`the length of `shape_list`, `ring_celltype_list`, `ring_purity_list`, " \
+            "`infiltration_celltype_list`, `infiltration_prop_list`, `center_x_list`, `center_y_list`, " \
+            "`ring_width_list`, `a_list`, `b_list`, and `theta_list` must be equal!"
+
+        major_ring_type = []
+        for row in ring_celltype_list:
+            if len(row) == 2:
+                major_ring_type.append(row[0])
+            elif len(row) == 3:
+                major_ring_type.append(row[0])
+                major_ring_type.append(row[1])
+
+        for n in range(len(shape_list)):
+            shape = shape_list[n]
+            ring_celltype = ring_celltype_list[n]
+            ring_purity = ring_purity_list[n]
+            infiltration_prop = infiltration_prop_list[n]
+            infiltration_celltype = infiltration_celltype_list[n]
+            center_x = center_x_list[n]
+            center_y = center_y_list[n]
+            a = a_list[n]
+            b = b_list[n]
+            theta = theta_list[n]
+            ring_width = ring_width_list[n]
+            assert 1 <= len(ring_width) <= 2, \
+                'the length of `ring_width` must be `1` for single ring or `2` for double rings!'
+            if len(ring_width) == 1:
+                assert len(ring_celltype) == 2, "the length of `ring_celltype` must be 2 single ring!"
+            elif len(ring_width) == 2:
+                assert len(ring_celltype) == 3, "the length of `ring_celltype` must be 3 for double rings!"
+
+            idx = []
+
+            # Ring
+            for i in range(sim_point.shape[0]):
+                x = sim_point.loc[i, 'point_x']
+                y = sim_point.loc[i, 'point_y']
+                x = x - center_x
+                y = y - center_y
+
+                if shape == 'Circle':
+                    # 使用椭圆方程进行判断
+                    assert a == b, 'the value of `a` and `b` must be same when `shape == Circle`!'
+                    value_inner = (x ** 2) / (a ** 2) + (y ** 2) / (b ** 2)
+                    if len(ring_width) == 1:
+                        value_outer = (x ** 2) / ((a + ring_width[0]) ** 2) + (y ** 2) / ((b + ring_width[0]) ** 2)
+                        if value_inner < 1:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[0]
+                            idx.append(i)
+                        elif value_outer < 1 and sim_point.loc[i, self.celltype_key] not in major_ring_type:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[1]
+                            idx.append(i)
+                    elif len(ring_width) == 2:
+                        value_middle = (x ** 2) / ((a + ring_width[0]) ** 2) + (y ** 2) / ((b + ring_width[0]) ** 2)
+                        value_outer = (x ** 2) / ((a + (ring_width[0] + ring_width[1])) ** 2) + \
+                                      (y ** 2) / ((b + (ring_width[0] + ring_width[1])) ** 2)
+                        if value_inner < 1:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[0]
+                            idx.append(i)
+                        elif value_middle < 1 and sim_point.loc[i, self.celltype_key] not in major_ring_type:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[1]
+                            idx.append(i)
+                        elif value_outer < 1 and sim_point.loc[i, self.celltype_key] not in major_ring_type:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[2]
+                            idx.append(i)
+
+                elif shape == 'Oval':
+                    # 旋转点坐标
+                    x_rotated = x * np.cos(theta) + y * np.sin(theta)
+                    y_rotated = -x * np.sin(theta) + y * np.cos(theta)
+                    # 使用椭圆方程进行判断
+                    value_inner = (x_rotated ** 2) / (a ** 2) + (y_rotated ** 2) / (b ** 2)
+                    if len(ring_width) == 1:
+                        value_outer = (x_rotated ** 2) / ((a + ring_width[0]) ** 2) + \
+                                      (y_rotated ** 2) / ((b + ring_width[0]) ** 2)
+                        if value_inner < 1:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[0]
+                            idx.append(i)
+                        elif value_outer < 1 and sim_point.loc[i, self.celltype_key] not in major_ring_type:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[1]
+                            idx.append(i)
+                    elif len(ring_width) == 2:
+                        value_middle = (x_rotated ** 2) / ((a + ring_width[0]) ** 2) + \
+                                       (y_rotated ** 2) / ((b + ring_width[0]) ** 2)
+                        value_outer = (x_rotated ** 2) / ((a + (ring_width[0] + ring_width[1])) ** 2) + \
+                                      (y_rotated ** 2) / ((b + (ring_width[0] + ring_width[1])) ** 2)
+                        if value_inner < 1:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[0]
+                            idx.append(i)
+                        elif value_middle < 1 and sim_point.loc[i, self.celltype_key] not in major_ring_type:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[1]
+                            idx.append(i)
+                        elif value_outer < 1 and sim_point.loc[i, self.celltype_key] not in major_ring_type:
+                            sim_point.loc[i, self.celltype_key] = ring_celltype[2]
+                            idx.append(i)
+
+            # Infiltration
+            if ring_purity is None:
+                ring_purity = 1
+            else:
+                assert 0 <= ring_purity <= 1, '`cluster_purity` must in [0, 1]!'
+
+            # avoid duplication in Infiltration
+            sim_point_rep = sim_point.loc[idx].copy()
+            ring_num_all = sim_point_rep[sim_point_rep[self.celltype_key].isin(ring_celltype)].shape[0]
+            ring_num_inner = np.round(ring_num_all * ring_purity).astype(int)
+            ring_num_outer = ring_num_all - ring_num_inner
+            if infiltration_prop is None:
+                print(
+                    'no `infiltration_prop` is provided, each infiltrated cell type follows an equal proportion...')
+                infiltration_prop = [1 / len(infiltration_celltype)] * len(infiltration_celltype)
+            else:
+                assert len(infiltration_prop) == len(infiltration_celltype), \
+                    "the length of `infiltration_prop` must be equal to the length of `infiltration_celltype`!"
+                infiltration_prop = [x / sum(infiltration_prop) for x in infiltration_prop]
+
+            infiltration_num_list = [np.round(x * ring_num_outer).astype(int) for x in infiltration_prop]
+            for i in range(len(infiltration_num_list)):
+                tmp_idx = np.random.choice(
+                    sim_point_rep[sim_point_rep[self.celltype_key].isin(ring_celltype)].index.values,
+                    infiltration_num_list[i], replace=False).tolist()
+                sim_point.loc[tmp_idx, self.celltype_key] = infiltration_celltype[i]
+
+        # background
+        if background_prop is None:
+            print('no `background_prop` is provided, each background cell type follows an equal proportion...')
+            background_prop = [1 / len(background_celltype)] * len(background_celltype)
+        else:
+            assert len(background_prop) == len(background_celltype), \
+                "the length of `background_prop` must be equal to the length of `background_celltype`!"
+            background_prop = [x / sum(background_prop) for x in background_prop]
+
+        background_num_all = sim_point[sim_point[self.celltype_key] == 'unassigned'].shape[0]
+        background_num_list = [np.round(x * background_num_all).astype(int) for x in background_prop]
+
+        for i in range(len(background_num_list)):
+            if i < len(background_num_list) - 1:
+                tmp_idx = np.random.choice(sim_point[sim_point[self.celltype_key] == 'unassigned'].index.values,
+                                           background_num_list[i], replace=False).tolist()
+                sim_point.loc[tmp_idx, self.celltype_key] = background_celltype[i]
+            else:
+                sim_point.loc[sim_point[self.celltype_key] == 'unassigned', self.celltype_key] = background_celltype[i]
+
+        return sim_point
+
+    def simulate_stripes(self,
+                         y1_list: list = [None, None],
+                         y2_list: list = [None, None],
+                         stripe_width_list: list = [2, 3],
+                         stripe_purity_list: list = [],
+                         stripe_celltypee_list: list = [],
+                         infiltration_celltype_list: list = [[]],
+                         infiltration_prop_list: list = [[]],
+                         background_celltype: list = [],
+                         background_prop: Optional[list] = None,
+                         ):
+
+        print('generating structured stripes spatial patterns...')
+        if self.set_seed:
+            np.random.seed(self.seed)
+            random.seed(self.seed)
+
+        assert len(set(stripe_celltypee_list) - set(self.select_celltype)) == 0, \
+            "the stripe cell type in `stripe_celltypee_list` must exist in `select_celltype`!"
+
+        infiltration_list_set = set()
+        for row in infiltration_celltype_list:
+            infiltration_list_set.update(row)
+        assert len(infiltration_list_set - set(self.select_celltype)) == 0, \
+            "the infiltrated cell type in `infiltration_celltype_list` must exist in `select_celltype`!"
+
+        assert len(set(background_celltype) - set(self.select_celltype)) == 0, \
+            "`background_celltype` must exist in `select_celltype`!"
+
+        # Generates a realisation of the Poisson point process
+        sim_point = self.__create_sim_pois(cell_num=self.cell_num) * self.spatial_size
+        sim_point[self.celltype_key] = 'unassigned'
+
+        var_len_list = [len(stripe_width_list), len(stripe_purity_list), len(stripe_celltypee_list),
+                        len(infiltration_celltype_list), len(infiltration_prop_list)]
+        assert len(set(var_len_list)) == 1, \
+            "`the length of `stripe_width_list`, `stripe_purity_list`, `stripe_celltypee_list`, " \
+            "`infiltration_celltype_list`, and `infiltration_prop_list` must be equal!"
+
+        for n in range(len(stripe_celltypee_list)):
+            y1 = y1_list[n]
+            y2 = y2_list[n]
+            stripe_celltype = stripe_celltypee_list[n]
+            stripe_purity = stripe_purity_list[n]
+            stripe_width = stripe_width_list[n]
+            infiltration_prop = infiltration_prop_list[n]
+            infiltration_celltype = infiltration_celltype_list[n]
+            idx = []
+
+            x1 = min(sim_point['point_x'])
+            x2 = max(sim_point['point_x'])
+            if y1 is None:
+                y1 = random.uniform(min(sim_point['point_y']), max(sim_point['point_y']))
+            if y2 is None:
+                y2 = random.uniform(min(sim_point['point_y']), max(sim_point['point_y']))
+            # 计算线条方向向量
+            direction = np.array([x2 - x1, y2 - y1], dtype=float)
+            # 计算线条长度
+            length = np.linalg.norm(direction)
+            # 归一化方向向量
+            direction /= length
+
+            # 计算线条的垂直向量
+            perpendicular = np.array([-direction[1], direction[0]], dtype=float)
+
+            # 计算线条的四个顶点
+            p1 = np.array([x1, y1], dtype=float) + perpendicular * stripe_width / 2
+            p2 = np.array([x1, y1], dtype=float) - perpendicular * stripe_width / 2
+            # p3 = np.array([x2, y2], dtype=float) + perpendicular * stripe_width / 2
+            # p4 = np.array([x2, y2], dtype=float) - perpendicular * stripe_width / 2
+
+            # Stripes
+            for i in range(sim_point.shape[0]):
+                x = sim_point.loc[i, 'point_x']
+                y = sim_point.loc[i, 'point_y']
+                point = np.array([x, y], dtype=float)
+                u = np.dot(point - p1, direction)
+                v = np.dot(point - p2, perpendicular)
+                if 0 <= u <= length and np.abs(v) <= stripe_width / 2:
+                    sim_point.loc[i, self.celltype_key] = stripe_celltype
+                    idx.append(i)
+
+            # Infiltration
+            if stripe_purity is None:
+                stripe_purity = 1
+            else:
+                assert 0 <= stripe_purity <= 1, '`cluster_purity` must in [0, 1]!'
+
+            # avoid duplication in Infiltration
+            sim_point_rep = sim_point.loc[idx].copy()
+            stripe_num_all = sim_point_rep[sim_point_rep[self.celltype_key] == stripe_celltype].shape[0]
+            stripe_num_inner = np.round(stripe_num_all * stripe_purity).astype(int)
+            stripe_num_outer = stripe_num_all - stripe_num_inner
+            if infiltration_prop is None:
+                print('no `infiltration_prop` is provided, each infiltrated cell type follows an equal proportion...')
+                infiltration_prop = [1 / len(infiltration_celltype)] * len(infiltration_celltype)
+            else:
+                assert len(infiltration_prop) == len(infiltration_celltype), \
+                    "the length of `infiltration_prop` must be equal to the length of `infiltration_celltype`!"
+                infiltration_prop = [x / sum(infiltration_prop) for x in infiltration_prop]
+
+            infiltration_num_list = [np.round(x * stripe_num_outer).astype(int) for x in infiltration_prop]
+            for i in range(len(infiltration_num_list)):
+                tmp_idx = np.random.choice(sim_point_rep[sim_point_rep[self.celltype_key] == stripe_celltype].index.values,
+                                           infiltration_num_list[i], replace=False).tolist()
+                sim_point.loc[tmp_idx, self.celltype_key] = infiltration_celltype[i]
+
+        # background
+        if background_prop is None:
+            print('no `background_prop` is provided, each background cell type follows an equal proportion...')
+            background_prop = [1 / len(background_celltype)] * len(background_celltype)
+        else:
+            assert len(background_prop) == len(background_celltype), \
+                "the length of `background_prop` must be equal to the length of `background_celltype`!"
+            background_prop = [x / sum(background_prop) for x in background_prop]
+
+        background_num_all = sim_point[sim_point[self.celltype_key] == 'unassigned'].shape[0]
+        background_num_list = [np.round(x * background_num_all).astype(int) for x in background_prop]
+
+        for i in range(len(background_num_list)):
+            if i < len(background_num_list) - 1:
+                tmp_idx = np.random.choice(sim_point[sim_point[self.celltype_key] == 'unassigned'].index.values,
+                                           background_num_list[i], replace=False).tolist()
+                sim_point.loc[tmp_idx, self.celltype_key] = background_celltype[i]
+            else:
+                sim_point.loc[sim_point[self.celltype_key] == 'unassigned', self.celltype_key] = background_celltype[i]
+
+        return sim_point
+
+    def __create_sim_pois(self,
+                          cell_num: int):
+        """
+        Generates a realisation of the Poisson point process
+        :param cell_num: the number of points
+        :return: DataFrame of spatial coordinates of points
+        """
+
+        xx = np.random.uniform(0, 1, cell_num)
+        yy = np.random.uniform(0, 1, cell_num)
+        out = pd.DataFrame({'point_x': xx, 'point_y': yy})
+
+        return out
 
 
