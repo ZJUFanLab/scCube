@@ -9,7 +9,7 @@ scCube is a Python package coupled with an interactive website for reproducible,
 ![avatar](images/workflow.jpg)
 ## Major updates in v2.0.0
 1. **scCube now allows users to consider the heterogeneity within cell types and generate the spatial patterns of cell subtypes flexibly:**
-   * [Simulation of the variability of spatial patterns within cell types]() 
+   * [Simulation of the variability of spatial patterns within cell types](tutorial/tutorial_subtype.ipynb) 
 2. **scCube now allows users to generate more interpretable spatial patterns in a customized manner:**
    * [Simulation of biologically interpretable spatial basis patterns]() 
    * [Simulation of highly customized complex spatial patterns]() 
@@ -43,7 +43,7 @@ python setup.py install
 ```
 
 ## Quick Start (Training new models directly)
-scCube requires a **data** file (gene expression profiles) and a **meta** file (cell type/domain annotations) as the input, which can be stored as either `.csv` (read by pandas) or '.h5ad' (loaded by scanpy) formats. We have included two toy datasets in the [tutorial/demo_data folder](tutorial/demo_data) of this repository as examples to show how to use scCube. 
+scCube requires a **data** file (gene expression profiles) and a **meta** file (cell type/domain annotations) as the input, which can be stored as either `.csv` (read by pandas) or `.h5ad` (loaded by scanpy) formats. We have included two toy datasets in the [tutorial/demo_data folder](tutorial/demo_data) of this repository as examples to show how to use scCube. 
 
 Reference-based simulation:
 * [Demonstration of scCube on simulating mouse hypothalamus MERFISH data (same as the spatial reference)](tutorial/demo_merfish_own.ipynb)
@@ -71,7 +71,6 @@ Reference-free simulation:
 * [Using scCube to simulate spatial patterns with diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
 * [Using scCube to simulate 3D spatial patterns](tutorial/tutorial_3d.ipynb)
 * [Using scCube to simulate spatial patterns for user-specified cell types](tutorial/tutorial_specified.ipynb)
-* [Using scCube to simulate the variability of spatial patterns within cell types](tutorial/tutorial_subtype.ipynb)
 * [Using scCube to simulate the variability of resolution and spot arrangement of spot-based SRT data](tutorial/tutorial_resolution.ipynb)
 
 
