@@ -81,7 +81,7 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
 
 **celltype_key**: _str_
 
-&emsp;The column name of `cell types` or `domain` in meta
+&emsp;The column name of `cell labels` in meta
 
 **cell_key**: _str_
 
@@ -145,7 +145,7 @@ generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(
 
 **celltype_key**: _str_
 
-&emsp;The column name of `cell types` or `domain` in meta
+&emsp;The column name of `cell labels` in meta
 
 **cell_key**: _str_
 
@@ -165,33 +165,27 @@ generate_sc_meta, generate_sc_data = model.load_vae_and_generate_cell(
 
 **used_device**: _str, default: `cuda:0`_
 
-&emsp;Device name, `cpu` or `cuda
+&emsp;Device name, `cpu` or `cuda`
 
 ****
 
 #### spatial pattern simulation functions:
-##### generate random spatial patterns with reference-free strategy
+##### generate random spatial patterns for cell types with reference-free strategy
 ```python
-generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_spatial_data_random(
-    generate_sc_data=generate_sc_data,
-    generate_sc_meta=generate_sc_meta,
-    set_seed=False,
-    seed=12345,
-    spatial_cell_type=None,
-    spatial_dim=2,
-    spatial_size=30,
-    delta=25,
-    lamda=0.75,
-    is_spot=False,
-    platform='ST',
-    gene_type='whole',
-    min_cell=10,
-    n_gene=None,
-    n_cell=5,
-    is_split=True,
-    split_coord='point_z',
-    slice_num=5,
-    )
+generate_sc_data, generate_sc_meta = model.generate_pattern_random(
+   generate_sc_data=generate_sc_data,
+   generate_sc_meta=generate_sc_meta,
+   celltype_key='Cell_type',
+   set_seed=False,
+   seed=12345,
+   spatial_cell_type=None,
+   spatial_dim=2,
+   spatial_size=30,
+   delta=25,
+   lamda=0.75,
+   is_split=True,
+   split_coord='point_z',
+   slice_num=5,)
 ```
 **Parameters**
 
@@ -202,6 +196,10 @@ generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_
 **generate_sc_meta**: _DataFrame_
 
 &emsp;DataFrame of generated meta
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in meta
 
 **set_seed**: _bool, default: `False`_
 
@@ -221,7 +219,7 @@ generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_
 
 **spatial_size**: _int, default: `30`_
 
-&emsp;The scope for spatial autocorrelation function, the large values will take more running time
+&emsp;The scope for simulated spatial patterns, the large values will take more running time
 
 **delta**: _float, default: `25`_
 
@@ -230,30 +228,6 @@ generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_
 **lamda**: _float, default: `0.75`_
 
 &emsp;The larger values will tend to form clearer spatial patterns
-
-**is_spot**: _bool, default: `False`_
-
-&emsp;True -- generate spot-based SRT data; False -- generate imaging-based SRT data
-
-**platform**: _str, default: `ST`_
-
-&emsp;Only works when `is_spot=True`, `ST` -- square neighborhood structure; `Visium` -- hexagonal neighborhood structure; `Slide` -- random neighborhood structure
-
-**gene_type**: _str, default: `whole`_
-
-&emsp;The type of genes to generate, `whole` -- the whole genes; `hvg` -- the highly variable genes; `marker` -- the marker genes of each cell type; `random` -- the randomly selected genes
-
-**min_cell**: _int, default: `10`_
-
-&emsp;Filter the genes expressed in fewer than `min_cell` cells before selected genes, only works when `gene_type='random', 'hvg', or 'marker'`
-
-**n_gene**: _Optional[int], default: `None`_
-
-&emsp;The number of genes to select, only works when `gene_type='random', 'hvg', or 'marker'`
-
-**n_cell**: _int, default: `10`_
-
-&emsp;The average number of cells per spot, only works when `is_spot=True`
 
 **is_split**: _bool, default: `True`_
 
@@ -269,9 +243,628 @@ generate_sc_data, generate_sc_meta, st_data, st_meta, st_index = model.generate_
 
 ****
 
+##### generate random spatial patterns for cell subtypes with reference-free strategy
+```python
+generate_sc_data_sub, generate_sc_meta_sub = model.generate_subtype_pattern_random(
+   generate_sc_data=generate_sc_data,
+   generate_sc_meta=generate_sc_meta,
+   celltype_key='Cell_type',
+   select_cell_type='',
+   subtype_key='',
+   set_seed=False,
+   seed=12345,
+   spatial_dim=2,
+   subtype_delta=25,)
+```
+**Parameters**
+
+**generate_sc_data**: _DataFrame_
+
+&emsp;DataFrame of generated data
+
+**generate_sc_meta**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in meta
+
+**select_cell_type**: _str_
+
+&emsp;the select cell types to generate subtype spatial patterns
+
+**subtype_key**: _str_
+
+&emsp;The column name of `cell sub-labels` in meta
+
+**set_seed**: _bool, default: `False`_
+
+&emsp;Whether to set seed for reproducible simulation
+
+**seed**: _int, default: `12345`_
+
+&emsp;The seed number
+
+**spatial_dim**: _int, default: `2`_
+
+&emsp;The spatial dimensionality， `2` or `3`
+
+**subtype_delta**: _int, default: `25`_
+
+&emsp;The larger value will tend to form spatial patterns with greater connectivity 
+
+****
+
+
+##### generate spot-based SRT data with reference-free strategy by combined simulated gene expression profiles and spatial patterns
+```python
+st_data, st_meta, st_index = model.generate_spot_data_random(
+   generate_sc_data=generate_sc_data,
+   generate_sc_meta=generate_sc_meta,
+   platform='ST',
+   gene_type='whole',
+   min_cell=10,
+   n_gene=None,
+   n_cell=10,)
+```
+**Parameters**
+
+**generate_sc_data**: _DataFrame_
+
+&emsp;DataFrame of generated data
+
+**generate_sc_meta**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**platform**: _str, default: `ST`_
+
+&emsp;Spot arrangement, `ST` -- square neighborhood structure;  `Visium` -- hexagonal neighborhood structure;  `Slide` -- random neighborhood structure
+
+**gene_type**: _str, default: `whole`_
+
+&emsp;The type of genes to generate, `whole` -- the whole genes;  `hvg` -- the highly variable genes;  `marker` -- the marker genes of each cell type;  `random` -- the randomly selected genes
+
+**min_cell**: _int, default: `10`_
+
+&emsp;Filter the genes expressed in fewer than `min_cell` cells before selected genes, only works when `gene_type='random', 'hvg', or 'marker'`
+
+**n_gene**: _Optional[int], default: `None`_
+
+&emsp;The number of genes to select, only works when `gene_type='random', 'hvg', or 'marker'`
+
+**n_cell**: _int, default: `10`_
+
+&emsp;The average number of cells per spot, only works when `is_spot=True`
+****
+
+##### generate image-based SRT data with reference-free strategy by combined simulated gene expression profiles and spatial patterns
+```python
+st_data, st_meta, st_index = model.generate_spot_data_random(
+   generate_sc_data=generate_sc_data,
+   generate_sc_meta=generate_sc_meta,
+   gene_type='whole',
+   min_cell=10,
+   n_gene=None,)
+```
+**Parameters**
+
+**generate_sc_data**: _DataFrame_
+
+&emsp;DataFrame of generated data
+
+**generate_sc_meta**: _DataFrame_
+
+&emsp;DataFrame of generated meta
+
+**gene_type**: _str, default: `whole`_
+
+&emsp;The type of genes to generate, `whole` -- the whole genes;  `hvg` -- the highly variable genes;  `marker` -- the marker genes of each cell type;  `random` -- the randomly selected genes
+
+**min_cell**: _int, default: `10`_
+
+&emsp;Filter the genes expressed in fewer than `min_cell` cells before selected genes, only works when `gene_type='random', 'hvg', or 'marker'`
+
+**n_gene**: _Optional[int], default: `None`_
+
+&emsp;The number of genes to select, only works when `gene_type='random', 'hvg', or 'marker'`
+
+****
+
+##### generate customized spatial patterns for cell types with reference-free strategy (mixing patterns)
+```python
+generate_sc_data, generate_sc_meta = model.generate_pattern_custom_mixing(
+   sc_adata=sc_adata,
+   generate_cell_num=5000,
+   celltype_key='Cell_type',
+   cell_key='Cell',
+   set_seed=False,
+   seed=12345,
+   spatial_size=30,
+   select_celltype=None,
+   prop_list=None,
+   hidden_size=128,
+   load_path='',
+   used_device=cuda:0,)
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of reference data
+
+**generate_cell_num**: _int_
+
+&emsp;cell number to generate
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in `sc_adata.obs`
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in `sc_adata.obs`
+
+**set_seed**: _bool, default: `False`_
+
+&emsp;Whether to set seed for reproducible simulation
+
+**seed**: _int, default: `12345`_
+
+&emsp;The seed number
+
+**spatial_size**: _int, default: `30`_
+
+&emsp;The scope for simulated spatial patterns
+
+**select_celltype**: _Optional[list], default: `None`_
+
+&emsp;The selected cell types for simulation, if`select_celltype=None`, all cell types would be selected
+
+**prop_list**: _Optional[list], default: `None`_
+
+&emsp;The proportion of selected cell types
+
+
+**hidden_size**: _int, default: `128`_
+
+&emsp;Hidden size of VAE model
+
+**load_path**: _str_
+
+&emsp;The load path
+
+**used_device**: _str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda`
+****
+
+##### generate customized spatial patterns for cell types with reference-free strategy (clustered patterns)
+```python
+generate_sc_data, generate_sc_meta = model.generate_pattern_custom_cluster(
+   sc_adata=sc_adata,
+   generate_cell_num=5000,
+   celltype_key='Cell_type',
+   cell_key='Cell',
+   set_seed=False,
+   seed=12345,
+   spatial_size=30,
+   select_celltype=None,
+   shape_list=['Circle', 'Oval'],
+   cluster_celltype_list=[],
+   cluster_purity_list=[],
+   infiltration_celltype_list=[[]],
+   infiltration_prop_list=[[]],
+   background_celltype=[],
+   background_prop=None,
+   center_x_list=[20, 10],
+   center_y_list=[20, 10],
+   a_list=[15, 20],
+   b_list=[10, 15],
+   theta_list=[np.pi / 4, np.pi / 4],
+   scale_value_list=[4.8, 4.8],
+   twist_value_list=[0.5, 0.5],
+   hidden_size=128,
+   load_path='',
+   used_device='cuda:0')
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of reference data
+
+**generate_cell_num**: _int_
+
+&emsp;cell number to generate
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in `sc_adata.obs`
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in `sc_adata.obs`
+
+**set_seed**: _bool, default: `False`_
+
+&emsp;Whether to set seed for reproducible simulation
+
+**seed**: _int, default: `12345`_
+
+&emsp;The seed number
+
+**spatial_size**: _int, default: `30`_
+
+&emsp;The scope for simulated spatial patterns
+
+**select_celltype**: _Optional[list], default: `None`_
+
+&emsp;The selected cell types for simulation, if`select_celltype=None`, all cell types would be selected
+
+**shape_list**: _list_
+
+&emsp;The shapes for simulation, `Circle`, `Oval`, or `Irregular`
+
+**cluster_celltype_list**: _list_
+
+&emsp;The selected cell types for clustered shapes, the length must be equal to `shape_list`
+
+**cluster_purity_list**: _list_
+
+&emsp;The purity of each clustered shape
+
+**infiltration_celltype_list**: _list_
+
+&emsp;The infiltrating cell types in each clustered shape
+
+**infiltration_prop_list**: _list_
+
+&emsp;The proportion of each infiltrating cell type in each clustered shape
+
+**background_celltype**: _list_
+
+&emsp;The cell types considered as background
+
+**background_prop**: _Optional[list], default: `None`_
+
+&emsp;The proportion of cell types considered as background, if`background_prop=None`, each background cell type follows an equal proportion
+
+**center_x_list**: _list_
+
+&emsp;The position of the center of each clustered shapes on the X-axis
+
+**center_y_list**: _list_
+
+&emsp;The position of the center of each clustered shapes on the Y-axis
+
+**a_list**: _list_
+
+&emsp;The major axis of each clustered shapes
+
+**b_list**: _list_
+
+&emsp;The minor axis of each clustered shapes
+
+**theta_list**: _list_
+
+&emsp;The direction of each clustered shapes
+
+**scale_value_list**: _list_
+
+&emsp;The scale factor of each clustered shapes used to control the shape of each cluster, only works when shape is `irregualr`
+
+**twist_value_list**: _list_
+
+&emsp;The twist degree of each clustered shapes used to control the shape of each cluster, only works when shape is `irregualr`
+
+**hidden_size**: _int, default: `128`_
+
+&emsp;Hidden size of VAE model
+
+**load_path**: _str_
+
+&emsp;The load path
+
+**used_device**: _str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda`
+****
+
+##### generate customized spatial patterns for cell types with reference-free strategy (cell rings patterns)
+```python
+generate_sc_data, generate_sc_meta = model.generate_pattern_custom_ring(
+   sc_adata=sc_adata,
+   generate_cell_num=5000,
+   celltype_key='Cell_type',
+   cell_key='Cell',
+   set_seed=False,
+   seed=12345,
+   spatial_size=30,
+   select_celltype=None,
+   shape_list=['Circle', 'Oval'],
+   ring_celltype_list=[],
+   ring_purity_list=[],
+   infiltration_celltype_list=[[]],
+   infiltration_prop_list=[[]],
+   background_celltype=[],
+   background_prop=None,
+   center_x_list=[20, 10],
+   center_y_list=[20, 10],
+   a_list=[15, 20],
+   b_list=[10, 15],
+   theta_list=[np.pi / 4, np.pi / 4],
+   ring_width_list=[[2, 3], [2]],
+   hidden_size=128,
+   load_path='',
+   used_device='cuda:0')
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of reference data
+
+**generate_cell_num**: _int_
+
+&emsp;cell number to generate
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in `sc_adata.obs`
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in `sc_adata.obs`
+
+**set_seed**: _bool, default: `False`_
+
+&emsp;Whether to set seed for reproducible simulation
+
+**seed**: _int, default: `12345`_
+
+&emsp;The seed number
+
+**spatial_size**: _int, default: `30`_
+
+&emsp;The scope for simulated spatial patterns
+
+**select_celltype**: _Optional[list], default: `None`_
+
+&emsp;The selected cell types for simulation, if`select_celltype=None`, all cell types would be selected
+
+**shape_list**: _list_
+
+&emsp;The shapes for simulation, `Circle`, `Oval`, or `Irregular`
+
+**ring_celltype_list**: _list_
+
+&emsp;The selected cell types for cell rings shapes, the length must be equal to `shape_list`
+
+**ring_purity_list**: _list_
+
+&emsp;The purity of each cell rings shape
+
+**infiltration_celltype_list**: _list_
+
+&emsp;The infiltrating cell types in each cell rings shape
+
+**infiltration_prop_list**: _list_
+
+&emsp;The proportion of each infiltrating cell type in each cell rings shape
+
+**background_celltype**: _list_
+
+&emsp;The cell types considered as background
+
+**background_prop**: _Optional[list], default: `None`_
+
+&emsp;The proportion of cell types considered as background, if`background_prop=None`, each background cell type follows an equal proportion
+
+**center_x_list**: _list_
+
+&emsp;The position of the center of each cell rings shapes on the X-axis
+
+**center_y_list**: _list_
+
+&emsp;The position of the center of each cell rings shapes on the Y-axis
+
+**a_list**: _list_
+
+&emsp;The major axis of each cell rings shapes
+
+**b_list**: _list_
+
+&emsp;The minor axis of each cell rings shapes
+
+**theta_list**: _list_
+
+&emsp;The direction of each cell rings shapes
+
+**ring_width_list**: _list_
+
+&emsp;The width of each cell rings shape
+
+**hidden_size**: _int, default: `128`_
+
+&emsp;Hidden size of VAE model
+
+**load_path**: _str_
+
+&emsp;The load path
+
+**used_device**: _str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda`
+****
+
+##### generate customized spatial patterns for cell types with reference-free strategy (stripes patterns)
+```python
+generate_sc_data, generate_sc_meta = model.generate_pattern_custom_stripes(
+   sc_adata=sc_adata,
+   generate_cell_num=5000,
+   celltype_key='Cell_type',
+   cell_key='Cell',
+   set_seed=False,
+   seed=12345,
+   spatial_size=30,
+   select_celltype=None,
+   y1_list=[None, None],
+   y2_list=[None, None],
+   stripe_width_list=[2, 3],
+   stripe_purity_list=[],
+   infiltration_celltype_list=[[]],
+   infiltration_prop_list=[[]],
+   background_celltype=[],
+   background_prop=None,
+   hidden_size=128,
+   load_path='',
+   used_device='cuda:0')
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of reference data
+
+**generate_cell_num**: _int_
+
+&emsp;cell number to generate
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in `sc_adata.obs`
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in `sc_adata.obs`
+
+**set_seed**: _bool, default: `False`_
+
+&emsp;Whether to set seed for reproducible simulation
+
+**seed**: _int, default: `12345`_
+
+&emsp;The seed number
+
+**spatial_size**: _int, default: `30`_
+
+&emsp;The scope for simulated spatial patterns
+
+**select_celltype**: _Optional[list], default: `None`_
+
+&emsp;The selected cell types for simulation, if`select_celltype=None`, all cell types would be selected
+
+**y1_list**: _list_
+
+&emsp;The endpoints of simulated stripes, if `y1_list=[None]`, scCube would choose endpoints randomly in the scope of spatial patterns
+
+**y2_list**: _list_
+
+&emsp;The endpoints of simulated stripes, if `y2_list=[None]`, scCube would choose endpoints randomly in the scope of spatial patterns
+
+**stripe_celltype_list**: _list_
+
+&emsp;The selected cell types for stripe shapes, the length must be equal to `y1_list` or `y2_list`
+
+**stripe_width_list**: _list_
+
+&emsp;The width for each stripe shape, the length must be equal to `stripe_celltype_list`
+
+**stripe_purity_list**: _list_
+
+&emsp;The purity of each stripe shape
+
+**infiltration_celltype_list**: _list_
+
+&emsp;The infiltrating cell types in each stripe shape
+
+**infiltration_prop_list**: _list_
+
+&emsp;The proportion of each infiltrating cell type in each stripe shape
+
+**background_celltype**: _list_
+
+&emsp;The cell types considered as background
+
+**background_prop**: _Optional[list], default: `None`_
+
+&emsp;The proportion of cell types considered as background, if`background_prop=None`, each background cell type follows an equal proportion
+
+**hidden_size**: _int, default: `128`_
+
+&emsp;Hidden size of VAE model
+
+**load_path**: _str_
+
+&emsp;The load path
+
+**used_device**: _str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda`
+****
+
+##### generate customized spatial patterns for cell types with reference-free strategy (complex patterns)
+```python
+generate_sc_data, generate_sc_meta = model.generate_pattern_custom_complex(
+   sc_adata=sc_adata,
+   spa_pattern_base,
+   spa_pattern_add,
+   celltype_key='Cell_type',
+   cell_key='Cell',
+   background_celltype=[],
+   hidden_size=128,
+   load_path='',
+   used_device='cuda:0')
+```
+**Parameters**
+
+**sc_adata**: _AnnData_
+
+&emsp;AnnData of reference data
+
+**spa_pattern_base**: _DataFrame_
+
+&emsp;The base spatial patterns (for example, mixing cell populations, cell clusters, or cell rings)
+
+**spa_pattern_add**: _DataFrame_
+
+&emsp;The added spatial patterns overlaid on the base spatial patterns (for example, stripes)
+
+**celltype_key**: _str_
+
+&emsp;The column name of `cell labels` in `sc_adata.obs`
+
+**cell_key**: _str_
+
+&emsp;The column name of `cell` in `sc_adata.obs`
+
+**background_celltype**: _list_
+
+&emsp;The cell types considered as background
+
+**background_prop**: _Optional[list], default: `None`_
+
+&emsp;The proportion of cell types considered as background, the background cell type must be same in the base and added spatial patterns
+
+**hidden_size**: _int, default: `128`_
+
+&emsp;Hidden size of VAE model
+
+**load_path**: _str_
+
+&emsp;The load path
+
+**used_device**: _str, default: `cuda:0`_
+
+&emsp;Device name, `cpu` or `cuda`
+****
+
+
 ##### generate spatial patterns with reference-based strategy
 ```python
-generate_sc_data, generate_sc_meta = model.generate_spatial_data_reference(
+generate_sc_data, generate_sc_meta = model.generate_pattern_reference(
     sc_adata=sc_adata,
     generate_sc_data=generate_sc_data,
     generate_sc_meta=generate_sc_meta,
@@ -296,7 +889,7 @@ generate_sc_data, generate_sc_meta = model.generate_spatial_data_reference(
 
 **celltype_key**: _str_
 
-&emsp;The column name of `cell types` or `domain` in meta
+&emsp;The column name of `cell labels` in meta
 
 **spatial_key**: _list_
 

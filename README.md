@@ -68,7 +68,7 @@ Reference-based simulation:
 * [Using scCube to simulate the human breast cancer ST data](tutorial/tutorial_bc.ipynb)
 
 Reference-free simulation:
-* [Using scCube to simulate spatial patterns with diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
+* [Using scCube to simulate diverse spatial patterns](tutorial/tutorial_pattern.ipynb)
 * [Using scCube to simulate 3D spatial patterns](tutorial/tutorial_3d.ipynb)
 * [Using scCube to simulate spatial patterns for user-specified cell types](tutorial/tutorial_specified.ipynb)
 * [Using scCube to simulate the variability of resolution and spot arrangement of spot-based SRT data](tutorial/tutorial_resolution.ipynb)
