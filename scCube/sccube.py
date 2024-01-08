@@ -433,7 +433,7 @@ class scCube:
                                                               y2_list=y2_list,
                                                               stripe_width_list=stripe_width_list,
                                                               stripe_purity_list=stripe_purity_list,
-                                                              stripe_celltypee_list=stripe_celltype_list,
+                                                              stripe_celltype_list=stripe_celltype_list,
                                                               infiltration_celltype_list=infiltration_celltype_list,
                                                               infiltration_prop_list=infiltration_prop_list,
                                                               background_celltype=background_celltype,
