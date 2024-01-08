@@ -11,9 +11,9 @@ scCube is a Python package coupled with an interactive website for reproducible,
 1. **scCube now allows users to consider the heterogeneity within cell types and generate the spatial patterns of cell subtypes flexibly:**
    * [Simulation of the variability of spatial patterns within cell types](tutorial/tutorial_subtype.ipynb) 
 2. **scCube now allows users to generate more interpretable spatial patterns in a customized manner:**
-   * [Simulation of biologically interpretable spatial basis patterns]() 
-   * [Simulation of highly customized complex spatial patterns]() 
-   * [Demonstration on simulating the tumor-immune microenvironment of TNBC with three archetypical subtypes]() 
+   * [Simulation of biologically interpretable spatial basis patterns](tutorial/customized_basis_patterns.ipynb) 
+   * [Simulation of highly customized complex spatial patterns](tutorial/customized_complex_patterns.ipynb) 
+   * [Demonstration on simulating the tumor-immune microenvironment of TNBC with three archetypical subtypes](tutorial/customized_TME.ipynb) 
 
 
 ## Requirements and Installation
