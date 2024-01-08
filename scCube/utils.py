@@ -1550,7 +1550,7 @@ class SPatternGeneratorCustom:
                          y2_list: list = [None, None],
                          stripe_width_list: list = [2, 3],
                          stripe_purity_list: list = [],
-                         stripe_celltypee_list: list = [],
+                         stripe_celltype_list: list = [],
                          infiltration_celltype_list: list = [[]],
                          infiltration_prop_list: list = [[]],
                          background_celltype: list = [],
@@ -1562,7 +1562,7 @@ class SPatternGeneratorCustom:
             np.random.seed(self.seed)
             random.seed(self.seed)
 
-        assert len(set(stripe_celltypee_list) - set(self.select_celltype)) == 0, \
+        assert len(set(stripe_celltype_list) - set(self.select_celltype)) == 0, \
             "the stripe cell type in `stripe_celltypee_list` must exist in `select_celltype`!"
 
         infiltration_list_set = set()
@@ -1578,16 +1578,16 @@ class SPatternGeneratorCustom:
         sim_point = self.__create_sim_pois(cell_num=self.cell_num) * self.spatial_size
         sim_point[self.celltype_key] = 'unassigned'
 
-        var_len_list = [len(stripe_width_list), len(stripe_purity_list), len(stripe_celltypee_list),
+        var_len_list = [len(stripe_width_list), len(stripe_purity_list), len(stripe_celltype_list),
                         len(infiltration_celltype_list), len(infiltration_prop_list)]
         assert len(set(var_len_list)) == 1, \
             "`the length of `stripe_width_list`, `stripe_purity_list`, `stripe_celltypee_list`, " \
             "`infiltration_celltype_list`, and `infiltration_prop_list` must be equal!"
 
-        for n in range(len(stripe_celltypee_list)):
+        for n in range(len(stripe_celltype_list)):
             y1 = y1_list[n]
             y2 = y2_list[n]
-            stripe_celltype = stripe_celltypee_list[n]
+            stripe_celltype = stripe_celltype_list[n]
             stripe_purity = stripe_purity_list[n]
             stripe_width = stripe_width_list[n]
             infiltration_prop = infiltration_prop_list[n]
