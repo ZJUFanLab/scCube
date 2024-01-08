@@ -51,7 +51,7 @@ class scCube:
                                     cell_key: str,
                                     target_num: Optional[dict] = None,
                                     batch_size: int = 512,
-                                    epoch_num: int = 5000,
+                                    epoch_num: int = 10000,
                                     lr: float = 0.0001,
                                     hidden_size: int = 128,
                                     save_model: bool = True,

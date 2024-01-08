@@ -1064,24 +1064,31 @@ def generate_image_data(
     assert gene_type in ['whole', 'hvg', 'marker', 'random'], \
         "the gene type is supposed to whole, hvg, marker, or random!!"
     # check gene number
-    assert n_gene <= generate_data.shape[0], "the number of selected genes is too large, please reduce and try again!!"
+    if n_gene is not None:
+        assert n_gene <= generate_data.shape[0], \
+            "the number of selected genes is too large, please reduce and try again!!"
 
-    # process data only
-    if gene_type == 'hvg':
-        print('generating image-based data with ' + str(n_gene) + ' targeted HVGs...')
-    elif gene_type == 'marker':
-        print('generating with ' + str(n_gene) + ' targeted marker genes...')
-    elif gene_type == 'random':
-        print('generating with ' + str(n_gene) + ' randomly targeted genes...')
+    # gene type
+    if gene_type == 'whole':
+        print('generating with whole genes...')
+        target_data = generate_data
+    else:
+        # process data only
+        if gene_type == 'hvg':
+            print('generating image-based data with ' + str(n_gene) + ' targeted HVGs...')
+        elif gene_type == 'marker':
+            print('generating with ' + str(n_gene) + ' targeted marker genes...')
+        elif gene_type == 'random':
+            print('generating with ' + str(n_gene) + ' randomly targeted genes...')
 
-    genes = select_gene(
+        genes = select_gene(
             generate_meta=generate_meta,
             generate_data=generate_data,
             min_cell=min_cell,
             gene_type=gene_type,
             n_gene=n_gene
         )
-    target_data = generate_data.loc[genes]
+        target_data = generate_data.loc[genes]
 
     return target_data, generate_meta, generate_data
 

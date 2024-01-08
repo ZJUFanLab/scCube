@@ -1,5 +1,5 @@
 ## API Reference
-### Input data format
+### Input data format (`.csv` or `.h5ad`)
 
 1. Data file: a `.csv` file with genes as rows and one sample as column
 
@@ -95,7 +95,7 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
 
 &emsp;Batch size of training
 
-**epoch_num**: _int, default: `3500`_
+**epoch_num**: _int, default: `10000`_
 
 &emsp;Epoch number of training
 
@@ -121,7 +121,7 @@ generate_sc_meta, generate_sc_data = model.train_vae_and_generate_cell(
 
 **used_device**: _str, default: `cuda:0`_
 
-&emsp;Device name, `cpu` or `cuda
+&emsp;Device name, `cpu` or `cuda`
 
 ****
 

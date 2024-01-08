@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="scCube",
-    version="1.0.0",
+    version="2.0.0",
     author='Jingyang Qian',
     author_email='qianjingyang@zju.edu.cn',
     url='https://github.com/ZJUFanLab/scCube',
