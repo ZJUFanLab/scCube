@@ -15,9 +15,6 @@ scCube is a Python package for independent, reproducible, and platform-diverse s
    * [Simulation of highly customized complex spatial patterns](tutorial/customized_complex_patterns.ipynb) 
    * [Demonstration on simulating the tumor-immune microenvironment of TNBC with three archetypical subtypes](tutorial/customized_TME.ipynb)
 
-## To-Do list
-1. **Other deep generative models (such as CGAN) for gene expression simulation**
-
 ## Requirements and Installation
 [![anndata 0.8.0](https://img.shields.io/badge/anndata-0.8.0-success)](https://pypi.org/project/anndata/) [![numpy 1.23.5](https://img.shields.io/badge/numpy-1.23.5-important)](https://pypi.org/project/numpy/) [![pandas 1.5.3](https://img.shields.io/badge/pandas-1.5.3-critical)](https://pypi.org/project/pandas/) [![scanpy 1.9.1](https://img.shields.io/badge/scanpy-1.9.1-informational)](https://github.com/scverse/scanpy) [![pot 0.8.2](https://img.shields.io/badge/pot-0.8.2-blueviolet)](https://pypi.org/project/POT/) [![matplotlib 3.6.3](https://img.shields.io/badge/matplotlib-3.6.3-ff69b4)](https://pypi.org/project/matplotlib/) [![seaborn 0.12.2](https://img.shields.io/badge/seaborn-0.12.2-9cf)](https://pypi.org/project/seaborn/) [![tqdm 4.64.1](https://img.shields.io/badge/tqdm-4.64.1-lightgrey)](https://pypi.org/project/tqdm/)
 
