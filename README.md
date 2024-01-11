@@ -32,7 +32,7 @@ pip install torch --extra-index-url https://download.pytorch.org/whl/cu116
 ```
 ### Install other requirements
 ```
-cd scCube-release
+cd scCube-main
 pip install -r requirements.txt
 ```
 ### Install scCube
