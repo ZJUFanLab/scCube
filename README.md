@@ -2,7 +2,7 @@
 
 ## Simulating multiple variability in spatially resolved transcriptomics
 
-[![python >=3.8](https://img.shields.io/badge/python-%3E%3D3.8-brightgreen)](https://www.python.org/) 
+[![python >=3.8](https://img.shields.io/badge/python-%3E%3D3.8-brightgreen)](https://www.python.org/) [![DOI](https://zenodo.org/badge/637091543.svg)](https://zenodo.org/doi/10.5281/zenodo.10483806)
 
 scCube is a Python package for independent, reproducible, and platform-diverse simulation of spatially-resolved transcriptomic data 
 
