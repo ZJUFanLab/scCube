@@ -915,6 +915,7 @@ def generate_spot_data(
         min_cell: int = 10,
         n_gene: Optional[int] = None,
         n_cell: int = 10,
+        count_threshold: Optional[float] = None,
 ):
     """
     Generate spot-based spatial transcriptomics data
@@ -926,6 +927,7 @@ def generate_spot_data(
     :param min_cell: filter the genes expressed in fewer than `min_cell` cells
     :param n_gene: targeted genes number
     :param n_cell: cell number per spot
+    :param count_threshold: sparsity calibration, reset the expression values below this threshold to zero
     :return:
         spot_data: spot-based spatial transcriptomics data
         spot_meta: spot-based spatial transcriptomics meta
@@ -1037,6 +1039,9 @@ def generate_spot_data(
         )
         spot_data = spot_data.loc[genes]
 
+    if count_threshold is not None:
+        spot_data = spot_data.apply(lambda x: (np.where(x < count_threshold, 0, x)))
+
     return spot_data, spot_meta, generate_meta
 
 
@@ -1046,6 +1051,7 @@ def generate_image_data(
         gene_type: str,
         min_cell: int,
         n_gene: int,
+        count_threshold: Optional[float] = None,
 ):
     """
     Generate image-based spatial transcriptomics data
@@ -1054,6 +1060,7 @@ def generate_image_data(
     :param gene_type: targeted genes type
     :param min_cell: filter the genes expressed in fewer than `min_cell` cells
     :param n_gene: targeted genes number
+    :param count_threshold: sparsity calibration, reset the expression values below this threshold to zero
     :return:
         target_data: image-based spatial transcriptomics data
         generate_meta: image-based spatial transcriptomics meta
@@ -1089,6 +1096,9 @@ def generate_image_data(
             n_gene=n_gene
         )
         target_data = generate_data.loc[genes]
+
+    if count_threshold is not None:
+        target_data = target_data.apply(lambda x: (np.where(x < count_threshold, 0, x)))
 
     return target_data, generate_meta, generate_data
 

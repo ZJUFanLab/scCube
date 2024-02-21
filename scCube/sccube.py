@@ -548,7 +548,8 @@ class scCube:
                                   gene_type: str = 'whole',
                                   min_cell: int = 10,
                                   n_gene: Optional[int] = None,
-                                  n_cell: int = 10, ):
+                                  n_cell: int = 10,
+                                  count_threshold: Optional[float] = None):
 
         """
         generate spot-based data
@@ -563,6 +564,7 @@ class scCube:
         only works when `gene_type='random', 'hvg', or 'marker'`
         :param n_gene: the number of genes to select, only works when `gene_type='random', 'hvg', or 'marker'`
         :param n_cell: the mean number of cells per spot
+        :param count_threshold: sparsity calibration, reset the expression values below this threshold to zero
         :return: st_data, st_meta, st_index
          """
 
@@ -573,7 +575,8 @@ class scCube:
                                                         gene_type=gene_type,
                                                         min_cell=min_cell,
                                                         n_gene=n_gene,
-                                                        n_cell=n_cell
+                                                        n_cell=n_cell,
+                                                        count_threshold=count_threshold
                                                         )
 
         return st_data, st_meta, st_index
@@ -583,7 +586,8 @@ class scCube:
                                    generate_sc_meta: DataFrame,
                                    gene_type: str = 'whole',
                                    min_cell: int = 10,
-                                   n_gene: Optional[int] = None, ):
+                                   n_gene: Optional[int] = None,
+                                   count_threshold: Optional[float] = None,):
         """
         generate image-based data
         :param generate_sc_data: DataFrame of generated sc data
@@ -594,6 +598,7 @@ class scCube:
         :param min_cell: filter the genes expressed in fewer than `min_cell` cells before selected genes,
         only works when `gene_type='random', 'hvg', or 'marker'`
         :param n_gene: the number of genes to select, only works when `gene_type='random', 'hvg', or 'marker'`
+        :param count_threshold: sparsity calibration, reset the expression values below this threshold to zero
         :return: st_data, st_meta, st_index
         """
 
@@ -601,7 +606,8 @@ class scCube:
                                                          generate_data=generate_sc_data,
                                                          gene_type=gene_type,
                                                          min_cell=min_cell,
-                                                         n_gene=n_gene
+                                                         n_gene=n_gene,
+                                                         count_threshold=count_threshold
                                                          )
 
         return st_data, st_meta, st_index
