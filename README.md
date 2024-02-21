@@ -1,4 +1,4 @@
-# scCube v2.0.0
+# scCube v2.0.1
 
 ## Simulating multiple variability in spatially resolved transcriptomics
 
