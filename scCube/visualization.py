@@ -443,9 +443,9 @@ def plot_spot_histplot(
     fig, ax = plt.subplots(figsize=(figwidth, figheight))
     # the histogram of the data
     n, bins, patches = ax.hist(x, n_bins, density=True)
-    # add a 'best fit' line
-    y = ((1 / (np.sqrt(2 * np.pi) * sigma)) * np.exp(-0.5 * (1 / sigma * (bins - mu)) ** 2))
-    ax.plot(bins, y, '--')
+    # # add a 'best fit' line
+    # y = ((1 / (np.sqrt(2 * np.pi) * sigma)) * np.exp(-0.5 * (1 / sigma * (bins - mu)) ** 2))
+    # ax.plot(bins, y, '--')
     ax.set_xlabel('Cell number per spot')
     ax.set_ylabel('Density')
     ax.set_title(r'$\mu='+ str(round(mu, 2)) + '$, $\sigma='+ str(round(sigma, 2)) + '$')
