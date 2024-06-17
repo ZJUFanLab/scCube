@@ -1,7 +1,7 @@
 ## API Reference
 ### Input data format (`.csv` or `.h5ad`)
 
-1. Data file: a `.csv` file with genes as rows and one sample as column
+1. Data file: a `.csv` file with genes as rows and cells/spots as column
 
 |<img width=40/> <img width=40/>|<img width=25/>Cell1<img width=25/>|<img width=25/>Cell2<img width=25/>|<img width=25/>Cell3<img width=25/>|<img width=35/>...<img width=34/>|<img width=25/>CellN<img width=25/>| 
 | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | 
