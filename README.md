@@ -77,3 +77,7 @@ Reference-free simulation:
 ## About
 scCube was developed by Jingyang Qian. Should you have any questions, please contact Jingyang Qian at qianjingyang@zju.edu.cn.
 
+## References
+Qian, J., Bao, H., Shao, X. et al. Simulating multiple variability in spatially resolved transcriptomics with scCube. Nat Commun 15, 5021 (2024). [https://doi.org/10.1038/s41467-024-49445-0](https://doi.org/10.1038/s41467-024-49445-0)
+
+
