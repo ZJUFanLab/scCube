@@ -1157,6 +1157,120 @@ def get_min_grid_index(
 
     return idx
 
+def read_or_pass_through(input_data):
+    """
+    Helper function to either read a CSV file or pass through data if it's already a DataFrame.
+    Additionally checks if the DataFrame contains columns with 'x' and 'y', which might be needed for spatial data.
+
+    Example usage:
+    df = read_or_pass_through("path/to/your/data.csv")
+    df = read_or_pass_through(your_dataframe)
+    """
+    if isinstance(input_data, str):
+        df = pd.read_csv(input_data, index_col=0)
+    elif isinstance(input_data, pd.DataFrame):
+        df = input_data
+    else:
+        raise ValueError("Input data must be either a path to a CSV file or a pandas DataFrame.")
+
+    columns = df.columns
+    has_x = any('x' in col for col in columns)
+    has_y = any('y' in col for col in columns)
+
+    if not has_x or not has_y:
+        print("Warning: The input data may be missing spatial coordinates as it lacks columns containing 'x' and/or 'y'.")
+
+    return df
+
+def create_and_save_anndata(data, meta, spatial_key=['x', 'y'], save_path=None):
+    """
+    Creates an Anndata object from data and meta. Optionally saves to a file.
+
+    Args:
+    data: str or pd.DataFrame - Path to the data CSV file or a DataFrame containing the data.
+    meta: str or pd.DataFrame - Path to the meta CSV file or a DataFrame containing the metadata.
+    spatial_key: list - List of column names in meta that correspond to spatial coordinates.
+    save_path: str - Path to save the Anndata object file. If None, the file is not saved.
+
+    Returns:
+    adata: Anndata object
+    """
+    # Read or pass through data and meta
+    data_df = read_or_pass_through(data)
+    meta_df = read_or_pass_through(meta)
+
+    # Create an AnnData object from the transposed data
+    adata = sc.AnnData(data_df.T)
+
+    # Assign meta as the .obs attribute of AnnData
+    adata.obs = meta_df
+
+    # Set spatial coordinates if the appropriate columns are available in meta
+    if all(key in meta_df for key in spatial_key):
+        adata.obsm['spatial'] = np.array(meta_df[spatial_key])
+    else:
+        raise ValueError(f"Meta data must contain the specified spatial keys: {spatial_key}")
+
+    # Convert matrix to a sparse format if necessary
+    if isinstance(adata.X, np.ndarray):
+        adata.X = csr_matrix(adata.X)
+
+    # Save the AnnData object if a save path is provided
+    if save_path:
+        adata.write_h5ad(save_path)
+
+    return adata
+
+
+def scale_spatial_coordinates(adata=None, spatial_size=None, spatial_key=None):
+    """
+    Scales the spatial coordinates of an AnnData object to a specified size.
+
+    Args:
+    adata: AnnData object - The AnnData object containing spatial coordinates.
+    spatial_size: int - The desired size for scaling spatial coordinates.
+    spatial_key: list - List of column names in adata.obs that correspond to spatial coordinates.
+
+    Returns:
+    adata: AnnData object - The AnnData object with scaled spatial coordinates.
+
+    Example:
+    adata = create_and_save_anndata(data, meta, spatial_key=['x', 'y'], save_path=None)
+    adata_scaled = sizer(adata, spatial_size=1000)
+
+    Or with manually specified column names:
+    adata_scaled = sizer(adata, spatial_size=1000, spatial_key=['x_coord', 'y_coord'])
+    """
+    if adata is None:
+        raise ValueError("Please provide an AnnData object.")
+
+    if spatial_size is None:
+        raise ValueError("Please provide a spatial_size for scaling.")
+
+    if 'spatial' not in adata.obsm:
+        raise KeyError(
+            "Key 'spatial' not found in adata.obsm. Please make sure the AnnData object contains spatial coordinates.")
+
+    points = adata.obsm['spatial']
+    min_vals = points.min(axis=0)
+    max_vals = points.max(axis=0)
+    normalized_points = (points - min_vals) / (max_vals - min_vals)
+    scaled_points = np.floor(normalized_points * spatial_size).astype(int)
+    adata.obsm['spatial'] = scaled_points
+
+    if spatial_key is None:
+        spatial_key = ['x_pixel', 'y_pixel']
+
+    if len(spatial_key) != 2:
+        raise ValueError("spatial_key must contain exactly two elements for 'x' and 'y' coordinates.")
+
+    for key in spatial_key:
+        if key not in adata.obs.columns:
+            adata.obs[key] = scaled_points[:, spatial_key.index(key)]
+        else:
+            adata.obs[key] = scaled_points[:, spatial_key.index(key)]
+
+    return adata
 
 # generate custom spatial pattern
 # (biologically interpretable, such as a spherical tumor tissue surrounded by normal tissues)
